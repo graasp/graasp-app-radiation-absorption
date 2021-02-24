@@ -11,6 +11,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { toggleSideMenu } from '../../actions';
 import { DRAWER_WIDTH, DEFAULT_THEME_DIRECTION } from '../../config/constants';
+import GreenhouseGases from '../lab/GreenhouseGases';
+import NonGreenhouseGases from '../lab/NonGreenhouseGases';
 
 const styles = (theme) => ({
   drawerPaper: {
@@ -26,6 +28,10 @@ const styles = (theme) => ({
   contentWrapper: {
     margin: theme.spacing(2),
   },
+  sideMenuDivider: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
 });
 
 class SideMenu extends React.Component {
@@ -34,6 +40,7 @@ class SideMenu extends React.Component {
       drawerHeader: PropTypes.string.isRequired,
       drawerPaper: PropTypes.string.isRequired,
       contentWrapper: PropTypes.string.isRequired,
+      sideMenuDivider: PropTypes.string.isRequired,
     }).isRequired,
     theme: PropTypes.shape({
       direction: PropTypes.string.isRequired,
@@ -67,16 +74,6 @@ class SideMenu extends React.Component {
     );
   };
 
-  renderDescription = () => {
-    const { t } = this.props;
-    return (
-      <>
-        <Typography variant="h6">{t('Description')}</Typography>
-        {t('Welcome to the Graasp App Starter Lab Kit')}
-      </>
-    );
-  };
-
   render() {
     const { classes, showSideMenu } = this.props;
 
@@ -93,7 +90,9 @@ class SideMenu extends React.Component {
         >
           {this.renderDrawerHeader()}
           <div className={classes.contentWrapper}>
-            {this.renderDescription()}
+            <GreenhouseGases />
+            <Divider className={classes.sideMenuDivider} />
+            <NonGreenhouseGases />
           </div>
         </Drawer>
       </>
