@@ -6,12 +6,14 @@ import {
   DISPLAY_MOLECULE,
   REMOVE_MOLECULE_AREA_DELETION,
   CLEAR_MOLECULE_AREA,
+  TOGGLE_SPECTRUM,
 } from '../types';
 import {
   CANVAS_MOLECULE_AREA_ACTIVE,
   CANVAS_MOLECULE_AREA_AWAITING_DELETE,
   CANVAS_MOLECULE_AREA_EMPTY,
   CANVAS_MOLECULE_AREA_FULL,
+  INFRARED_SPECTRUM,
 } from '../config/constants';
 
 const INITIAL_STATE = {
@@ -22,6 +24,7 @@ const INITIAL_STATE = {
     { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_EMPTY },
     { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_EMPTY },
   ],
+  spectrum: INFRARED_SPECTRUM,
 };
 
 export default (state = INITIAL_STATE, { type, payload }) => {
@@ -30,6 +33,11 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         selectedMoleculeInSideMenu: payload,
+      };
+    case TOGGLE_SPECTRUM:
+      return {
+        ...state,
+        spectrum: payload,
       };
     case ACTIVATE_MOLECULE_AREA:
       return {

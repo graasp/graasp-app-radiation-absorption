@@ -1,5 +1,6 @@
 import {
   SELECT_MOLECULE_SIDE_MENU,
+  TOGGLE_SPECTRUM,
   DISPLAY_MOLECULE,
   ACTIVATE_MOLECULE_AREA,
   DEACTIVATE_MOLECULE_AREA,
@@ -12,6 +13,12 @@ const selectMoleculeInSideMenu = (molecule) => (dispatch) =>
   dispatch({
     type: SELECT_MOLECULE_SIDE_MENU,
     payload: molecule,
+  });
+
+const toggleSpectrum = (payload) => (dispatch) =>
+  dispatch({
+    type: TOGGLE_SPECTRUM,
+    payload,
   });
 
 const activateMoleculeArea = (payload) => (dispatch) =>
@@ -40,6 +47,7 @@ const clearMoleculeArea = (payload) => (dispatch) =>
 
 export {
   selectMoleculeInSideMenu,
+  toggleSpectrum,
   activateMoleculeArea,
   deactivateMoleculeArea,
   prepareMoleculeAreaForDeletion,

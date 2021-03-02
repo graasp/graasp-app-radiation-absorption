@@ -74,3 +74,6 @@ export const CANVAS_MOLECULE_AREA_EMPTY = 'empty';
 export const CANVAS_MOLECULE_AREA_ACTIVE = 'active';
 export const CANVAS_MOLECULE_AREA_FULL = 'full';
 export const CANVAS_MOLECULE_AREA_AWAITING_DELETE = 'awaiting-delete';
+
+export const INFRARED_SPECTRUM = 'infrared';
+export const VISIBLE_LIGHT_SPECTRUM = 'visible-light';
