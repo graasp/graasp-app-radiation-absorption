@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Atom from './Atom';
+import SideMenuAtom from './SideMenuAtom';
 import {
   NITROGEN_ATOM_COLOR,
   NITROGEN_ATOM_SIZE,
-} from '../../../../config/constants';
+} from '../../../../../config/constants';
 
-const Nitrogen = ({ customPositioningStyles }) => {
+const SideMenuNitrogen = ({ customPositioningStyles }) => {
   return (
-    <Atom
+    <SideMenuAtom
       atomColor={NITROGEN_ATOM_COLOR}
       atomSize={NITROGEN_ATOM_SIZE}
       customPositioningStyles={customPositioningStyles}
@@ -16,12 +16,12 @@ const Nitrogen = ({ customPositioningStyles }) => {
   );
 };
 
-Nitrogen.propTypes = {
+SideMenuNitrogen.propTypes = {
   customPositioningStyles: PropTypes.shape(),
 };
 
-Nitrogen.defaultProps = {
+SideMenuNitrogen.defaultProps = {
   customPositioningStyles: {},
 };
 
-export default Nitrogen;
+export default SideMenuNitrogen;

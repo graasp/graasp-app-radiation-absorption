@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { ATOM_DIMENSIONS } from '../../../../config/constants';
+import { ATOM_DIMENSIONS } from '../../../../../config/constants';
 
 const useStyles = makeStyles(() => ({
   atom: {
@@ -9,7 +9,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Atom = ({ atomColor, atomSize, customPositioningStyles }) => {
+const SideMenuAtom = ({ atomColor, atomSize, customPositioningStyles }) => {
   const classes = useStyles();
 
   const atomWidthAndHeight = ATOM_DIMENSIONS[atomSize];
@@ -27,14 +27,14 @@ const Atom = ({ atomColor, atomSize, customPositioningStyles }) => {
   );
 };
 
-Atom.propTypes = {
+SideMenuAtom.propTypes = {
   atomColor: PropTypes.string.isRequired,
   atomSize: PropTypes.string.isRequired,
   customPositioningStyles: PropTypes.shape(),
 };
 
-Atom.defaultProps = {
+SideMenuAtom.defaultProps = {
   customPositioningStyles: {},
 };
 
-export default Atom;
+export default SideMenuAtom;

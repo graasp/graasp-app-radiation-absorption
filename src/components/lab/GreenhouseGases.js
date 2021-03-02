@@ -2,12 +2,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import GasesContainer from './GasesContainer';
-import CarbonDioxide from './molecules/CarbonDioxide';
-import NitrousOxide from './molecules/NitrousOxide';
-import Ozone from './molecules/Ozone';
-import Methane from './molecules/Methane';
-import Water from './molecules/Water';
-import MoleculeAndLabelContainer from './molecules/MoleculeAndLabelContainer';
+import SideMenuCarbonDioxide from './side-menu/molecules/SideMenuCarbonDioxide';
+import SideMenuNitrousOxide from './side-menu/molecules/SideMenuNitrousOxide';
+import SideMenuOzone from './side-menu/molecules/SideMenuOzone';
+import SideMenuMethane from './side-menu/molecules/SideMenuMethane';
+import SideMenuWater from './side-menu/molecules/SideMenuWater';
+import SideMenuMoleculeAndLabelContainer from './side-menu/molecules/SideMenuMoleculeAndLabelContainer';
 import {
   WATER_MOLECULE_ID,
   CARBON_DIOXIDE_MOLECULE_ID,
@@ -18,34 +18,36 @@ import {
 
 const GreenhouseGases = () => {
   const { t } = useTranslation();
-  const selectedMolecule = useSelector(({ lab }) => lab.selectedMolecule);
+  const selectedMoleculeInSideMenu = useSelector(
+    ({ lab }) => lab.selectedMoleculeInSideMenu,
+  );
 
   return (
     <GasesContainer gasContainerLabel={t('Greenhouse Gases')}>
-      <MoleculeAndLabelContainer
-        molecule={<Water />}
+      <SideMenuMoleculeAndLabelContainer
+        molecule={<SideMenuWater />}
         moleculeLabel={t('Water')}
-        isSelected={selectedMolecule === WATER_MOLECULE_ID}
+        isSelected={selectedMoleculeInSideMenu === WATER_MOLECULE_ID}
       />
-      <MoleculeAndLabelContainer
-        molecule={<CarbonDioxide />}
+      <SideMenuMoleculeAndLabelContainer
+        molecule={<SideMenuCarbonDioxide />}
         moleculeLabel={t('Carbon Dioxide')}
-        isSelected={selectedMolecule === CARBON_DIOXIDE_MOLECULE_ID}
+        isSelected={selectedMoleculeInSideMenu === CARBON_DIOXIDE_MOLECULE_ID}
       />
-      <MoleculeAndLabelContainer
-        molecule={<Ozone />}
+      <SideMenuMoleculeAndLabelContainer
+        molecule={<SideMenuOzone />}
         moleculeLabel={t('Ozone')}
-        isSelected={selectedMolecule === OZONE_MOLECULE_ID}
+        isSelected={selectedMoleculeInSideMenu === OZONE_MOLECULE_ID}
       />
-      <MoleculeAndLabelContainer
-        molecule={<NitrousOxide />}
+      <SideMenuMoleculeAndLabelContainer
+        molecule={<SideMenuNitrousOxide />}
         moleculeLabel={t('Nitrous Oxide')}
-        isSelected={selectedMolecule === NITROUS_OXIDE_MOLECULE_ID}
+        isSelected={selectedMoleculeInSideMenu === NITROUS_OXIDE_MOLECULE_ID}
       />
-      <MoleculeAndLabelContainer
-        molecule={<Methane />}
+      <SideMenuMoleculeAndLabelContainer
+        molecule={<SideMenuMethane />}
         moleculeLabel={t('Methane')}
-        isSelected={selectedMolecule === METHANE_MOLECULE_ID}
+        isSelected={selectedMoleculeInSideMenu === METHANE_MOLECULE_ID}
       />
     </GasesContainer>
   );

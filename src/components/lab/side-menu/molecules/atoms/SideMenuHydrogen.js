@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Atom from './Atom';
+import SideMenuAtom from './SideMenuAtom';
 import {
   HYDROGEN_ATOM_COLOR,
   HYDROGEN_ATOM_SIZE,
-} from '../../../../config/constants';
+} from '../../../../../config/constants';
 
-const Hydrogen = ({ customPositioningStyles }) => {
+const SideMenuHydrogen = ({ customPositioningStyles }) => {
   return (
-    <Atom
+    <SideMenuAtom
       atomColor={HYDROGEN_ATOM_COLOR}
       atomSize={HYDROGEN_ATOM_SIZE}
       customPositioningStyles={customPositioningStyles}
@@ -16,12 +16,12 @@ const Hydrogen = ({ customPositioningStyles }) => {
   );
 };
 
-Hydrogen.propTypes = {
+SideMenuHydrogen.propTypes = {
   customPositioningStyles: PropTypes.shape(),
 };
 
-Hydrogen.defaultProps = {
+SideMenuHydrogen.defaultProps = {
   customPositioningStyles: {},
 };
 
-export default Hydrogen;
+export default SideMenuHydrogen;

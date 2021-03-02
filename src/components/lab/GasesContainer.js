@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import MoleculeRow from './molecules/MoleculeRow';
+import SideMenuMoleculeRow from './side-menu/molecules/SideMenuMoleculeRow';
 import { MAX_MOLECULES_IN_SIDEMENU_ROW } from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
@@ -28,7 +28,7 @@ const GasesContainer = ({ children, gasContainerLabel }) => {
       </Typography>
       {chunkedChildElements.map((childrenGroup, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <MoleculeRow key={index}>{childrenGroup}</MoleculeRow>
+        <SideMenuMoleculeRow key={index}>{childrenGroup}</SideMenuMoleculeRow>
       ))}
     </div>
   );

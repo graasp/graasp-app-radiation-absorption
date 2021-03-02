@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { MAX_MOLECULES_IN_SIDEMENU_ROW } from '../../../config/constants';
+import { MAX_MOLECULES_IN_SIDEMENU_ROW } from '../../../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   moleculeRow: {
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MoleculeRow = ({ children }) => {
+const SideMenuMoleculeRow = ({ children }) => {
   const classes = useStyles();
 
   // flexbox style used to distribute molecules in a row
@@ -26,11 +26,11 @@ const MoleculeRow = ({ children }) => {
   );
 };
 
-MoleculeRow.propTypes = {
+SideMenuMoleculeRow.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element,
   ]).isRequired,
 };
 
-export default MoleculeRow;
+export default SideMenuMoleculeRow;

@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Atom from './Atom';
+import SideMenuAtom from './SideMenuAtom';
 import {
   OXYGEN_ATOM_COLOR,
   OXYGEN_ATOM_SIZE,
-} from '../../../../config/constants';
+} from '../../../../../config/constants';
 
-const Oxygen = ({ customPositioningStyles }) => {
+const SideMenuOxygen = ({ customPositioningStyles }) => {
   return (
-    <Atom
+    <SideMenuAtom
       atomColor={OXYGEN_ATOM_COLOR}
       atomSize={OXYGEN_ATOM_SIZE}
       customPositioningStyles={customPositioningStyles}
@@ -16,12 +16,12 @@ const Oxygen = ({ customPositioningStyles }) => {
   );
 };
 
-Oxygen.propTypes = {
+SideMenuOxygen.propTypes = {
   customPositioningStyles: PropTypes.shape(),
 };
 
-Oxygen.defaultProps = {
+SideMenuOxygen.defaultProps = {
   customPositioningStyles: {},
 };
 
-export default Oxygen;
+export default SideMenuOxygen;

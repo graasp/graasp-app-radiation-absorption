@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Atom from './Atom';
+import SideMenuAtom from './SideMenuAtom';
 import {
   ARGON_ATOM_COLOR,
   ARGON_ATOM_SIZE,
-} from '../../../../config/constants';
+} from '../../../../../config/constants';
 
-const Argon = ({ customPositioningStyles }) => {
+const SideMenuArgon = ({ customPositioningStyles }) => {
   return (
-    <Atom
+    <SideMenuAtom
       atomColor={ARGON_ATOM_COLOR}
       atomSize={ARGON_ATOM_SIZE}
       customPositioningStyles={customPositioningStyles}
@@ -16,12 +16,12 @@ const Argon = ({ customPositioningStyles }) => {
   );
 };
 
-Argon.propTypes = {
+SideMenuArgon.propTypes = {
   customPositioningStyles: PropTypes.shape(),
 };
 
-Argon.defaultProps = {
+SideMenuArgon.defaultProps = {
   customPositioningStyles: {},
 };
 
-export default Argon;
+export default SideMenuArgon;

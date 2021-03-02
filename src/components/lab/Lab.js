@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { ReactReduxContext, Provider, connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Stage, Layer } from 'react-konva';
+import CanvasMoleculeContainer from './canvas/CanvasMoleculeContainer';
 import { setStageDimensions } from '../../actions';
-import { BACKGROUND_COLOR } from '../../config/constants';
+import {
+  BACKGROUND_COLOR,
+  CANVAS_NUMBER_OF_MOLECULES,
+  CANVAS_MOLECULE_AREA_DEFAULT_RADIUS,
+} from '../../config/constants';
 
 const styles = () => ({
   container: {
@@ -29,6 +34,13 @@ class Lab extends Component {
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,
     }).isRequired,
+    selectedMoleculeInSideMenu: PropTypes.string.isRequired,
+    moleculesOnCanvas: PropTypes.arrayOf(
+      PropTypes.shape({
+        molecule: PropTypes.string.isRequired,
+        moleculeAreaStatus: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
   };
 
   componentDidMount() {
@@ -49,8 +61,38 @@ class Lab extends Component {
     });
   };
 
+  determineMoleculeContainersCenterPoints = (
+    totalWidth,
+    numberOfContainers,
+    containerRadius,
+  ) => {
+    const totalExcessWidth =
+      totalWidth - containerRadius * 2 * numberOfContainers;
+    const unitsToDistributeExcessWidth = 2 + (numberOfContainers - 1);
+    const excessWidthPerUnit = totalExcessWidth / unitsToDistributeExcessWidth;
+    const moleculeContainerCenterPoints = new Array(numberOfContainers)
+      .fill()
+      .map(
+        (emptyElement, index) =>
+          (excessWidthPerUnit + containerRadius) * (index + 1) +
+          index * containerRadius,
+      );
+    return moleculeContainerCenterPoints;
+  };
+
   render() {
-    const { classes, stageDimensions } = this.props;
+    const {
+      classes,
+      stageDimensions,
+      selectedMoleculeInSideMenu,
+      moleculesOnCanvas,
+    } = this.props;
+    const moleculeContainerCenterPoints = this.determineMoleculeContainersCenterPoints(
+      stageDimensions.width,
+      CANVAS_NUMBER_OF_MOLECULES,
+      CANVAS_MOLECULE_AREA_DEFAULT_RADIUS,
+    );
+
     return (
       <div
         className={classes.container}
@@ -59,20 +101,43 @@ class Lab extends Component {
           this.container = node;
         }}
       >
-        <Stage
-          className={classes.stage}
-          width={stageDimensions.width}
-          height={stageDimensions.height}
-        >
-          <Layer />
-        </Stage>
+        {/* below is necessary for redux store to be accessible by konva children */}
+        {/* see https://github.com/konvajs/react-konva/issues/311 */}
+        <ReactReduxContext.Consumer>
+          {({ store }) => (
+            <Stage
+              className={classes.stage}
+              width={stageDimensions.width}
+              height={stageDimensions.height}
+            >
+              <Provider store={store}>
+                <Layer>
+                  {moleculeContainerCenterPoints.map((centerPoint, index) => (
+                    <CanvasMoleculeContainer
+                      x={centerPoint}
+                      key={centerPoint}
+                      isActive={selectedMoleculeInSideMenu !== ''}
+                      containerIndex={index}
+                      moleculeToDisplay={moleculesOnCanvas[index].molecule}
+                      moleculeAreaStatus={
+                        moleculesOnCanvas[index].moleculeAreaStatus
+                      }
+                    />
+                  ))}
+                </Layer>
+              </Provider>
+            </Stage>
+          )}
+        </ReactReduxContext.Consumer>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ layout }) => ({
+const mapStateToProps = ({ layout, lab }) => ({
   stageDimensions: layout.lab.stageDimensions,
+  selectedMoleculeInSideMenu: lab.selectedMoleculeInSideMenu,
+  moleculesOnCanvas: lab.moleculesOnCanvas,
 });
 
 const mapDispatchToProps = {

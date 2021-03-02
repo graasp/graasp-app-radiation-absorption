@@ -26,7 +26,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MoleculeAndLabelContainer = ({ molecule, moleculeLabel, isSelected }) => {
+const SideMenuMoleculeAndLabelContainer = ({
+  molecule,
+  moleculeLabel,
+  isSelected,
+}) => {
   const classes = useStyles();
 
   return (
@@ -45,10 +49,10 @@ const MoleculeAndLabelContainer = ({ molecule, moleculeLabel, isSelected }) => {
   );
 };
 
-MoleculeAndLabelContainer.propTypes = {
+SideMenuMoleculeAndLabelContainer.propTypes = {
   molecule: PropTypes.element.isRequired,
   moleculeLabel: PropTypes.string.isRequired,
   isSelected: PropTypes.bool.isRequired,
 };
 
-export default MoleculeAndLabelContainer;
+export default SideMenuMoleculeAndLabelContainer;

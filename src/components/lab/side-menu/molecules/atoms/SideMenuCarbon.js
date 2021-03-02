@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Atom from './Atom';
+import SideMenuAtom from './SideMenuAtom';
 import {
   CARBON_ATOM_COLOR,
   CARBON_ATOM_SIZE,
-} from '../../../../config/constants';
+} from '../../../../../config/constants';
 
-const Carbon = ({ customPositioningStyles }) => {
+const SideMenuCarbon = ({ customPositioningStyles }) => {
   return (
-    <Atom
+    <SideMenuAtom
       atomColor={CARBON_ATOM_COLOR}
       atomSize={CARBON_ATOM_SIZE}
       customPositioningStyles={customPositioningStyles}
@@ -16,12 +16,12 @@ const Carbon = ({ customPositioningStyles }) => {
   );
 };
 
-Carbon.propTypes = {
+SideMenuCarbon.propTypes = {
   customPositioningStyles: PropTypes.shape(),
 };
 
-Carbon.defaultProps = {
+SideMenuCarbon.defaultProps = {
   customPositioningStyles: {},
 };
 
-export default Carbon;
+export default SideMenuCarbon;
