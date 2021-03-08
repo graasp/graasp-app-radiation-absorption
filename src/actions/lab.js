@@ -8,6 +8,7 @@ import {
   CHANGE_MOLECULE_AREA_STATUS,
   CLEAR_MOLECULE_AREA,
   RESET_ALL_MOLECULE_AREAS,
+  TOGGLE_SHOW_ATOMS_CHARGES,
 } from '../types';
 
 const selectMoleculeInSideMenu = (molecule) => (dispatch) =>
@@ -61,6 +62,9 @@ const resetAllLines = (payload) => (dispatch) =>
 const resetAllMoleculeAreas = () => (dispatch) =>
   dispatch({ type: RESET_ALL_MOLECULE_AREAS });
 
+const toggleShowAtomsCharges = (payload) => (dispatch) =>
+  dispatch({ type: TOGGLE_SHOW_ATOMS_CHARGES, payload });
+
 export {
   selectMoleculeInSideMenu,
   toggleSpectrum,
@@ -71,4 +75,5 @@ export {
   updateLinePoints,
   resetAllLines,
   resetAllMoleculeAreas,
+  toggleShowAtomsCharges,
 };

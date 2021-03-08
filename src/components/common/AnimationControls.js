@@ -13,10 +13,13 @@ import {
   resetAllLines,
   changeMoleculeAreaStatus,
   resetAllMoleculeAreas,
+  toggleShowAtomsCharges,
+  toggleSpectrum,
 } from '../../actions';
 import {
   CANVAS_MOLECULE_AREA_AWAITING_DELETE,
   CANVAS_MOLECULE_AREA_FULL,
+  INFRARED_SPECTRUM,
 } from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
@@ -68,10 +71,11 @@ const AnimationControls = () => {
   };
 
   const onClickReset = () => {
-    dispatch(
-      resetAllMoleculeAreas(),
-      dispatch(resetAllLines(), dispatch(setIsPaused(true))),
-    );
+    dispatch(resetAllMoleculeAreas());
+    dispatch(resetAllLines());
+    dispatch(setIsPaused(true));
+    dispatch(toggleShowAtomsCharges(false));
+    dispatch(toggleSpectrum(INFRARED_SPECTRUM));
   };
 
   return (

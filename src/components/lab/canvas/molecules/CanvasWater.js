@@ -10,6 +10,8 @@ import {
   CANVAS_MOLECULE_AREA_Y_POSITION,
   CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
   CANVAS_WATER_ANGLED_ATOMS_Y_ADJUSTMENT_FACTOR,
+  POSITIVE_CHARGE,
+  NEGATIVE_CHARGE,
 } from '../../../../config/constants';
 
 const CanvasWater = ({ x }) => {
@@ -26,8 +28,13 @@ const CanvasWater = ({ x }) => {
           hydrogenAtomRadius +
           CANVAS_WATER_ANGLED_ATOMS_Y_ADJUSTMENT_FACTOR
         }
+        charge={POSITIVE_CHARGE}
       />
-      <CanvasOxygen x={x} y={CANVAS_MOLECULE_AREA_Y_POSITION} />
+      <CanvasOxygen
+        x={x}
+        y={CANVAS_MOLECULE_AREA_Y_POSITION}
+        charge={NEGATIVE_CHARGE}
+      />
       <CanvasHydrogen
         x={x + CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR}
         y={
@@ -36,6 +43,7 @@ const CanvasWater = ({ x }) => {
           hydrogenAtomRadius -
           CANVAS_WATER_ANGLED_ATOMS_Y_ADJUSTMENT_FACTOR
         }
+        charge={POSITIVE_CHARGE}
       />
     </Group>
   );

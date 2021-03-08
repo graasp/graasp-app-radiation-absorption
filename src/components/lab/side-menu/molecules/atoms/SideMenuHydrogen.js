@@ -6,22 +6,25 @@ import {
   HYDROGEN_ATOM_SIZE,
 } from '../../../../../config/constants';
 
-const SideMenuHydrogen = ({ customPositioningStyles }) => {
+const SideMenuHydrogen = ({ customPositioningStyles, charge }) => {
   return (
     <SideMenuAtom
       atomColor={HYDROGEN_ATOM_COLOR}
       atomSize={HYDROGEN_ATOM_SIZE}
       customPositioningStyles={customPositioningStyles}
+      charge={charge}
     />
   );
 };
 
 SideMenuHydrogen.propTypes = {
   customPositioningStyles: PropTypes.shape(),
+  charge: PropTypes.string,
 };
 
 SideMenuHydrogen.defaultProps = {
   customPositioningStyles: {},
+  charge: '',
 };
 
 export default SideMenuHydrogen;

@@ -8,6 +8,7 @@ import {
   CHANGE_MOLECULE_AREA_STATUS,
   CLEAR_MOLECULE_AREA,
   RESET_ALL_MOLECULE_AREAS,
+  TOGGLE_SHOW_ATOMS_CHARGES,
 } from '../types';
 import {
   CANVAS_MOLECULE_AREA_EMPTY,
@@ -21,6 +22,7 @@ const INITIAL_STATE = {
   isPaused: true,
   selectedMoleculeInSideMenu: '',
   spectrum: INFRARED_SPECTRUM,
+  showAtomsCharges: false,
   moleculesOnCanvas: [
     { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_EMPTY },
     { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_EMPTY },
@@ -60,6 +62,11 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         spectrum: payload,
+      };
+    case TOGGLE_SHOW_ATOMS_CHARGES:
+      return {
+        ...state,
+        showAtomsCharges: payload,
       };
     case CHANGE_MOLECULE_AREA_STATUS:
       return {

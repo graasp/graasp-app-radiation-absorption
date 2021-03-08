@@ -9,12 +9,13 @@ import { Divider, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { toggleSideMenu } from '../../actions';
+import { toggleShowAtomsCharges, toggleSideMenu } from '../../actions';
 import { DRAWER_WIDTH, DEFAULT_THEME_DIRECTION } from '../../config/constants';
 import GreenhouseGases from '../lab/GreenhouseGases';
 import NonGreenhouseGases from '../lab/NonGreenhouseGases';
 import SpectrumToggle from './SpectrumToggle';
 import AnimationControls from './AnimationControls';
+import CustomSwitch from './CustomSwitch';
 
 const styles = (theme) => ({
   drawerPaper: {
@@ -28,11 +29,14 @@ const styles = (theme) => ({
     justifyContent: 'flex-start',
   },
   contentWrapper: {
-    margin: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    marginTop: theme.spacing(1),
   },
   sideMenuDivider: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
 });
 
@@ -50,6 +54,8 @@ class SideMenu extends React.Component {
     t: PropTypes.func.isRequired,
     showSideMenu: PropTypes.bool.isRequired,
     dispatchToggleSideMenu: PropTypes.func.isRequired,
+    showAtomsCharges: PropTypes.bool.isRequired,
+    dispatchToggleShowAtomsCharges: PropTypes.func.isRequired,
   };
 
   handleToggleSideMenu = (open) => () => {
@@ -77,7 +83,13 @@ class SideMenu extends React.Component {
   };
 
   render() {
-    const { classes, showSideMenu } = this.props;
+    const {
+      classes,
+      showSideMenu,
+      showAtomsCharges,
+      dispatchToggleShowAtomsCharges,
+      t,
+    } = this.props;
 
     return (
       <>
@@ -98,6 +110,12 @@ class SideMenu extends React.Component {
             <GreenhouseGases />
             <Divider className={classes.sideMenuDivider} />
             <NonGreenhouseGases />
+            <Divider className={classes.sideMenuDivider} />
+            <CustomSwitch
+              switchLabel={t('Sign of charges')}
+              switchStatus={showAtomsCharges}
+              switchDispatch={dispatchToggleShowAtomsCharges}
+            />
           </div>
         </Drawer>
       </>
@@ -105,12 +123,14 @@ class SideMenu extends React.Component {
   }
 }
 
-const mapStateToProps = ({ layout }) => ({
+const mapStateToProps = ({ layout, lab }) => ({
   showSideMenu: layout.showSideMenu,
+  showAtomsCharges: lab.showAtomsCharges,
 });
 
 const mapDispatchToProps = {
   dispatchToggleSideMenu: toggleSideMenu,
+  dispatchToggleShowAtomsCharges: toggleShowAtomsCharges,
 };
 
 const ConnectedComponent = connect(

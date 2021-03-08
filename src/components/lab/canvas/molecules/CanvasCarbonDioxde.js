@@ -8,6 +8,8 @@ import {
   OXYGEN_ATOM_SIZE,
   CARBON_ATOM_SIZE,
   CANVAS_MOLECULE_AREA_Y_POSITION,
+  NEGATIVE_CHARGE,
+  POSITIVE_CHARGE,
 } from '../../../../config/constants';
 
 const CanvasCarbonDioxide = ({ x }) => {
@@ -21,13 +23,19 @@ const CanvasCarbonDioxide = ({ x }) => {
         y={
           CANVAS_MOLECULE_AREA_Y_POSITION - carbonAtomRadius - oxygenAtomRadius
         }
+        charge={NEGATIVE_CHARGE}
       />
-      <CanvasCarbon x={x} y={CANVAS_MOLECULE_AREA_Y_POSITION} />
+      <CanvasCarbon
+        x={x}
+        y={CANVAS_MOLECULE_AREA_Y_POSITION}
+        charge={POSITIVE_CHARGE}
+      />
       <CanvasOxygen
         x={x}
         y={
           CANVAS_MOLECULE_AREA_Y_POSITION + carbonAtomRadius + oxygenAtomRadius
         }
+        charge={NEGATIVE_CHARGE}
       />
     </Group>
   );

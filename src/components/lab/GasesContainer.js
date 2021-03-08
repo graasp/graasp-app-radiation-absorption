@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import SideMenuMoleculeRow from './side-menu/molecules/SideMenuMoleculeRow';
-import { MAX_MOLECULES_IN_SIDEMENU_ROW } from '../../config/constants';
+import { MAX_MOLECULES_IN_SIDE_MENU_ROW } from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
   typography: {
@@ -15,15 +15,18 @@ const useStyles = makeStyles(() => ({
 const GasesContainer = ({ children, gasContainerLabel }) => {
   const classes = useStyles();
 
-  // divide children passed into GasesContainer into groups of MAX_MOLECULES_IN_SIDEMENU_ROW (or smaller)
-  // e.g. say MAX_MOLECULES_IN_SIDEMENU_ROW = 3 and children = [<Molecule1>, <Molecule2>, <Molecule3>, <Molecule4>]
+  // divide children passed into GasesContainer into groups of MAX_MOLECULES_IN_SIDE_MENU_ROW (or smaller)
+  // e.g. say MAX_MOLECULES_IN_SIDE_MENU_ROW = 3 and children = [<Molecule1>, <Molecule2>, <Molecule3>, <Molecule4>]
   // => then chunkedChildElements = [[<Molecule1>, <Molecule2>, <Molecule3>], [<Molecule4>]]
   // hence insuring that each MoleculeRow gets at most 3 molecules
-  const chunkedChildElements = _.chunk(children, MAX_MOLECULES_IN_SIDEMENU_ROW);
+  const chunkedChildElements = _.chunk(
+    children,
+    MAX_MOLECULES_IN_SIDE_MENU_ROW,
+  );
 
   return (
     <div>
-      <Typography variant="h6" className={classes.typography}>
+      <Typography variant="subtitle1" className={classes.typography}>
         {gasContainerLabel}
       </Typography>
       {chunkedChildElements.map((childrenGroup, index) => (

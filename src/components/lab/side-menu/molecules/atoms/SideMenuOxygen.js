@@ -6,22 +6,25 @@ import {
   OXYGEN_ATOM_SIZE,
 } from '../../../../../config/constants';
 
-const SideMenuOxygen = ({ customPositioningStyles }) => {
+const SideMenuOxygen = ({ customPositioningStyles, charge }) => {
   return (
     <SideMenuAtom
       atomColor={OXYGEN_ATOM_COLOR}
       atomSize={OXYGEN_ATOM_SIZE}
       customPositioningStyles={customPositioningStyles}
+      charge={charge}
     />
   );
 };
 
 SideMenuOxygen.propTypes = {
   customPositioningStyles: PropTypes.shape(),
+  charge: PropTypes.string,
 };
 
 SideMenuOxygen.defaultProps = {
   customPositioningStyles: {},
+  charge: '',
 };
 
 export default SideMenuOxygen;

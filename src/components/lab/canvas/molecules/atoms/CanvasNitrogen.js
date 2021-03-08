@@ -6,13 +6,14 @@ import {
   NITROGEN_ATOM_SIZE,
 } from '../../../../../config/constants';
 
-const CanvasNitrogen = ({ x, y }) => {
+const CanvasNitrogen = ({ x, y, charge }) => {
   return (
     <CanvasAtom
       atomColor={NITROGEN_ATOM_COLOR}
       atomSize={NITROGEN_ATOM_SIZE}
       x={x}
       y={y}
+      charge={charge}
     />
   );
 };
@@ -20,6 +21,11 @@ const CanvasNitrogen = ({ x, y }) => {
 CanvasNitrogen.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
+  charge: PropTypes.string,
+};
+
+CanvasNitrogen.defaultProps = {
+  charge: '',
 };
 
 export default CanvasNitrogen;

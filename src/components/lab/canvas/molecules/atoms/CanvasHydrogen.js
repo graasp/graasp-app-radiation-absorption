@@ -6,13 +6,14 @@ import {
   HYDROGEN_ATOM_SIZE,
 } from '../../../../../config/constants';
 
-const CanvasHydrogen = ({ x, y }) => {
+const CanvasHydrogen = ({ x, y, charge }) => {
   return (
     <CanvasAtom
       atomColor={HYDROGEN_ATOM_COLOR}
       atomSize={HYDROGEN_ATOM_SIZE}
       x={x}
       y={y}
+      charge={charge}
     />
   );
 };
@@ -20,6 +21,11 @@ const CanvasHydrogen = ({ x, y }) => {
 CanvasHydrogen.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
+  charge: PropTypes.string,
+};
+
+CanvasHydrogen.defaultProps = {
+  charge: '',
 };
 
 export default CanvasHydrogen;

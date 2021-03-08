@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { MAX_MOLECULES_IN_SIDEMENU_ROW } from '../../../../config/constants';
+import { MAX_MOLECULES_IN_SIDE_MENU_ROW } from '../../../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   moleculeRow: {
     display: 'flex',
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(1),
   },
 }));
 
@@ -15,7 +15,7 @@ const SideMenuMoleculeRow = ({ children }) => {
 
   // flexbox style used to distribute molecules in a row
   const justifyContent =
-    children.length === MAX_MOLECULES_IN_SIDEMENU_ROW
+    children.length === MAX_MOLECULES_IN_SIDE_MENU_ROW
       ? 'space-between'
       : 'space-around';
 

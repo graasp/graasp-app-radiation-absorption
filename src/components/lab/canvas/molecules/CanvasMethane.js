@@ -16,6 +16,8 @@ import {
   CANVAS_METHANE_THIRD_ATOM_Y_ADJUSTMENT_FACTOR,
   CANVAS_METHANE_FOURTH_ATOM_X_ADJUSTMENT_FACTOR,
   CANVAS_METHANE_FOURTH_ATOM_Y_ADJUSTMENT_FACTOR,
+  NEGATIVE_CHARGE,
+  POSITIVE_CHARGE,
 } from '../../../../config/constants';
 
 const CanvasMethane = ({ x }) => {
@@ -24,7 +26,11 @@ const CanvasMethane = ({ x }) => {
 
   return (
     <Group>
-      <CanvasCarbon x={x} y={CANVAS_MOLECULE_AREA_Y_POSITION} />
+      <CanvasCarbon
+        x={x}
+        y={CANVAS_MOLECULE_AREA_Y_POSITION}
+        charge={NEGATIVE_CHARGE}
+      />
       <CanvasHydrogen
         x={x - CANVAS_METHANE_FIRST_ATOM_X_ADJUSTMENT_FACTOR}
         y={
@@ -33,6 +39,7 @@ const CanvasMethane = ({ x }) => {
           hydrogenAtomRadius +
           CANVAS_METHANE_FIRST_ATOM_Y_ADJUSTMENT_FACTOR
         }
+        charge={POSITIVE_CHARGE}
       />
       <CanvasHydrogen
         x={x + CANVAS_METHANE_SECOND_ATOM_X_ADJUSTMENT_FACTOR}
@@ -42,6 +49,7 @@ const CanvasMethane = ({ x }) => {
           hydrogenAtomRadius +
           CANVAS_METHANE_SECOND_ATOM_Y_ADJUSTMENT_FACTOR
         }
+        charge={POSITIVE_CHARGE}
       />
       <CanvasHydrogen
         x={x + CANVAS_METHANE_THIRD_ATOM_X_ADJUSTMENT_FACTOR}
@@ -51,6 +59,7 @@ const CanvasMethane = ({ x }) => {
           hydrogenAtomRadius -
           CANVAS_METHANE_THIRD_ATOM_Y_ADJUSTMENT_FACTOR
         }
+        charge={POSITIVE_CHARGE}
       />
       <CanvasHydrogen
         x={x - CANVAS_METHANE_FOURTH_ATOM_X_ADJUSTMENT_FACTOR}
@@ -60,6 +69,7 @@ const CanvasMethane = ({ x }) => {
           hydrogenAtomRadius -
           CANVAS_METHANE_FOURTH_ATOM_Y_ADJUSTMENT_FACTOR
         }
+        charge={POSITIVE_CHARGE}
       />
     </Group>
   );
