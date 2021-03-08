@@ -20,11 +20,9 @@ import {
 } from '../../../config/constants';
 import {
   selectMoleculeInSideMenu,
-  activateMoleculeArea,
-  deactivateMoleculeArea,
-  prepareMoleculeAreaForDeletion,
-  removeMoleculeAreaDeletion,
   displayMolecule,
+  changeMoleculeAreaStatus,
+  setIsPaused,
 } from '../../../actions';
 import CanvasMoleculeAreClearButton from './CanvasMoleculeAreaClearButton';
 
@@ -59,7 +57,10 @@ const CanvasMoleculeArea = ({
     );
     if (moleculeAwaitingDeletionIndex !== -1) {
       dispatch(
-        removeMoleculeAreaDeletion({ areaId: moleculeAwaitingDeletionIndex }),
+        changeMoleculeAreaStatus({
+          areaIndex: moleculeAwaitingDeletionIndex,
+          newStatus: CANVAS_MOLECULE_AREA_FULL,
+        }),
       );
     }
 
@@ -68,7 +69,12 @@ const CanvasMoleculeArea = ({
       (molecule) => molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_ACTIVE,
     );
     if (activeMoleculeIndex !== -1) {
-      dispatch(deactivateMoleculeArea({ areaId: activeMoleculeIndex }));
+      dispatch(
+        changeMoleculeAreaStatus({
+          areaIndex: activeMoleculeIndex,
+          newStatus: CANVAS_MOLECULE_AREA_EMPTY,
+        }),
+      );
     }
 
     const currentMoleculeStatus =
@@ -78,14 +84,19 @@ const CanvasMoleculeArea = ({
     if (selectedMoleculeInSideMenu) {
       // if a molecule area is full (i.e. area contains a molecule), do nothing
       // i.e. de-select the side menu molecule, and de-activate all active areas
-      // currently, to replace a molecule in an area, the molecule must be cleared first
-      // (this and other code below uses dispatch method's callback: dispatch({action, callback})
+      // (from a user perspective, to replace a molecule in an area, the molecule must be cleared first)
+      // (this and other code below uses dispatch method's callback: dispatch(action, callback)
       if (currentMoleculeStatus === CANVAS_MOLECULE_AREA_FULL) {
         dispatch(
           selectMoleculeInSideMenu(''),
           moleculesOnCanvas.forEach((molecule, index) => {
             if (molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_ACTIVE) {
-              dispatch(deactivateMoleculeArea({ areaId: index }));
+              dispatch(
+                changeMoleculeAreaStatus({
+                  areaIndex: index,
+                  newStatus: CANVAS_MOLECULE_AREA_EMPTY,
+                }),
+              );
             }
           }),
         );
@@ -96,11 +107,16 @@ const CanvasMoleculeArea = ({
         dispatch(
           displayMolecule({
             moleculeId: selectedMoleculeInSideMenu,
-            areaId: containerIndex,
+            areaIndex: containerIndex,
           }),
           moleculesOnCanvas.forEach((molecule, index) => {
             if (molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_ACTIVE) {
-              dispatch(deactivateMoleculeArea({ areaId: index }));
+              dispatch(
+                changeMoleculeAreaStatus({
+                  areaIndex: index,
+                  newStatus: CANVAS_MOLECULE_AREA_EMPTY,
+                }),
+              );
             }
           }),
         );
@@ -109,13 +125,34 @@ const CanvasMoleculeArea = ({
     }
     // remaining cases are more straightforward and self-explanatory
     else if (currentMoleculeStatus === CANVAS_MOLECULE_AREA_EMPTY) {
-      dispatch(activateMoleculeArea({ areaId: containerIndex }));
+      dispatch(
+        changeMoleculeAreaStatus({
+          areaIndex: containerIndex,
+          newStatus: CANVAS_MOLECULE_AREA_ACTIVE,
+        }),
+      );
     } else if (currentMoleculeStatus === CANVAS_MOLECULE_AREA_ACTIVE) {
-      dispatch(deactivateMoleculeArea({ areaId: containerIndex }));
+      dispatch(
+        changeMoleculeAreaStatus({
+          areaIndex: containerIndex,
+          newStatus: CANVAS_MOLECULE_AREA_EMPTY,
+        }),
+      );
     } else if (currentMoleculeStatus === CANVAS_MOLECULE_AREA_FULL) {
-      dispatch(prepareMoleculeAreaForDeletion({ areaId: containerIndex }));
+      dispatch(
+        changeMoleculeAreaStatus({
+          areaIndex: containerIndex,
+          newStatus: CANVAS_MOLECULE_AREA_AWAITING_DELETE,
+        }),
+        dispatch(setIsPaused(true)),
+      );
     } else if (currentMoleculeStatus === CANVAS_MOLECULE_AREA_AWAITING_DELETE) {
-      dispatch(removeMoleculeAreaDeletion({ areaId: containerIndex }));
+      dispatch(
+        changeMoleculeAreaStatus({
+          areaIndex: containerIndex,
+          newStatus: CANVAS_MOLECULE_AREA_FULL,
+        }),
+      );
     }
   };
 
@@ -123,7 +160,6 @@ const CanvasMoleculeArea = ({
   let moleculeAreaRadius;
   let moleculeAreaFill;
   let moleculeAreaDash;
-
   switch (moleculeStatus) {
     case CANVAS_MOLECULE_AREA_EMPTY:
       moleculeAreaRadius = CANVAS_MOLECULE_AREA_DEFAULT_RADIUS;

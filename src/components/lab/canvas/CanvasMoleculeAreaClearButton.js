@@ -10,13 +10,16 @@ import {
   CANVAS_MOLECULE_AREA_CLEAR_BUTTON_LINE_STROKE_WIDTH,
   CANVAS_MOLECULE_AREA_CLEAR_BUTTON_LINE_LENGTH,
 } from '../../../config/constants';
-import { clearMoleculeArea } from '../../../actions';
+import { clearMoleculeArea, resetAllLines } from '../../../actions';
 
 const CanvasMoleculeAreClearButton = ({ x, y, containerIndex }) => {
   const dispatch = useDispatch();
 
   const handleClear = () => {
-    dispatch(clearMoleculeArea({ areaId: containerIndex }));
+    dispatch(
+      clearMoleculeArea({ areaIndex: containerIndex }),
+      dispatch(resetAllLines()),
+    );
   };
 
   return (

@@ -9,14 +9,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   selectMoleculeInSideMenu,
   displayMolecule,
-  activateMoleculeArea,
-  deactivateMoleculeArea,
-  removeMoleculeAreaDeletion,
+  changeMoleculeAreaStatus,
 } from '../../../../actions';
 import {
   CANVAS_MOLECULE_AREA_ACTIVE,
   CANVAS_MOLECULE_AREA_AWAITING_DELETE,
   CANVAS_MOLECULE_AREA_EMPTY,
+  CANVAS_MOLECULE_AREA_FULL,
 } from '../../../../config/constants';
 
 const useStyles = makeStyles(() => ({
@@ -43,7 +42,10 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
     );
     if (moleculeAwaitingDeletionIndex !== -1) {
       dispatch(
-        removeMoleculeAreaDeletion({ areaId: moleculeAwaitingDeletionIndex }),
+        changeMoleculeAreaStatus({
+          areaIndex: moleculeAwaitingDeletionIndex,
+          newStatus: CANVAS_MOLECULE_AREA_FULL,
+        }),
       );
     }
 
@@ -56,7 +58,7 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
       dispatch(
         displayMolecule({
           moleculeId,
-          areaId: activeMoleculeIndex,
+          areaIndex: activeMoleculeIndex,
         }),
       );
     }
@@ -71,7 +73,12 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
         selectMoleculeInSideMenu(moleculeId),
         moleculesOnCanvas.forEach((molecule, index) => {
           if (molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_EMPTY) {
-            dispatch(activateMoleculeArea({ areaId: index }));
+            dispatch(
+              changeMoleculeAreaStatus({
+                areaIndex: index,
+                newStatus: CANVAS_MOLECULE_AREA_ACTIVE,
+              }),
+            );
           }
         }),
       );
@@ -84,7 +91,12 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
         selectMoleculeInSideMenu(''),
         moleculesOnCanvas.forEach((molecule, index) => {
           if (molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_ACTIVE) {
-            dispatch(deactivateMoleculeArea({ areaId: index }));
+            dispatch(
+              changeMoleculeAreaStatus({
+                areaIndex: index,
+                newStatus: CANVAS_MOLECULE_AREA_EMPTY,
+              }),
+            );
           }
         }),
       );

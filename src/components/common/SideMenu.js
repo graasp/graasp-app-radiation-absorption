@@ -14,6 +14,7 @@ import { DRAWER_WIDTH, DEFAULT_THEME_DIRECTION } from '../../config/constants';
 import GreenhouseGases from '../lab/GreenhouseGases';
 import NonGreenhouseGases from '../lab/NonGreenhouseGases';
 import SpectrumToggle from './SpectrumToggle';
+import AnimationControls from './AnimationControls';
 
 const styles = (theme) => ({
   drawerPaper: {
@@ -91,6 +92,7 @@ class SideMenu extends React.Component {
         >
           {this.renderDrawerHeader()}
           <div className={classes.contentWrapper}>
+            <AnimationControls />
             <SpectrumToggle />
             <Divider className={classes.sideMenuDivider} />
             <GreenhouseGases />

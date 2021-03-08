@@ -10,7 +10,7 @@ class StudentMode extends Component {
   static propTypes = {
     appInstanceId: PropTypes.string,
     view: PropTypes.string,
-    activity: PropTypes.number,
+    activity: PropTypes.bool,
     dispatchGetAppInstanceResources: PropTypes.func.isRequired,
     dispatchGetActions: PropTypes.func.isRequired,
     userId: PropTypes.string,

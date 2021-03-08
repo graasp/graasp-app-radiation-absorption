@@ -8,7 +8,7 @@ import {
   INFRARED_SPECTRUM,
   VISIBLE_LIGHT_SPECTRUM,
 } from '../../config/constants';
-import { toggleSpectrum } from '../../actions';
+import { resetAllLines, toggleSpectrum } from '../../actions';
 
 const useStyles = makeStyles(() => ({
   switchWithTwoLabelsContainer: {
@@ -24,9 +24,12 @@ const SpectrumToggle = () => {
 
   const handleToggle = () => {
     if (spectrum === VISIBLE_LIGHT_SPECTRUM) {
-      dispatch(toggleSpectrum(INFRARED_SPECTRUM));
+      dispatch(resetAllLines(), dispatch(toggleSpectrum(INFRARED_SPECTRUM)));
     } else {
-      dispatch(toggleSpectrum(VISIBLE_LIGHT_SPECTRUM));
+      dispatch(
+        resetAllLines(),
+        dispatch(toggleSpectrum(VISIBLE_LIGHT_SPECTRUM)),
+      );
     }
   };
 

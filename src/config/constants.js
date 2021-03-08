@@ -77,3 +77,17 @@ export const CANVAS_MOLECULE_AREA_AWAITING_DELETE = 'awaiting-delete';
 
 export const INFRARED_SPECTRUM = 'infrared';
 export const VISIBLE_LIGHT_SPECTRUM = 'visible-light';
+
+export const EMITTED_LINE_STROKE_COLOR = 'black';
+export const EMITTED_LINE_STROKE_WIDTH = 1.5;
+export const EMITTED_LINE_TENSION = 0.3;
+export const EMITTED_LINE_INTERVAL_TIME = 50;
+export const EMITTED_LINE_AMPLITUDE = 15;
+export const EMITTED_LINE_STEP = 10;
+// this choice of constant comes from app #2 (thermal radiation)
+// it is used so that the infrared wavelength in this app is the same as that in app #2
+export const INFRARED_OSCILLATION_CONSTANT_INCREMENT = 289 / 1500;
+export const VISIBLE_LIGHT_OSCILLATION_CONSTANT_INCREMENT = 1400 / 1500;
+
+export const INITIAL_LINE_POINTS = [0, 0];
+export const INITIAL_OSCILLATION_CONSTANT = 0;

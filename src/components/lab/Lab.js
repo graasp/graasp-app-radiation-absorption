@@ -10,6 +10,7 @@ import {
   CANVAS_NUMBER_OF_MOLECULES,
   CANVAS_MOLECULE_AREA_DEFAULT_RADIUS,
 } from '../../config/constants';
+import EmittedLines from './EmittedLines';
 
 const styles = () => ({
   container: {
@@ -112,6 +113,7 @@ class Lab extends Component {
             >
               <Provider store={store}>
                 <Layer>
+                  <EmittedLines xPoints={moleculeContainerCenterPoints} />
                   {moleculeContainerCenterPoints.map((centerPoint, index) => (
                     <CanvasMoleculeContainer
                       x={centerPoint}

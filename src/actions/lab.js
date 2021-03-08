@@ -2,11 +2,12 @@ import {
   SELECT_MOLECULE_SIDE_MENU,
   TOGGLE_SPECTRUM,
   DISPLAY_MOLECULE,
-  ACTIVATE_MOLECULE_AREA,
-  DEACTIVATE_MOLECULE_AREA,
-  PREPARE_MOLECULE_AREA_FOR_DELETION,
-  REMOVE_MOLECULE_AREA_DELETION,
+  SET_IS_PAUSED,
+  UPDATE_LINE_POINTS,
+  RESET_ALL_LINES,
+  CHANGE_MOLECULE_AREA_STATUS,
   CLEAR_MOLECULE_AREA,
+  RESET_ALL_MOLECULE_AREAS,
 } from '../types';
 
 const selectMoleculeInSideMenu = (molecule) => (dispatch) =>
@@ -21,21 +22,15 @@ const toggleSpectrum = (payload) => (dispatch) =>
     payload,
   });
 
-const activateMoleculeArea = (payload) => (dispatch) =>
-  dispatch({ type: ACTIVATE_MOLECULE_AREA, payload });
-
-const deactivateMoleculeArea = (payload) => (dispatch) =>
-  dispatch({ type: DEACTIVATE_MOLECULE_AREA, payload });
-
-const prepareMoleculeAreaForDeletion = (payload) => (dispatch) =>
-  dispatch({ type: PREPARE_MOLECULE_AREA_FOR_DELETION, payload });
-
-const removeMoleculeAreaDeletion = (payload) => (dispatch) =>
-  dispatch({ type: REMOVE_MOLECULE_AREA_DELETION, payload });
-
 const displayMolecule = (payload) => (dispatch) =>
   dispatch({
     type: DISPLAY_MOLECULE,
+    payload,
+  });
+
+const changeMoleculeAreaStatus = (payload) => (dispatch) =>
+  dispatch({
+    type: CHANGE_MOLECULE_AREA_STATUS,
     payload,
   });
 
@@ -45,13 +40,35 @@ const clearMoleculeArea = (payload) => (dispatch) =>
     payload,
   });
 
+const setIsPaused = (payload) => (dispatch) =>
+  dispatch({
+    type: SET_IS_PAUSED,
+    payload,
+  });
+
+const updateLinePoints = (payload) => (dispatch) =>
+  dispatch({
+    type: UPDATE_LINE_POINTS,
+    payload,
+  });
+
+const resetAllLines = (payload) => (dispatch) =>
+  dispatch({
+    type: RESET_ALL_LINES,
+    payload,
+  });
+
+const resetAllMoleculeAreas = () => (dispatch) =>
+  dispatch({ type: RESET_ALL_MOLECULE_AREAS });
+
 export {
   selectMoleculeInSideMenu,
   toggleSpectrum,
-  activateMoleculeArea,
-  deactivateMoleculeArea,
-  prepareMoleculeAreaForDeletion,
-  removeMoleculeAreaDeletion,
   displayMolecule,
+  changeMoleculeAreaStatus,
   clearMoleculeArea,
+  setIsPaused,
+  updateLinePoints,
+  resetAllLines,
+  resetAllMoleculeAreas,
 };
