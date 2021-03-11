@@ -5,8 +5,8 @@ import CanvasOxygen from './atoms/CanvasOxygen';
 import CanvasHydrogen from './atoms/CanvasHydrogen';
 import {
   CANVAS_ATOM_DIMENSIONS,
-  OXYGEN_ATOM_SIZE,
-  HYDROGEN_ATOM_SIZE,
+  OXYGEN,
+  HYDROGEN,
   CANVAS_MOLECULE_AREA_Y_POSITION,
   CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
   CANVAS_WATER_ANGLED_ATOMS_Y_ADJUSTMENT_FACTOR,
@@ -15,8 +15,8 @@ import {
 } from '../../../../config/constants';
 
 const CanvasWater = ({ x }) => {
-  const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN_ATOM_SIZE];
-  const hydrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[HYDROGEN_ATOM_SIZE];
+  const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
+  const hydrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[HYDROGEN.size];
 
   return (
     <Group>

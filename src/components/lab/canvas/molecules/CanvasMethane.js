@@ -5,8 +5,8 @@ import CanvasCarbon from './atoms/CanvasCarbon';
 import CanvasHydrogen from './atoms/CanvasHydrogen';
 import {
   CANVAS_ATOM_DIMENSIONS,
-  HYDROGEN_ATOM_SIZE,
-  CARBON_ATOM_SIZE,
+  HYDROGEN,
+  CARBON,
   CANVAS_MOLECULE_AREA_Y_POSITION,
   CANVAS_METHANE_FIRST_ATOM_X_ADJUSTMENT_FACTOR,
   CANVAS_METHANE_FIRST_ATOM_Y_ADJUSTMENT_FACTOR,
@@ -21,8 +21,8 @@ import {
 } from '../../../../config/constants';
 
 const CanvasMethane = ({ x }) => {
-  const hydrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[HYDROGEN_ATOM_SIZE];
-  const carbonAtomRadius = CANVAS_ATOM_DIMENSIONS[CARBON_ATOM_SIZE];
+  const hydrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[HYDROGEN.size];
+  const carbonAtomRadius = CANVAS_ATOM_DIMENSIONS[CARBON.size];
 
   return (
     <Group>

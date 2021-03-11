@@ -4,7 +4,7 @@ import { Group } from 'react-konva';
 import CanvasOxygen from './atoms/CanvasOxygen';
 import {
   CANVAS_ATOM_DIMENSIONS,
-  OXYGEN_ATOM_SIZE,
+  OXYGEN,
   CANVAS_MOLECULE_AREA_Y_POSITION,
   CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
   CANVAS_OZONE_ANGLED_ATOMS_Y_ADJUSTMENT_FACTOR,
@@ -13,7 +13,7 @@ import {
 } from '../../../../config/constants';
 
 const CanvasOzone = ({ x }) => {
-  const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN_ATOM_SIZE];
+  const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
 
   return (
     <Group>

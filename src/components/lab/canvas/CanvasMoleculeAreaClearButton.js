@@ -12,7 +12,7 @@ import {
 } from '../../../config/constants';
 import { clearMoleculeArea, resetAllLines } from '../../../actions';
 
-const CanvasMoleculeAreClearButton = ({ x, y, containerIndex }) => {
+const CanvasMoleculeAreaClearButton = ({ x, y, containerIndex }) => {
   const dispatch = useDispatch();
 
   const handleClear = () => {
@@ -82,10 +82,10 @@ const CanvasMoleculeAreClearButton = ({ x, y, containerIndex }) => {
   );
 };
 
-CanvasMoleculeAreClearButton.propTypes = {
+CanvasMoleculeAreaClearButton.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   containerIndex: PropTypes.number.isRequired,
 };
 
-export default CanvasMoleculeAreClearButton;
+export default CanvasMoleculeAreaClearButton;

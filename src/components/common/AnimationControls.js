@@ -11,16 +11,12 @@ import { green, yellow, orange } from '@material-ui/core/colors';
 import {
   setIsPaused,
   resetAllLines,
-  changeMoleculeAreaStatus,
+  setMoleculeAreaStatus,
   resetAllMoleculeAreas,
   toggleShowAtomsCharges,
   toggleSpectrum,
 } from '../../actions';
-import {
-  CANVAS_MOLECULE_AREA_AWAITING_DELETE,
-  CANVAS_MOLECULE_AREA_FULL,
-  INFRARED_SPECTRUM,
-} from '../../config/constants';
+import { CANVAS_MOLECULE_AREA_STATE, SPECTRUMS } from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
   buttonContainer: {
@@ -51,13 +47,14 @@ const AnimationControls = () => {
     // this happens when: (1) animation is playing, (2) user clicks on a molecule (activating it for deletion), (3) user clicks back on play button
     const moleculeAwaitingDeletionIndex = moleculesOnCanvas.findIndex(
       (molecule) =>
-        molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_AWAITING_DELETE,
+        molecule.moleculeAreaStatus ===
+        CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE,
     );
     if (moleculeAwaitingDeletionIndex !== -1) {
       dispatch(
-        changeMoleculeAreaStatus({
+        setMoleculeAreaStatus({
           areaIndex: moleculeAwaitingDeletionIndex,
-          newStatus: CANVAS_MOLECULE_AREA_FULL,
+          newStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
         }),
         dispatch(setIsPaused(false)),
       );
@@ -75,7 +72,7 @@ const AnimationControls = () => {
     dispatch(resetAllLines());
     dispatch(setIsPaused(true));
     dispatch(toggleShowAtomsCharges(false));
-    dispatch(toggleSpectrum(INFRARED_SPECTRUM));
+    dispatch(toggleSpectrum(SPECTRUMS.INFRARED));
   };
 
   return (

@@ -4,12 +4,12 @@ import { Group } from 'react-konva';
 import CanvasNitrogen from './atoms/CanvasNitrogen';
 import {
   CANVAS_ATOM_DIMENSIONS,
-  NITROGEN_ATOM_SIZE,
+  NITROGEN,
   CANVAS_MOLECULE_AREA_Y_POSITION,
 } from '../../../../config/constants';
 
 const CanvasDinitrogen = ({ x }) => {
-  const nitrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[NITROGEN_ATOM_SIZE];
+  const nitrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[NITROGEN.size];
 
   return (
     <Group>

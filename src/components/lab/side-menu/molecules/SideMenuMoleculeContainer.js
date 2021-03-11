@@ -9,14 +9,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   selectMoleculeInSideMenu,
   displayMolecule,
-  changeMoleculeAreaStatus,
+  setMoleculeAreaStatus,
 } from '../../../../actions';
-import {
-  CANVAS_MOLECULE_AREA_ACTIVE,
-  CANVAS_MOLECULE_AREA_AWAITING_DELETE,
-  CANVAS_MOLECULE_AREA_EMPTY,
-  CANVAS_MOLECULE_AREA_FULL,
-} from '../../../../config/constants';
+import { CANVAS_MOLECULE_AREA_STATE } from '../../../../config/constants';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -38,13 +33,14 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
     // if some molecule has an active deletion area, clear that area
     const moleculeAwaitingDeletionIndex = moleculesOnCanvas.findIndex(
       (molecule) =>
-        molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_AWAITING_DELETE,
+        molecule.moleculeAreaStatus ===
+        CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE,
     );
     if (moleculeAwaitingDeletionIndex !== -1) {
       dispatch(
-        changeMoleculeAreaStatus({
+        setMoleculeAreaStatus({
           areaIndex: moleculeAwaitingDeletionIndex,
-          newStatus: CANVAS_MOLECULE_AREA_FULL,
+          newStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
         }),
       );
     }
@@ -52,7 +48,8 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
     // if some molecule has an active selection area, and a side menu molecule is clicked, display the molecule in that area
     // this happens in cases where a canvas area is activated, *then* a side menu molecule is clicked
     const activeMoleculeIndex = moleculesOnCanvas.findIndex(
-      (molecule) => molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_ACTIVE,
+      (molecule) =>
+        molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_STATE.ACTIVE,
     );
     if (activeMoleculeIndex !== -1 && !selectedMoleculeInSideMenu) {
       dispatch(
@@ -72,11 +69,13 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
       dispatch(
         selectMoleculeInSideMenu(moleculeId),
         moleculesOnCanvas.forEach((molecule, index) => {
-          if (molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_EMPTY) {
+          if (
+            molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_STATE.EMPTY
+          ) {
             dispatch(
-              changeMoleculeAreaStatus({
+              setMoleculeAreaStatus({
                 areaIndex: index,
-                newStatus: CANVAS_MOLECULE_AREA_ACTIVE,
+                newStatus: CANVAS_MOLECULE_AREA_STATE.ACTIVE,
               }),
             );
           }
@@ -88,13 +87,15 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
     // in this case, empty side menu selection, and de-activate all active canvas molecule areas
     else {
       dispatch(
-        selectMoleculeInSideMenu(''),
+        selectMoleculeInSideMenu(null),
         moleculesOnCanvas.forEach((molecule, index) => {
-          if (molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_ACTIVE) {
+          if (
+            molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_STATE.ACTIVE
+          ) {
             dispatch(
-              changeMoleculeAreaStatus({
+              setMoleculeAreaStatus({
                 areaIndex: index,
-                newStatus: CANVAS_MOLECULE_AREA_EMPTY,
+                newStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
               }),
             );
           }

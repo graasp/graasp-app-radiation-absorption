@@ -29,10 +29,7 @@ const styles = (theme) => ({
     justifyContent: 'flex-start',
   },
   contentWrapper: {
-    marginBottom: theme.spacing(2),
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    marginTop: theme.spacing(1),
+    margin: theme.spacing(1, 2, 2),
   },
   sideMenuDivider: {
     marginTop: theme.spacing(1),

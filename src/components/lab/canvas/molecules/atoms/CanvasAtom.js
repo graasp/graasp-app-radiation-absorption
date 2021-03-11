@@ -6,20 +6,21 @@ import {
   CANVAS_ATOM_DIMENSIONS,
   POSITIVE_CHARGE,
   NEGATIVE_CHARGE,
-  DARK_ATOM_CHARGE_COLOR,
-  STANDARD_CHARGE_COLOR,
 } from '../../../../../config/constants';
 import CanvasAtomNegativeCharge from './charges/CanvasAtomNegativeCharge';
 import CanvasAtomPositiveCharge from './charges/CanvasAtomPositiveCharge';
 
-const CanvasAtom = ({ atomColor, atomSize, x, y, charge }) => {
+const CanvasAtom = ({
+  atomColor,
+  atomSize,
+  x,
+  y,
+  charge,
+  chargeSymbolColor,
+}) => {
   const showAtomsCharges = useSelector(({ lab }) => lab.showAtomsCharges);
 
   const atomRadius = CANVAS_ATOM_DIMENSIONS[atomSize];
-
-  // constants for styling charge
-  const chargeSymbolColor =
-    atomColor === 'black' ? DARK_ATOM_CHARGE_COLOR : STANDARD_CHARGE_COLOR;
 
   // used in return statement below; default is null (no charge displayed)
   let chargeToDisplay = null;
@@ -44,6 +45,7 @@ const CanvasAtom = ({ atomColor, atomSize, x, y, charge }) => {
 CanvasAtom.propTypes = {
   atomColor: PropTypes.string.isRequired,
   atomSize: PropTypes.string.isRequired,
+  chargeSymbolColor: PropTypes.string.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   charge: PropTypes.string,

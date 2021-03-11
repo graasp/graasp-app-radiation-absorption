@@ -26,96 +26,45 @@ const CanvasMoleculeContainer = ({
   moleculeAreaStatus,
   containerIndex,
 }) => {
+  let moleculeComponent = null;
   switch (moleculeToDisplay) {
     case WATER_MOLECULE_ID:
-      return (
-        <CanvasMoleculeArea
-          x={x}
-          moleculeStatus={moleculeAreaStatus}
-          containerIndex={containerIndex}
-        >
-          <CanvasWater x={x} />
-        </CanvasMoleculeArea>
-      );
+      moleculeComponent = <CanvasWater x={x} />;
+      break;
     case CARBON_DIOXIDE_MOLECULE_ID:
-      return (
-        <CanvasMoleculeArea
-          x={x}
-          moleculeStatus={moleculeAreaStatus}
-          containerIndex={containerIndex}
-        >
-          <CanvasCarbonDioxide x={x} />
-        </CanvasMoleculeArea>
-      );
+      moleculeComponent = <CanvasCarbonDioxide x={x} />;
+      break;
     case OZONE_MOLECULE_ID:
-      return (
-        <CanvasMoleculeArea
-          x={x}
-          moleculeStatus={moleculeAreaStatus}
-          containerIndex={containerIndex}
-        >
-          <CanvasOzone x={x} />
-        </CanvasMoleculeArea>
-      );
+      moleculeComponent = <CanvasOzone x={x} />;
+      break;
     case NITROUS_OXIDE_MOLECULE_ID:
-      return (
-        <CanvasMoleculeArea
-          x={x}
-          moleculeStatus={moleculeAreaStatus}
-          containerIndex={containerIndex}
-        >
-          <CanvasNitrousOxide x={x} />
-        </CanvasMoleculeArea>
-      );
+      moleculeComponent = <CanvasNitrousOxide x={x} />;
+      break;
     case METHANE_MOLECULE_ID:
-      return (
-        <CanvasMoleculeArea
-          x={x}
-          moleculeStatus={moleculeAreaStatus}
-          containerIndex={containerIndex}
-        >
-          <CanvasMethane x={x} />
-        </CanvasMoleculeArea>
-      );
+      moleculeComponent = <CanvasMethane x={x} />;
+      break;
     case DINITROGEN_MOLECULE_ID:
-      return (
-        <CanvasMoleculeArea
-          x={x}
-          moleculeStatus={moleculeAreaStatus}
-          containerIndex={containerIndex}
-        >
-          <CanvasDinitrogen x={x} />
-        </CanvasMoleculeArea>
-      );
+      moleculeComponent = <CanvasDinitrogen x={x} />;
+      break;
     case DIOXYGEN_MOLECULE_ID:
-      return (
-        <CanvasMoleculeArea
-          x={x}
-          moleculeStatus={moleculeAreaStatus}
-          containerIndex={containerIndex}
-        >
-          <CanvasDioxygen x={x} />
-        </CanvasMoleculeArea>
-      );
+      moleculeComponent = <CanvasDioxygen x={x} />;
+      break;
     case ARGON_MOLECULE_ID:
-      return (
-        <CanvasMoleculeArea
-          x={x}
-          moleculeStatus={moleculeAreaStatus}
-          containerIndex={containerIndex}
-        >
-          <CanvasArgonMolecule x={x} />
-        </CanvasMoleculeArea>
-      );
+      moleculeComponent = <CanvasArgonMolecule x={x} />;
+      break;
     default:
-      return (
-        <CanvasMoleculeArea
-          x={x}
-          moleculeStatus={moleculeAreaStatus}
-          containerIndex={containerIndex}
-        />
-      );
+      moleculeComponent = null;
   }
+
+  return (
+    <CanvasMoleculeArea
+      x={x}
+      moleculeStatus={moleculeAreaStatus}
+      containerIndex={containerIndex}
+    >
+      {moleculeComponent}
+    </CanvasMoleculeArea>
+  );
 };
 
 CanvasMoleculeContainer.propTypes = {

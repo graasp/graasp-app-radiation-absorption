@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SideMenuAtom from './SideMenuAtom';
-import {
-  HYDROGEN_ATOM_COLOR,
-  HYDROGEN_ATOM_SIZE,
-} from '../../../../../config/constants';
+import { HYDROGEN } from '../../../../../config/constants';
 
 const SideMenuHydrogen = ({ customPositioningStyles, charge }) => {
   return (
     <SideMenuAtom
-      atomColor={HYDROGEN_ATOM_COLOR}
-      atomSize={HYDROGEN_ATOM_SIZE}
+      atomColor={HYDROGEN.atomColor}
+      atomSize={HYDROGEN.size}
+      chargeSymbolColor={HYDROGEN.chargeSymbolColor}
       customPositioningStyles={customPositioningStyles}
       charge={charge}
     />

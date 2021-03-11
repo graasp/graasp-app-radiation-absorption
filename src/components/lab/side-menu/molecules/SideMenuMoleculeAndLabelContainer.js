@@ -8,21 +8,20 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    padding: theme.spacing(1),
+    padding: theme.spacing(1.5),
     border: '0.5px dashed white',
   },
   selectedMolecule: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    padding: theme.spacing(1),
+    padding: theme.spacing(1.5),
     borderRadius: '5%',
     border: '0.5px dashed darkgrey',
     backgroundColor: 'rgba(0, 0, 0, 0.05)',
   },
   typography: {
     marginTop: '0.25em',
-    textAlign: 'center',
   },
 }));
 
@@ -41,7 +40,11 @@ const SideMenuMoleculeAndLabelContainer = ({
     >
       {molecule}
       <div>
-        <Typography variant="body2" className={classes.typography}>
+        <Typography
+          variant="body2"
+          className={classes.typography}
+          align="center"
+        >
           {moleculeLabel}
         </Typography>
       </div>

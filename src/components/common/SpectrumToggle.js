@@ -4,10 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
-import {
-  INFRARED_SPECTRUM,
-  VISIBLE_LIGHT_SPECTRUM,
-} from '../../config/constants';
+import { SPECTRUMS } from '../../config/constants';
 import { resetAllLines, toggleSpectrum } from '../../actions';
 
 const useStyles = makeStyles(() => ({
@@ -23,12 +20,12 @@ const SpectrumToggle = () => {
   const dispatch = useDispatch();
 
   const handleToggle = () => {
-    if (spectrum === VISIBLE_LIGHT_SPECTRUM) {
-      dispatch(resetAllLines(), dispatch(toggleSpectrum(INFRARED_SPECTRUM)));
+    if (spectrum === SPECTRUMS.VISIBLE_LIGHT) {
+      dispatch(resetAllLines(), dispatch(toggleSpectrum(SPECTRUMS.INFRARED)));
     } else {
       dispatch(
         resetAllLines(),
-        dispatch(toggleSpectrum(VISIBLE_LIGHT_SPECTRUM)),
+        dispatch(toggleSpectrum(SPECTRUMS.VISIBLE_LIGHT)),
       );
     }
   };
@@ -44,7 +41,7 @@ const SpectrumToggle = () => {
       <Grid item>{t('Infrared')}</Grid>
       <Grid item>
         <Switch
-          checked={spectrum === VISIBLE_LIGHT_SPECTRUM}
+          checked={spectrum === SPECTRUMS.VISIBLE_LIGHT}
           onChange={handleToggle}
           value={spectrum}
           color="primary"

@@ -5,16 +5,16 @@ import CanvasNitrogen from './atoms/CanvasNitrogen';
 import CanvasOxygen from './atoms/CanvasOxygen';
 import {
   CANVAS_ATOM_DIMENSIONS,
-  OXYGEN_ATOM_SIZE,
-  NITROGEN_ATOM_SIZE,
+  OXYGEN,
+  NITROGEN,
   CANVAS_MOLECULE_AREA_Y_POSITION,
   NEGATIVE_CHARGE,
   POSITIVE_CHARGE,
 } from '../../../../config/constants';
 
 const CanvasNitrousOxide = ({ x }) => {
-  const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN_ATOM_SIZE];
-  const nitrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[NITROGEN_ATOM_SIZE];
+  const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
+  const nitrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[NITROGEN.size];
 
   return (
     <Group>

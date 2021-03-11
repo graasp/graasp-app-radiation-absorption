@@ -5,29 +5,28 @@ import {
   SET_IS_PAUSED,
   UPDATE_LINE_POINTS,
   RESET_ALL_LINES,
-  CHANGE_MOLECULE_AREA_STATUS,
+  SET_MOLECULE_AREA_STATUS,
   CLEAR_MOLECULE_AREA,
   RESET_ALL_MOLECULE_AREAS,
   TOGGLE_SHOW_ATOMS_CHARGES,
 } from '../types';
 import {
-  CANVAS_MOLECULE_AREA_EMPTY,
-  CANVAS_MOLECULE_AREA_FULL,
-  INFRARED_SPECTRUM,
+  CANVAS_MOLECULE_AREA_STATE,
+  SPECTRUMS,
   INITIAL_LINE_POINTS,
   INITIAL_OSCILLATION_CONSTANT,
 } from '../config/constants';
 
 const INITIAL_STATE = {
   isPaused: true,
-  selectedMoleculeInSideMenu: '',
-  spectrum: INFRARED_SPECTRUM,
+  selectedMoleculeInSideMenu: null,
+  spectrum: SPECTRUMS.INFRARED,
   showAtomsCharges: false,
   moleculesOnCanvas: [
-    { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_EMPTY },
-    { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_EMPTY },
-    { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_EMPTY },
-    { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_EMPTY },
+    { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY },
+    { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY },
+    { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY },
+    { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY },
   ],
   emittedLines: [
     {
@@ -68,7 +67,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         ...state,
         showAtomsCharges: payload,
       };
-    case CHANGE_MOLECULE_AREA_STATUS:
+    case SET_MOLECULE_AREA_STATUS:
       return {
         ...state,
         moleculesOnCanvas: [
@@ -88,7 +87,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
           {
             ...state.moleculesOnCanvas[payload.areaIndex],
             molecule: payload.moleculeId,
-            moleculeAreaStatus: CANVAS_MOLECULE_AREA_FULL,
+            moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
           },
           ...state.moleculesOnCanvas.slice(payload.areaIndex + 1),
         ],
@@ -101,7 +100,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
           {
             ...state.moleculesOnCanvas[payload.areaIndex],
             molecule: '',
-            moleculeAreaStatus: CANVAS_MOLECULE_AREA_EMPTY,
+            moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
           },
           ...state.moleculesOnCanvas.slice(payload.areaIndex + 1),
         ],
@@ -144,10 +143,22 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         moleculesOnCanvas: [
-          { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_EMPTY },
-          { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_EMPTY },
-          { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_EMPTY },
-          { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_EMPTY },
+          {
+            molecule: '',
+            moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
+          },
+          {
+            molecule: '',
+            moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
+          },
+          {
+            molecule: '',
+            moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
+          },
+          {
+            molecule: '',
+            moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
+          },
         ],
       };
     default:

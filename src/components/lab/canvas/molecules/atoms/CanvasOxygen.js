@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CanvasAtom from './CanvasAtom';
-import {
-  OXYGEN_ATOM_COLOR,
-  OXYGEN_ATOM_SIZE,
-} from '../../../../../config/constants';
+import { OXYGEN } from '../../../../../config/constants';
 
 const CanvasOxygen = ({ x, y, charge }) => {
   return (
     <CanvasAtom
-      atomColor={OXYGEN_ATOM_COLOR}
-      atomSize={OXYGEN_ATOM_SIZE}
+      atomColor={OXYGEN.atomColor}
+      atomSize={OXYGEN.size}
+      chargeSymbolColor={OXYGEN.chargeSymbolColor}
       x={x}
       y={y}
       charge={charge}

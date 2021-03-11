@@ -5,7 +5,7 @@ import {
   SET_IS_PAUSED,
   UPDATE_LINE_POINTS,
   RESET_ALL_LINES,
-  CHANGE_MOLECULE_AREA_STATUS,
+  SET_MOLECULE_AREA_STATUS,
   CLEAR_MOLECULE_AREA,
   RESET_ALL_MOLECULE_AREAS,
   TOGGLE_SHOW_ATOMS_CHARGES,
@@ -29,9 +29,9 @@ const displayMolecule = (payload) => (dispatch) =>
     payload,
   });
 
-const changeMoleculeAreaStatus = (payload) => (dispatch) =>
+const setMoleculeAreaStatus = (payload) => (dispatch) =>
   dispatch({
-    type: CHANGE_MOLECULE_AREA_STATUS,
+    type: SET_MOLECULE_AREA_STATUS,
     payload,
   });
 
@@ -69,7 +69,7 @@ export {
   selectMoleculeInSideMenu,
   toggleSpectrum,
   displayMolecule,
-  changeMoleculeAreaStatus,
+  setMoleculeAreaStatus,
   clearMoleculeArea,
   setIsPaused,
   updateLinePoints,

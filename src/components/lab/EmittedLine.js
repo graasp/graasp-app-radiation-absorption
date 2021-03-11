@@ -11,7 +11,7 @@ import {
   EMITTED_LINE_STEP,
   INFRARED_OSCILLATION_CONSTANT_INCREMENT,
   VISIBLE_LIGHT_OSCILLATION_CONSTANT_INCREMENT,
-  INFRARED_SPECTRUM,
+  SPECTRUMS,
 } from '../../config/constants';
 import { updateLinePoints } from '../../actions';
 
@@ -72,7 +72,7 @@ class EmittedLine extends Component {
         points: [x, 0, x, 0, ...newPoints],
         oscillationConstant:
           currentLineOscillationConstant +
-          (spectrum === INFRARED_SPECTRUM
+          (spectrum === SPECTRUMS.INFRARED
             ? INFRARED_OSCILLATION_CONSTANT_INCREMENT
             : VISIBLE_LIGHT_OSCILLATION_CONSTANT_INCREMENT),
         lineIndex,
