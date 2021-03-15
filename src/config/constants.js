@@ -111,6 +111,23 @@ export const SPECTRUMS = {
   VISIBLE_LIGHT: 'visible-light',
 };
 
+/* ------CONSTANTS USED TO DETERMINE WHEN EMITTED LINES GET 'ABSORBED'------ */
+// note that *only these greenhouse gases* absorb *infrared* radiation
+// the idea is that emitted lines are sliced once a line's y-point passes a molecule's lowpoint defined here
+// e.g. for CO2 the lowest point is: where the middle (carbon) atom is centered, + one radius of that carbon atom, + one radius of the bottom oxygen atom
+export const CARBON_DIOXIDE_MOLECULE_LOWEST_Y =
+  CANVAS_MOLECULE_AREA_Y_POSITION +
+  CANVAS_ATOM_DIMENSIONS[CARBON.size] +
+  CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
+export const METHANE_MOLECULE_LOWEST_Y = CANVAS_MOLECULE_AREA_Y_POSITION;
+export const NITROUS_OXIDE_MOLECULE_LOWEST_Y =
+  CANVAS_MOLECULE_AREA_Y_POSITION +
+  CANVAS_ATOM_DIMENSIONS[NITROGEN.size] +
+  CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
+export const OZONE_MOLECULE_LOWEST_Y =
+  CANVAS_MOLECULE_AREA_Y_POSITION + 2 * CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
+export const WATER_MOLECULE_LOWEST_Y = CANVAS_MOLECULE_AREA_Y_POSITION;
+
 /* ------CONSTANTS TO STYLE RADIATION LINES------ */
 export const EMITTED_LINE_STROKE_COLOR = 'black';
 export const EMITTED_LINE_STROKE_WIDTH = 1.5;
