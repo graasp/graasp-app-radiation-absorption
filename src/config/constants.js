@@ -50,9 +50,7 @@ export const SIDE_MENU_SMALL_ATOM_CHARGE_FONT_SIZE = 10;
 export const SIDE_MENU_STANDARD_CHARGE_FONT_SIZE = 12;
 // constants used to adjust select atoms within a molecule to achieve required styling
 export const CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR = 20;
-export const CANVAS_OZONE_ANGLED_ATOMS_Y_ADJUSTMENT_FACTOR = 5;
 export const CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR = 20;
-export const CANVAS_WATER_ANGLED_ATOMS_Y_ADJUSTMENT_FACTOR = 6;
 export const CANVAS_METHANE_FIRST_ATOM_X_ADJUSTMENT_FACTOR = 25;
 export const CANVAS_METHANE_FIRST_ATOM_Y_ADJUSTMENT_FACTOR = 12;
 export const CANVAS_METHANE_SECOND_ATOM_X_ADJUSTMENT_FACTOR = 25;
@@ -68,6 +66,11 @@ export const CANVAS_NUMBER_OF_MOLECULES = 4;
 export const CANVAS_MOLECULE_AREA_DEFAULT_RADIUS = 90;
 export const CANVAS_MOLECULE_AREA_DEFAULT_DASH = [];
 export const CANVAS_MOLECULE_AREA_Y_POSITION = 150;
+// distance between vertical atoms is created in order for the bonds between atoms to show
+export const CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS = 5;
+export const CANVAS_BOND_COLOR = 'black';
+export const DOUBLE_BOND_X_OFFSET = 3;
+export const TRIPLE_BOND_X_OFFSET = 5;
 export const CANVAS_MOLECULE_AREA_STROKE = 'darkgrey';
 export const CANVAS_MOLECULE_AREA_EMPTY_FILL = 'white';
 export const CANVAS_MOLECULE_AREA_ACTIVE_FILL = '#E8E8E8';
@@ -133,7 +136,7 @@ export const EMITTED_LINE_STROKE_COLOR = 'black';
 export const EMITTED_LINE_STROKE_WIDTH = 1.5;
 export const EMITTED_LINE_TENSION = 0.3;
 export const EMITTED_LINE_INTERVAL_TIME = 50;
-export const EMITTED_LINE_AMPLITUDE = 15;
+export const EMITTED_LINE_AMPLITUDE = 12;
 export const EMITTED_LINE_STEP = 10;
 // this choice of constant comes from app #2 (thermal radiation)
 // it is used so that the infrared wavelength in this app is the same as that in app #2

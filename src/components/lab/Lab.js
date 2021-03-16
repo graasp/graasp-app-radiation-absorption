@@ -36,7 +36,7 @@ class Lab extends Component {
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,
     }).isRequired,
-    selectedMoleculeInSideMenu: PropTypes.string.isRequired,
+    selectedMoleculeInSideMenu: PropTypes.string,
     moleculesOnCanvas: PropTypes.arrayOf(
       PropTypes.shape({
         molecule: PropTypes.string.isRequired,
@@ -45,6 +45,10 @@ class Lab extends Component {
     ).isRequired,
     dispatchResetAllLines: PropTypes.func.isRequired,
     spectrum: PropTypes.string.isRequired,
+  };
+
+  static defaultProps = {
+    selectedMoleculeInSideMenu: null,
   };
 
   componentDidMount() {
