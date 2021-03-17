@@ -1,6 +1,7 @@
 import React from 'react';
 import SideMenuMoleculeContainer from './SideMenuMoleculeContainer';
 import SideMenuOxygen from './atoms/SideMenuOxygen';
+import SideMenuBondContainer from '../SideMenuBondContainer';
 import {
   NEGATIVE_CHARGE,
   OZONE_MOLECULE_ID,
@@ -14,7 +15,9 @@ const SideMenuOzone = () => {
         customPositioningStyles={{ marginTop: 10 }}
         charge={NEGATIVE_CHARGE}
       />
+      <SideMenuBondContainer numberOfBonds={2} rotation={-20} />
       <SideMenuOxygen charge={POSITIVE_CHARGE} />
+      <SideMenuBondContainer numberOfBonds={1} rotation={20} />
       <SideMenuOxygen
         customPositioningStyles={{ marginTop: 10 }}
         charge={NEGATIVE_CHARGE}

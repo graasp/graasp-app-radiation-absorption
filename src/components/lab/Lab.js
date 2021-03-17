@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Stage, Layer } from 'react-konva';
 import CanvasMoleculeContainer from './canvas/CanvasMoleculeContainer';
-import { setStageDimensions } from '../../actions';
+import { setStageDimensions, resetAllLines } from '../../actions';
 import {
   BACKGROUND_COLOR,
   CANVAS_NUMBER_OF_MOLECULES,
   CANVAS_MOLECULE_AREA_DEFAULT_RADIUS,
+  SPECTRUMS,
 } from '../../config/constants';
 import EmittedLines from './EmittedLines';
 
@@ -35,13 +36,19 @@ class Lab extends Component {
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,
     }).isRequired,
-    selectedMoleculeInSideMenu: PropTypes.string.isRequired,
+    selectedMoleculeInSideMenu: PropTypes.string,
     moleculesOnCanvas: PropTypes.arrayOf(
       PropTypes.shape({
         molecule: PropTypes.string.isRequired,
         moleculeAreaStatus: PropTypes.string.isRequired,
       }),
     ).isRequired,
+    dispatchResetAllLines: PropTypes.func.isRequired,
+    spectrum: PropTypes.string.isRequired,
+  };
+
+  static defaultProps = {
+    selectedMoleculeInSideMenu: null,
   };
 
   componentDidMount() {
@@ -53,13 +60,27 @@ class Lab extends Component {
   }
 
   checkSize = () => {
-    const { dispatchSetStageDimensions } = this.props;
+    const {
+      dispatchSetStageDimensions,
+      dispatchResetAllLines,
+      stageDimensions,
+      spectrum,
+    } = this.props;
     const stageWidth = this.container?.offsetWidth;
     const stageHeight = this.container?.offsetHeight;
     dispatchSetStageDimensions({
       width: stageWidth,
       height: stageHeight,
     });
+    // if screen height is made *smaller*, reset radiation lines
+    // otherwise, radiation will no longer be properly 'absorbed' (i.e. radiation lines will move past molecules)
+    // since visible light radiation passes through all molecules, this reset is only necessary if the spectrum is infrared
+    if (
+      stageDimensions.height > stageHeight &&
+      spectrum === SPECTRUMS.INFRARED
+    ) {
+      dispatchResetAllLines();
+    }
   };
 
   determineMoleculeContainersCenterPoints = (
@@ -140,10 +161,12 @@ const mapStateToProps = ({ layout, lab }) => ({
   stageDimensions: layout.lab.stageDimensions,
   selectedMoleculeInSideMenu: lab.selectedMoleculeInSideMenu,
   moleculesOnCanvas: lab.moleculesOnCanvas,
+  spectrum: lab.spectrum,
 });
 
 const mapDispatchToProps = {
   dispatchSetStageDimensions: setStageDimensions,
+  dispatchResetAllLines: resetAllLines,
 };
 
 const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Lab);

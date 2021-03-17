@@ -12,6 +12,16 @@ import {
   INFRARED_OSCILLATION_CONSTANT_INCREMENT,
   VISIBLE_LIGHT_OSCILLATION_CONSTANT_INCREMENT,
   SPECTRUMS,
+  OZONE_MOLECULE_ID,
+  METHANE_MOLECULE_ID,
+  WATER_MOLECULE_ID,
+  CARBON_DIOXIDE_MOLECULE_ID,
+  NITROUS_OXIDE_MOLECULE_ID,
+  CARBON_DIOXIDE_MOLECULE_LOWEST_Y,
+  OZONE_MOLECULE_LOWEST_Y,
+  METHANE_MOLECULE_LOWEST_Y,
+  WATER_MOLECULE_LOWEST_Y,
+  NITROUS_OXIDE_MOLECULE_LOWEST_Y,
 } from '../../config/constants';
 import { updateLinePoints } from '../../actions';
 
@@ -32,6 +42,12 @@ class EmittedLine extends Component {
     ).isRequired,
     dispatchUpdateLinePoints: PropTypes.func.isRequired,
     spectrum: PropTypes.string.isRequired,
+    moleculesOnCanvas: PropTypes.arrayOf(
+      PropTypes.shape({
+        molecule: PropTypes.string.isRequired,
+        moleculeAreaStatus: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
   };
 
   componentDidUpdate({ isPaused: prevIsPaused }) {
@@ -50,6 +66,8 @@ class EmittedLine extends Component {
         emittedLines,
         dispatchUpdateLinePoints,
         spectrum,
+        moleculesOnCanvas,
+        stageDimensions,
       } = this.props;
       const currentLinePoints = emittedLines[lineIndex].points;
       const currentLineOscillationConstant =
@@ -68,8 +86,33 @@ class EmittedLine extends Component {
             : value + Math.sin(-Math.PI / 2) * EMITTED_LINE_STEP,
         );
 
+      // Some molecules (greenhouse gases) absorb infrared radiation
+      // This effect is achieved by cutting short (slicing) the array of points which generates radiation lines
+      // See constants.js for further explanation
+      let maxPoints = Infinity;
+      if (spectrum === SPECTRUMS.INFRARED) {
+        const currentLineMolecule = moleculesOnCanvas[lineIndex].molecule;
+        const currentHeight =
+          stageDimensions.height +
+          currentLinePoints[currentLinePoints.length - 1];
+        if (
+          (currentLineMolecule === OZONE_MOLECULE_ID &&
+            currentHeight < OZONE_MOLECULE_LOWEST_Y) ||
+          (currentLineMolecule === METHANE_MOLECULE_ID &&
+            currentHeight < METHANE_MOLECULE_LOWEST_Y) ||
+          (currentLineMolecule === WATER_MOLECULE_ID &&
+            currentHeight < WATER_MOLECULE_LOWEST_Y) ||
+          (currentLineMolecule === CARBON_DIOXIDE_MOLECULE_ID &&
+            currentHeight < CARBON_DIOXIDE_MOLECULE_LOWEST_Y) ||
+          (currentLineMolecule === NITROUS_OXIDE_MOLECULE_ID &&
+            currentHeight < NITROUS_OXIDE_MOLECULE_LOWEST_Y)
+        ) {
+          maxPoints = currentLinePoints.length;
+        }
+      }
+
       dispatchUpdateLinePoints({
-        points: [x, 0, x, 0, ...newPoints],
+        points: [x, 0, x, 0, ...newPoints].slice(0, maxPoints),
         oscillationConstant:
           currentLineOscillationConstant +
           (spectrum === SPECTRUMS.INFRARED
@@ -102,6 +145,7 @@ const mapStateToProps = ({ layout, lab }) => ({
   isPaused: lab.isPaused,
   emittedLines: lab.emittedLines,
   spectrum: lab.spectrum,
+  moleculesOnCanvas: lab.moleculesOnCanvas,
 });
 
 const mapDispatchToProps = {

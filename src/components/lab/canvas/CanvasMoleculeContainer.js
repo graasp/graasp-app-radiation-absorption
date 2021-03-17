@@ -12,7 +12,7 @@ import {
 } from '../../../config/constants';
 import CanvasMoleculeArea from './CanvasMoleculeArea';
 import CanvasWater from './molecules/CanvasWater';
-import CanvasCarbonDioxide from './molecules/CanvasCarbonDioxde';
+import CanvasCarbonDioxide from './molecules/CanvasCarbonDioxide';
 import CanvasOzone from './molecules/CanvasOzone';
 import CanvasNitrousOxide from './molecules/CanvasNitrousOxide';
 import CanvasMethane from './molecules/CanvasMethane';

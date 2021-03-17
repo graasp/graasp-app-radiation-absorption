@@ -1,39 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Group } from 'react-konva';
+import CanvasCarbon from './atoms/CanvasCarbon';
 import CanvasOxygen from './atoms/CanvasOxygen';
+import CanvasBondContainer from './CanvasBondContainer';
 import {
   CANVAS_ATOM_DIMENSIONS,
   OXYGEN,
+  CARBON,
   CANVAS_MOLECULE_AREA_Y_POSITION,
-  CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
   CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
   NEGATIVE_CHARGE,
   POSITIVE_CHARGE,
 } from '../../../../config/constants';
-import CanvasBondContainer from './CanvasBondContainer';
 
-const CanvasOzone = ({ x }) => {
+const CanvasCarbonDioxide = ({ x }) => {
   const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
+  const carbonAtomRadius = CANVAS_ATOM_DIMENSIONS[CARBON.size];
 
   const moleculeCenterPoints = {
     topOxygenAtomCenterPoint: {
-      x: x + CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR * 0.5,
+      x,
       y:
         CANVAS_MOLECULE_AREA_Y_POSITION -
-        oxygenAtomRadius -
+        carbonAtomRadius -
         oxygenAtomRadius -
         CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
     },
-    middleOxygenAtomCenterPoint: {
-      x: x - CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR * 0.5,
+    carbonAtomCenterPoint: {
+      x,
       y: CANVAS_MOLECULE_AREA_Y_POSITION,
     },
     bottomOxygenAtomCenterPoint: {
-      x: x + CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR * 0.5,
+      x,
       y:
         CANVAS_MOLECULE_AREA_Y_POSITION +
-        oxygenAtomRadius +
+        carbonAtomRadius +
         oxygenAtomRadius +
         CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
     },
@@ -41,7 +43,7 @@ const CanvasOzone = ({ x }) => {
 
   const {
     topOxygenAtomCenterPoint,
-    middleOxygenAtomCenterPoint,
+    carbonAtomCenterPoint,
     bottomOxygenAtomCenterPoint,
   } = moleculeCenterPoints;
 
@@ -50,11 +52,11 @@ const CanvasOzone = ({ x }) => {
       {/* CanvasBondContainers need to be at the top here so that they fall behind atoms in the canvas */}
       <CanvasBondContainer
         from={topOxygenAtomCenterPoint}
-        to={middleOxygenAtomCenterPoint}
-        numberOfBonds={1}
+        to={carbonAtomCenterPoint}
+        numberOfBonds={2}
       />
       <CanvasBondContainer
-        from={middleOxygenAtomCenterPoint}
+        from={carbonAtomCenterPoint}
         to={bottomOxygenAtomCenterPoint}
         numberOfBonds={2}
       />
@@ -63,9 +65,9 @@ const CanvasOzone = ({ x }) => {
         y={topOxygenAtomCenterPoint.y}
         charge={NEGATIVE_CHARGE}
       />
-      <CanvasOxygen
-        x={middleOxygenAtomCenterPoint.x}
-        y={middleOxygenAtomCenterPoint.y}
+      <CanvasCarbon
+        x={carbonAtomCenterPoint.x}
+        y={carbonAtomCenterPoint.y}
         charge={POSITIVE_CHARGE}
       />
       <CanvasOxygen
@@ -77,8 +79,8 @@ const CanvasOzone = ({ x }) => {
   );
 };
 
-CanvasOzone.propTypes = {
+CanvasCarbonDioxide.propTypes = {
   x: PropTypes.number.isRequired,
 };
 
-export default CanvasOzone;
+export default CanvasCarbonDioxide;

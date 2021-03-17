@@ -4,7 +4,8 @@ import EmittedLine from './EmittedLine';
 
 const EmittedLines = ({ xPoints }) => {
   return xPoints.map((xPoint, index) => (
-    <EmittedLine x={xPoint} key={xPoint} lineIndex={index} />
+    // eslint-disable-next-line react/no-array-index-key
+    <EmittedLine x={xPoint} key={index} lineIndex={index} />
   ));
 };
 
