@@ -9,6 +9,7 @@ import {
   CLEAR_MOLECULE_AREA,
   RESET_ALL_MOLECULE_AREAS,
   TOGGLE_SHOW_ATOMS_CHARGES,
+  TOGGLE_MOLECULE_OSCILLATION,
 } from '../types';
 
 const selectMoleculeInSideMenu = (molecule) => (dispatch) =>
@@ -65,6 +66,9 @@ const resetAllMoleculeAreas = () => (dispatch) =>
 const toggleShowAtomsCharges = (payload) => (dispatch) =>
   dispatch({ type: TOGGLE_SHOW_ATOMS_CHARGES, payload });
 
+const toggleMoleculeOscillation = (payload) => (dispatch) =>
+  dispatch({ type: TOGGLE_MOLECULE_OSCILLATION, payload });
+
 export {
   selectMoleculeInSideMenu,
   toggleSpectrum,
@@ -76,4 +80,5 @@ export {
   resetAllLines,
   resetAllMoleculeAreas,
   toggleShowAtomsCharges,
+  toggleMoleculeOscillation,
 };

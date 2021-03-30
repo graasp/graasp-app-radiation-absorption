@@ -9,6 +9,7 @@ import {
   CLEAR_MOLECULE_AREA,
   RESET_ALL_MOLECULE_AREAS,
   TOGGLE_SHOW_ATOMS_CHARGES,
+  TOGGLE_MOLECULE_OSCILLATION,
 } from '../types';
 import {
   CANVAS_MOLECULE_AREA_STATE,
@@ -23,10 +24,26 @@ const INITIAL_STATE = {
   spectrum: SPECTRUMS.INFRARED,
   showAtomsCharges: false,
   moleculesOnCanvas: [
-    { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY },
-    { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY },
-    { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY },
-    { molecule: '', moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY },
+    {
+      molecule: '',
+      moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
+      shouldOscillate: false,
+    },
+    {
+      molecule: '',
+      moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
+      shouldOscillate: false,
+    },
+    {
+      molecule: '',
+      moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
+      shouldOscillate: false,
+    },
+    {
+      molecule: '',
+      moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
+      shouldOscillate: false,
+    },
   ],
   emittedLines: [
     {
@@ -88,6 +105,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
             ...state.moleculesOnCanvas[payload.areaIndex],
             molecule: payload.moleculeId,
             moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
+            shouldOscillate: false,
           },
           ...state.moleculesOnCanvas.slice(payload.areaIndex + 1),
         ],
@@ -101,6 +119,18 @@ export default (state = INITIAL_STATE, { type, payload }) => {
             ...state.moleculesOnCanvas[payload.areaIndex],
             molecule: '',
             moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
+          },
+          ...state.moleculesOnCanvas.slice(payload.areaIndex + 1),
+        ],
+      };
+    case TOGGLE_MOLECULE_OSCILLATION:
+      return {
+        ...state,
+        moleculesOnCanvas: [
+          ...state.moleculesOnCanvas.slice(0, payload.areaIndex),
+          {
+            ...state.moleculesOnCanvas[payload.areaIndex],
+            shouldOscillate: payload.shouldOscillate,
           },
           ...state.moleculesOnCanvas.slice(payload.areaIndex + 1),
         ],
