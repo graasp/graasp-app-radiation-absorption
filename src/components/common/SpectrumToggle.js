@@ -5,7 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 import { SPECTRUMS } from '../../config/constants';
-import { resetAllLines, toggleSpectrum } from '../../actions';
+import {
+  resetAllLines,
+  toggleMoleculeOscillation,
+  toggleSpectrum,
+} from '../../actions';
 
 const useStyles = makeStyles(() => ({
   switchWithTwoLabelsContainer: {
@@ -17,12 +21,33 @@ const useStyles = makeStyles(() => ({
 const SpectrumToggle = () => {
   const { t } = useTranslation();
   const spectrum = useSelector(({ lab }) => lab.spectrum);
+  const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
   const dispatch = useDispatch();
 
   const handleToggle = () => {
     if (spectrum === SPECTRUMS.VISIBLE_LIGHT) {
+      moleculesOnCanvas.forEach((molecule, index) => {
+        if (molecule.shouldOscillate) {
+          dispatch(
+            toggleMoleculeOscillation({
+              areaIndex: index,
+              shouldOscillate: false,
+            }),
+          );
+        }
+      });
       dispatch(resetAllLines(), dispatch(toggleSpectrum(SPECTRUMS.INFRARED)));
-    } else {
+    } else if (spectrum === SPECTRUMS.INFRARED) {
+      moleculesOnCanvas.forEach((molecule, index) => {
+        if (molecule.shouldOscillate) {
+          dispatch(
+            toggleMoleculeOscillation({
+              areaIndex: index,
+              shouldOscillate: false,
+            }),
+          );
+        }
+      });
       dispatch(
         resetAllLines(),
         dispatch(toggleSpectrum(SPECTRUMS.VISIBLE_LIGHT)),

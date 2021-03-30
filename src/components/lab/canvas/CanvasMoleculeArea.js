@@ -20,6 +20,7 @@ import {
   displayMolecule,
   setMoleculeAreaStatus,
   setIsPaused,
+  toggleMoleculeOscillation,
 } from '../../../actions';
 import CanvasMoleculeAreaClearButton from './CanvasMoleculeAreaClearButton';
 import ActiveMoleculeAreaPlus from './ActiveMoleculeAreaPlus';
@@ -76,6 +77,18 @@ const CanvasMoleculeArea = ({
         }),
       );
     }
+
+    // if some molecules have an active oscillation, pause that animation
+    moleculesOnCanvas.forEach((molecule, index) => {
+      if (molecule.shouldOscillate) {
+        dispatch(
+          toggleMoleculeOscillation({
+            areaIndex: index,
+            shouldOscillate: false,
+          }),
+        );
+      }
+    });
 
     const currentMoleculeStatus =
       moleculesOnCanvas[containerIndex].moleculeAreaStatus;

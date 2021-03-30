@@ -15,6 +15,7 @@ import {
   resetAllMoleculeAreas,
   toggleShowAtomsCharges,
   toggleSpectrum,
+  toggleMoleculeOscillation,
 } from '../../actions';
 import { CANVAS_MOLECULE_AREA_STATE, SPECTRUMS } from '../../config/constants';
 
@@ -65,6 +66,16 @@ const AnimationControls = () => {
 
   const onClickPause = () => {
     dispatch(setIsPaused(true));
+    moleculesOnCanvas.forEach((molecule, index) => {
+      if (molecule.shouldOscillate) {
+        dispatch(
+          toggleMoleculeOscillation({
+            areaIndex: index,
+            shouldOscillate: false,
+          }),
+        );
+      }
+    });
   };
 
   const onClickReset = () => {

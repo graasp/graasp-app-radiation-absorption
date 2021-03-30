@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 import CanvasAtom from './CanvasAtom';
 import { ARGON } from '../../../../../config/constants';
 
-const CanvasArgon = ({ x, y }) => {
+const CanvasArgon = ({
+  x,
+  y,
+  shouldOscillate,
+  oscillationConstant,
+  initialCenterPoint,
+  setCenterPoint,
+}) => {
   return (
     <CanvasAtom
       atomColor={ARGON.atomColor}
@@ -11,6 +18,10 @@ const CanvasArgon = ({ x, y }) => {
       chargeSymbolColor={ARGON.chargeSymbolColor}
       x={x}
       y={y}
+      shouldOscillate={shouldOscillate}
+      oscillationConstant={oscillationConstant}
+      initialCenterPoint={initialCenterPoint}
+      setCenterPoint={setCenterPoint}
     />
   );
 };
@@ -18,6 +29,17 @@ const CanvasArgon = ({ x, y }) => {
 CanvasArgon.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
+  shouldOscillate: PropTypes.bool.isRequired,
+  oscillationConstant: PropTypes.number,
+  initialCenterPoint: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }).isRequired,
+  setCenterPoint: PropTypes.func.isRequired,
+};
+
+CanvasArgon.defaultProps = {
+  oscillationConstant: 0,
 };
 
 export default CanvasArgon;
