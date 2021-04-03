@@ -14,6 +14,7 @@ import {
   POSITIVE_CHARGE,
   NEGATIVE_CHARGE,
   CANVAS_MOLECULE_AREA_STATE,
+  CANVAS_WATER_OSCILLATION_AMPLITUDE,
 } from '../../../../config/constants';
 import CanvasBondContainer from './CanvasBondContainer';
 
@@ -42,8 +43,8 @@ const CanvasWater = ({ x, shouldOscillate }) => {
     y:
       CANVAS_MOLECULE_AREA_Y_POSITION +
       oxygenAtomRadius +
-      hydrogenAtomRadius +
-      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
+      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
+      hydrogenAtomRadius,
   };
 
   // initialize state with initial center point constants above
@@ -105,7 +106,7 @@ const CanvasWater = ({ x, shouldOscillate }) => {
         y={topHydrogenAtomCenterPoint.y}
         charge={POSITIVE_CHARGE}
         shouldOscillate={shouldOscillate}
-        oscillationConstant={0.5}
+        amplitude={CANVAS_WATER_OSCILLATION_AMPLITUDE}
         initialCenterPoint={topHydrogenAtomInitialCenterPoint}
         setCenterPoint={setTopHydrogenAtomCenterPoint}
       />
@@ -114,7 +115,7 @@ const CanvasWater = ({ x, shouldOscillate }) => {
         y={oxygenAtomCenterPoint.y}
         charge={NEGATIVE_CHARGE}
         shouldOscillate={shouldOscillate}
-        oscillationConstant={-0.5}
+        amplitude={-CANVAS_WATER_OSCILLATION_AMPLITUDE}
         initialCenterPoint={oxygenAtomInitialCenterPoint}
         setCenterPoint={setOxygenAtomCenterPoint}
       />
@@ -123,7 +124,7 @@ const CanvasWater = ({ x, shouldOscillate }) => {
         y={bottomHydrogenAtomCenterPoint.y}
         charge={POSITIVE_CHARGE}
         shouldOscillate={shouldOscillate}
-        oscillationConstant={0.5}
+        amplitude={CANVAS_WATER_OSCILLATION_AMPLITUDE}
         initialCenterPoint={bottomHydrogenAtomInitialCenterPoint}
         setCenterPoint={setBottomHydrogenAtomCenterPoint}
       />

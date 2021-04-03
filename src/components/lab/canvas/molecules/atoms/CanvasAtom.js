@@ -7,7 +7,8 @@ import {
   CANVAS_ATOM_DIMENSIONS,
   POSITIVE_CHARGE,
   NEGATIVE_CHARGE,
-  OSCILLATION_FRAMES_PER_SECOND_ADJUSTMENT_FACTOR,
+  EMITTED_LINE_INTERVAL_TIME,
+  INFRARED_OSCILLATION_CONSTANT_INCREMENT,
 } from '../../../../../config/constants';
 import CanvasAtomNegativeCharge from './charges/CanvasAtomNegativeCharge';
 import CanvasAtomPositiveCharge from './charges/CanvasAtomPositiveCharge';
@@ -20,7 +21,7 @@ const CanvasAtom = ({
   charge,
   chargeSymbolColor,
   shouldOscillate,
-  oscillationConstant,
+  amplitude,
   initialCenterPoint,
   setCenterPoint,
 }) => {
@@ -61,10 +62,14 @@ const CanvasAtom = ({
     if (atomRef.current?.attrs.x === initialCenterPoint.x) {
       const oscillationFunction = new Konva.Animation((frame) => {
         atomRef.current?.x(
-          atomRef.current.attrs.x +
-            oscillationConstant *
+          initialCenterPoint.x +
+            amplitude *
+              // below is in order for the frequency of the the molecule's oscillation to match the frequency of the emitted line/wave
+              // every EMITTED_LINE_INTERVAL_TIME, the wave's position is determined by sin(INFRARED_OSCILLATION_CONSTANT_INCREMENT * TOTAL_TIME/EMITTED_LINE_INTERVAL_TIME)
+              // hence, a similar approach here (using frame.time for total elapsed time)
               Math.sin(
-                frame.time / OSCILLATION_FRAMES_PER_SECOND_ADJUSTMENT_FACTOR,
+                (frame.time * INFRARED_OSCILLATION_CONSTANT_INCREMENT) /
+                  EMITTED_LINE_INTERVAL_TIME,
               ),
         );
       }, atomRef.current.getLayer());
@@ -88,7 +93,7 @@ CanvasAtom.propTypes = {
   y: PropTypes.number.isRequired,
   charge: PropTypes.string,
   shouldOscillate: PropTypes.bool.isRequired,
-  oscillationConstant: PropTypes.number.isRequired,
+  amplitude: PropTypes.number.isRequired,
   initialCenterPoint: PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,

@@ -8,7 +8,7 @@ const CanvasNitrogen = ({
   y,
   charge,
   shouldOscillate,
-  oscillationConstant,
+  amplitude,
   initialCenterPoint,
   setCenterPoint,
 }) => {
@@ -21,7 +21,7 @@ const CanvasNitrogen = ({
       y={y}
       charge={charge}
       shouldOscillate={shouldOscillate}
-      oscillationConstant={oscillationConstant}
+      amplitude={amplitude}
       initialCenterPoint={initialCenterPoint}
       setCenterPoint={setCenterPoint}
     />
@@ -33,7 +33,7 @@ CanvasNitrogen.propTypes = {
   y: PropTypes.number.isRequired,
   charge: PropTypes.string,
   shouldOscillate: PropTypes.bool.isRequired,
-  oscillationConstant: PropTypes.number,
+  amplitude: PropTypes.number,
   initialCenterPoint: PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
@@ -43,7 +43,7 @@ CanvasNitrogen.propTypes = {
 
 CanvasNitrogen.defaultProps = {
   charge: '',
-  oscillationConstant: 0,
+  amplitude: 0,
 };
 
 export default CanvasNitrogen;

@@ -12,6 +12,7 @@ import {
   NEGATIVE_CHARGE,
   POSITIVE_CHARGE,
   CANVAS_MOLECULE_AREA_STATE,
+  CANVAS_OZONE_OSCILLATION_AMPLITUDE,
 } from '../../../../config/constants';
 import CanvasBondContainer from './CanvasBondContainer';
 
@@ -27,8 +28,8 @@ const CanvasOzone = ({ x, shouldOscillate }) => {
     y:
       CANVAS_MOLECULE_AREA_Y_POSITION -
       oxygenAtomRadius -
-      oxygenAtomRadius -
-      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
+      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS -
+      oxygenAtomRadius,
   };
   const middleOxygenAtomInitialCenterPoint = {
     x: x - CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR * 0.5,
@@ -39,8 +40,8 @@ const CanvasOzone = ({ x, shouldOscillate }) => {
     y:
       CANVAS_MOLECULE_AREA_Y_POSITION +
       oxygenAtomRadius +
-      oxygenAtomRadius +
-      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
+      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
+      oxygenAtomRadius,
   };
 
   // initialize state with initial center point constants above
@@ -103,7 +104,7 @@ const CanvasOzone = ({ x, shouldOscillate }) => {
         y={topOxygenAtomCenterPoint.y}
         charge={NEGATIVE_CHARGE}
         shouldOscillate={shouldOscillate}
-        oscillationConstant={0.5}
+        amplitude={CANVAS_OZONE_OSCILLATION_AMPLITUDE}
         initialCenterPoint={topOxygenAtomInitialCenterPoint}
         setCenterPoint={setTopOxygenAtomCenterPoint}
       />
@@ -112,7 +113,7 @@ const CanvasOzone = ({ x, shouldOscillate }) => {
         y={middleOxygenAtomCenterPoint.y}
         charge={POSITIVE_CHARGE}
         shouldOscillate={shouldOscillate}
-        oscillationConstant={-0.5}
+        amplitude={-CANVAS_OZONE_OSCILLATION_AMPLITUDE}
         initialCenterPoint={middleOxygenAtomInitialCenterPoint}
         setCenterPoint={setMiddleOxygenAtomCenterPoint}
       />
@@ -121,7 +122,7 @@ const CanvasOzone = ({ x, shouldOscillate }) => {
         y={bottomOxygenAtomCenterPoint.y}
         charge={NEGATIVE_CHARGE}
         shouldOscillate={shouldOscillate}
-        oscillationConstant={0.5}
+        amplitude={CANVAS_OZONE_OSCILLATION_AMPLITUDE}
         initialCenterPoint={bottomOxygenAtomInitialCenterPoint}
         setCenterPoint={setBottomOxygenAtomCenterPoint}
       />

@@ -7,7 +7,7 @@ const CanvasArgon = ({
   x,
   y,
   shouldOscillate,
-  oscillationConstant,
+  amplitude,
   initialCenterPoint,
   setCenterPoint,
 }) => {
@@ -19,7 +19,7 @@ const CanvasArgon = ({
       x={x}
       y={y}
       shouldOscillate={shouldOscillate}
-      oscillationConstant={oscillationConstant}
+      amplitude={amplitude}
       initialCenterPoint={initialCenterPoint}
       setCenterPoint={setCenterPoint}
     />
@@ -30,7 +30,7 @@ CanvasArgon.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   shouldOscillate: PropTypes.bool.isRequired,
-  oscillationConstant: PropTypes.number,
+  amplitude: PropTypes.number,
   initialCenterPoint: PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
@@ -39,7 +39,7 @@ CanvasArgon.propTypes = {
 };
 
 CanvasArgon.defaultProps = {
-  oscillationConstant: 0,
+  amplitude: 0,
 };
 
 export default CanvasArgon;

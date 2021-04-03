@@ -14,6 +14,7 @@ import {
   NEGATIVE_CHARGE,
   POSITIVE_CHARGE,
   CANVAS_MOLECULE_AREA_STATE,
+  CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDE,
 } from '../../../../config/constants';
 
 const CanvasNitrousOxide = ({ x, shouldOscillate }) => {
@@ -29,8 +30,8 @@ const CanvasNitrousOxide = ({ x, shouldOscillate }) => {
     y:
       CANVAS_MOLECULE_AREA_Y_POSITION -
       nitrogenAtomRadius -
-      nitrogenAtomRadius -
-      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
+      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS -
+      nitrogenAtomRadius,
   };
   const middleNitrogenAtomInitialCenterPoint = {
     x,
@@ -41,8 +42,8 @@ const CanvasNitrousOxide = ({ x, shouldOscillate }) => {
     y:
       CANVAS_MOLECULE_AREA_Y_POSITION +
       nitrogenAtomRadius +
-      oxygenAtomRadius +
-      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
+      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
+      oxygenAtomRadius,
   };
 
   // initialize state with initial center point constants above
@@ -105,7 +106,7 @@ const CanvasNitrousOxide = ({ x, shouldOscillate }) => {
         y={topNitrogenAtomCenterPoint.y}
         charge={NEGATIVE_CHARGE}
         shouldOscillate={shouldOscillate}
-        oscillationConstant={0.5}
+        amplitude={CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDE}
         initialCenterPoint={topNitrogenAtomInitialCenterPoint}
         setCenterPoint={setTopNitrogenAtomCenterPoint}
       />
@@ -114,7 +115,7 @@ const CanvasNitrousOxide = ({ x, shouldOscillate }) => {
         y={middleNitrogenAtomCenterPoint.y}
         charge={POSITIVE_CHARGE}
         shouldOscillate={shouldOscillate}
-        oscillationConstant={-0.5}
+        amplitude={-CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDE}
         initialCenterPoint={middleNitrogenAtomInitialCenterPoint}
         setCenterPoint={setMiddleNitrogenAtomCenterPoint}
       />
@@ -123,7 +124,7 @@ const CanvasNitrousOxide = ({ x, shouldOscillate }) => {
         y={bottomOxygenAtomCenterPoint.y}
         charge={NEGATIVE_CHARGE}
         shouldOscillate={shouldOscillate}
-        oscillationConstant={0.5}
+        amplitude={CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDE}
         initialCenterPoint={bottomOxygenAtomInitialCenterPoint}
         setCenterPoint={setBottomOxygenAtomCenterPoint}
       />

@@ -14,6 +14,7 @@ import {
   NEGATIVE_CHARGE,
   POSITIVE_CHARGE,
   CANVAS_MOLECULE_AREA_STATE,
+  CANVAS_CARBON_DIOXIDE_OSCILLATION_AMPLITUDE,
 } from '../../../../config/constants';
 
 const CanvasCarbonDioxide = ({ x, shouldOscillate }) => {
@@ -29,8 +30,8 @@ const CanvasCarbonDioxide = ({ x, shouldOscillate }) => {
     y:
       CANVAS_MOLECULE_AREA_Y_POSITION -
       carbonAtomRadius -
-      oxygenAtomRadius -
-      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
+      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS -
+      oxygenAtomRadius,
   };
   const carbonAtomInitialCenterPoint = {
     x,
@@ -41,8 +42,8 @@ const CanvasCarbonDioxide = ({ x, shouldOscillate }) => {
     y:
       CANVAS_MOLECULE_AREA_Y_POSITION +
       carbonAtomRadius +
-      oxygenAtomRadius +
-      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
+      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
+      oxygenAtomRadius,
   };
 
   // initialize state with initial center point constants above
@@ -104,7 +105,7 @@ const CanvasCarbonDioxide = ({ x, shouldOscillate }) => {
         y={topOxygenAtomCenterPoint.y}
         charge={NEGATIVE_CHARGE}
         shouldOscillate={shouldOscillate}
-        oscillationConstant={0.5}
+        amplitude={CANVAS_CARBON_DIOXIDE_OSCILLATION_AMPLITUDE}
         initialCenterPoint={topOxygenAtomInitialCenterPoint}
         setCenterPoint={setTopOxygenAtomCenterPoint}
       />
@@ -113,7 +114,7 @@ const CanvasCarbonDioxide = ({ x, shouldOscillate }) => {
         y={carbonAtomCenterPoint.y}
         charge={POSITIVE_CHARGE}
         shouldOscillate={shouldOscillate}
-        oscillationConstant={-0.5}
+        amplitude={-CANVAS_CARBON_DIOXIDE_OSCILLATION_AMPLITUDE}
         initialCenterPoint={carbonAtomInitialCenterPoint}
         setCenterPoint={setCarbonAtomCenterPoint}
       />
@@ -122,7 +123,7 @@ const CanvasCarbonDioxide = ({ x, shouldOscillate }) => {
         y={bottomOxygenAtomCenterPoint.y}
         charge={NEGATIVE_CHARGE}
         shouldOscillate={shouldOscillate}
-        oscillationConstant={0.5}
+        amplitude={CANVAS_CARBON_DIOXIDE_OSCILLATION_AMPLITUDE}
         initialCenterPoint={bottomOxygenAtomInitialCenterPoint}
         setCenterPoint={setBottomOxygenAtomCenterPoint}
       />

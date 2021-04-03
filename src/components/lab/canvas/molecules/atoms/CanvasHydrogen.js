@@ -8,8 +8,7 @@ const CanvasHydrogen = ({
   y,
   charge,
   shouldOscillate,
-  oscillationConstant,
-  // eslint-disable-next-line react/prop-types
+  amplitude,
   initialCenterPoint,
   setCenterPoint,
 }) => {
@@ -22,7 +21,7 @@ const CanvasHydrogen = ({
       y={y}
       charge={charge}
       shouldOscillate={shouldOscillate}
-      oscillationConstant={oscillationConstant}
+      amplitude={amplitude}
       initialCenterPoint={initialCenterPoint}
       setCenterPoint={setCenterPoint}
     />
@@ -34,13 +33,17 @@ CanvasHydrogen.propTypes = {
   y: PropTypes.number.isRequired,
   charge: PropTypes.string,
   shouldOscillate: PropTypes.bool.isRequired,
-  oscillationConstant: PropTypes.number,
+  amplitude: PropTypes.number,
+  initialCenterPoint: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }).isRequired,
   setCenterPoint: PropTypes.func.isRequired,
 };
 
 CanvasHydrogen.defaultProps = {
   charge: '',
-  oscillationConstant: 0,
+  amplitude: 0,
 };
 
 export default CanvasHydrogen;
