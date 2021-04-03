@@ -88,37 +88,41 @@ const AnimationControls = () => {
 
   return (
     <div className={classes.buttonContainer}>
-      <Tooltip title={t('Play')} placement="left">
-        {/* Note: <span>s added to clear console error: 
+      {isPaused ? (
+        <Tooltip title={t('Play')} placement="left">
+          {/* Note: <span>s added to clear console error: 
         'Material-UI: You are providing a disabled `button` child to the Tooltip component...
         Add a simple wrapper element, such as a `span`.' */}
-        <span>
-          <IconButton
-            disabled={canvasIncomplete || !isPaused}
-            onClick={onClickPlay}
-          >
-            <PlayCircleOutlineIcon
-              className={`${classes.button} ${
-                isPaused && !canvasIncomplete ? classes.playButton : ''
-              }`}
-            />
-          </IconButton>
-        </span>
-      </Tooltip>
-      <Tooltip title={t('Pause')} placement="top">
-        <span>
-          <IconButton
-            disabled={canvasIncomplete || isPaused}
-            onClick={onClickPause}
-          >
-            <PauseCircleOutlineIcon
-              className={`${classes.button} ${
-                !isPaused && !canvasIncomplete ? classes.pauseButton : ''
-              }`}
-            />
-          </IconButton>
-        </span>
-      </Tooltip>
+          <span>
+            <IconButton
+              disabled={canvasIncomplete || !isPaused}
+              onClick={onClickPlay}
+            >
+              <PlayCircleOutlineIcon
+                className={`${classes.button} ${
+                  isPaused && !canvasIncomplete ? classes.playButton : ''
+                }`}
+              />
+            </IconButton>
+          </span>
+        </Tooltip>
+      ) : (
+        <Tooltip title={t('Pause')} placement="left">
+          <span>
+            <IconButton
+              disabled={canvasIncomplete || isPaused}
+              onClick={onClickPause}
+            >
+              <PauseCircleOutlineIcon
+                className={`${classes.button} ${
+                  !isPaused && !canvasIncomplete ? classes.pauseButton : ''
+                }`}
+              />
+            </IconButton>
+          </span>
+        </Tooltip>
+      )}
+
       <Tooltip title={t('Reset')} placement="right">
         <span>
           <IconButton onClick={onClickReset}>
