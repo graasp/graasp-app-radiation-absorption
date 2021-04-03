@@ -9,7 +9,12 @@ import { Divider, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { toggleShowAtomsCharges, toggleSideMenu } from '../../actions';
+import {
+  toggleShowElectricFieldVector,
+  toggleShowAtomsCharges,
+  toggleShowReEmission,
+  toggleSideMenu,
+} from '../../actions';
 import { DRAWER_WIDTH, DEFAULT_THEME_DIRECTION } from '../../config/constants';
 import GreenhouseGases from '../lab/GreenhouseGases';
 import NonGreenhouseGases from '../lab/NonGreenhouseGases';
@@ -51,8 +56,12 @@ class SideMenu extends React.Component {
     t: PropTypes.func.isRequired,
     showSideMenu: PropTypes.bool.isRequired,
     dispatchToggleSideMenu: PropTypes.func.isRequired,
+    showElectricFieldVector: PropTypes.bool.isRequired,
     showAtomsCharges: PropTypes.bool.isRequired,
+    showReEmission: PropTypes.bool.isRequired,
+    dispatchToggleShowElectricFieldVector: PropTypes.func.isRequired,
     dispatchToggleShowAtomsCharges: PropTypes.func.isRequired,
+    dispatchToggleShowReEmission: PropTypes.func.isRequired,
   };
 
   handleToggleSideMenu = (open) => () => {
@@ -83,8 +92,12 @@ class SideMenu extends React.Component {
     const {
       classes,
       showSideMenu,
+      showElectricFieldVector,
       showAtomsCharges,
+      showReEmission,
+      dispatchToggleShowElectricFieldVector,
       dispatchToggleShowAtomsCharges,
+      dispatchToggleShowReEmission,
       t,
     } = this.props;
 
@@ -109,9 +122,19 @@ class SideMenu extends React.Component {
             <NonGreenhouseGases />
             <Divider className={classes.sideMenuDivider} />
             <CustomSwitch
+              switchLabel={t('Electric field vector')}
+              switchStatus={showElectricFieldVector}
+              switchDispatch={dispatchToggleShowElectricFieldVector}
+            />
+            <CustomSwitch
               switchLabel={t('Sign of charges')}
               switchStatus={showAtomsCharges}
               switchDispatch={dispatchToggleShowAtomsCharges}
+            />
+            <CustomSwitch
+              switchLabel={t('Re-emission')}
+              switchStatus={showReEmission}
+              switchDispatch={dispatchToggleShowReEmission}
             />
           </div>
         </Drawer>
@@ -122,12 +145,16 @@ class SideMenu extends React.Component {
 
 const mapStateToProps = ({ layout, lab }) => ({
   showSideMenu: layout.showSideMenu,
+  showElectricFieldVector: lab.showElectricFieldVector,
   showAtomsCharges: lab.showAtomsCharges,
+  showReEmission: lab.showReEmission,
 });
 
 const mapDispatchToProps = {
   dispatchToggleSideMenu: toggleSideMenu,
+  dispatchToggleShowElectricFieldVector: toggleShowElectricFieldVector,
   dispatchToggleShowAtomsCharges: toggleShowAtomsCharges,
+  dispatchToggleShowReEmission: toggleShowReEmission,
 };
 
 const ConnectedComponent = connect(

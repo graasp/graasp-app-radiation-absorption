@@ -8,7 +8,9 @@ import {
   SET_MOLECULE_AREA_STATUS,
   CLEAR_MOLECULE_AREA,
   RESET_ALL_MOLECULE_AREAS,
+  TOGGLE_SHOW_ELECTRIC_FIELD_VECTOR,
   TOGGLE_SHOW_ATOMS_CHARGES,
+  TOGGLE_SHOW_RE_EMISSION,
   TOGGLE_MOLECULE_OSCILLATION,
 } from '../types';
 import {
@@ -22,7 +24,9 @@ const INITIAL_STATE = {
   isPaused: true,
   selectedMoleculeInSideMenu: null,
   spectrum: SPECTRUMS.INFRARED,
+  showElectricFieldVector: false,
   showAtomsCharges: false,
+  showReEmission: false,
   moleculesOnCanvas: [
     {
       molecule: '',
@@ -79,10 +83,20 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         ...state,
         spectrum: payload,
       };
+    case TOGGLE_SHOW_ELECTRIC_FIELD_VECTOR:
+      return {
+        ...state,
+        showElectricFieldVector: payload,
+      };
     case TOGGLE_SHOW_ATOMS_CHARGES:
       return {
         ...state,
         showAtomsCharges: payload,
+      };
+    case TOGGLE_SHOW_RE_EMISSION:
+      return {
+        ...state,
+        showReEmission: payload,
       };
     case SET_MOLECULE_AREA_STATUS:
       return {

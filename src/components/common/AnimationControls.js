@@ -13,7 +13,9 @@ import {
   resetAllLines,
   setMoleculeAreaStatus,
   resetAllMoleculeAreas,
+  toggleShowElectricFieldVector,
   toggleShowAtomsCharges,
+  toggleShowReEmission,
   toggleSpectrum,
   toggleMoleculeOscillation,
 } from '../../actions';
@@ -82,7 +84,9 @@ const AnimationControls = () => {
     dispatch(resetAllMoleculeAreas());
     dispatch(resetAllLines());
     dispatch(setIsPaused(true));
+    dispatch(toggleShowElectricFieldVector(false));
     dispatch(toggleShowAtomsCharges(false));
+    dispatch(toggleShowReEmission(false));
     dispatch(toggleSpectrum(SPECTRUMS.INFRARED));
   };
 
