@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Group } from 'react-konva';
+import _ from 'lodash';
 import CanvasOxygen from './atoms/CanvasOxygen';
 import {
   CANVAS_ATOM_DIMENSIONS,
@@ -11,14 +12,14 @@ import {
   CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
   NEGATIVE_CHARGE,
   POSITIVE_CHARGE,
-  CANVAS_MOLECULE_AREA_STATE,
   CANVAS_OZONE_OSCILLATION_AMPLITUDE,
+  INITIAL_LINE_POINTS,
 } from '../../../../config/constants';
 import CanvasBondContainer from './CanvasBondContainer';
 
 const CanvasOzone = ({ x, shouldOscillate }) => {
   const spectrum = useSelector(({ lab }) => lab.spectrum);
-  const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
+  const emittedLines = useSelector(({ lab }) => lab.emittedLines);
 
   // constants to determine initial center points of atoms in this molecule when component mounts
   // the 'initial center points' are also used in the useEffect hook below, to reset an oscillating molecule
@@ -66,25 +67,25 @@ const CanvasOzone = ({ x, shouldOscillate }) => {
     }
   }, [spectrum]);
 
-  // this handles the case where: (1) initially there are four molecules on the canvas,
-  // (2) this molecule was oscillating, (3) a molecule is cleared from the canvas
-  // in such a case, we want to reset this molecule to its original position
-  // this is a bit 'hacky' as we are comparing the top atom's current x point to its initial x point to determine if the molecule has been oscillating
-  // ideally, when a molecule is cleared from the canvas, we would dispatch something like RESET_ALL_MOLECULE_POSITIONS
+  // this handles two cases:
+  // case (A): (1) initially there are four molecules on canvas, (2) this molecule was oscillating, (3) another molecule is deleted from the canvas
+  // case (B): (1) initially there are four molecules on canvas, (2) this molecule was oscillating, (3) another molecule is replaced directly on the canvas
+  // in such cases, we want to reset this molecule to its original position
+  // this approach is a bit hacky - in two ways:
+  // (1) we are comparing the top atom's current x point to its initial x point to determine if the molecule has been oscillating
+  // (2) we rely on the fact that when a molecule is cleared or replaced by another molecule, lines are reset (hence the emittedLines.every(...) condition below)
+  // ideally, when a molecule is cleared from/replaced on the canvas, we would dispatch something like RESET_ALL_MOLECULE_POSITIONS
   // but this would require maintaining every atom's center point in Redux store, which adds complexity
   useEffect(() => {
     if (
       topOxygenAtomCenterPoint.x !== topOxygenAtomInitialCenterPoint.x &&
-      moleculesOnCanvas.filter(
-        (molecule) =>
-          molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_STATE.EMPTY,
-      ).length === 1
+      emittedLines.every((line) => _.isEqual(line.points, INITIAL_LINE_POINTS))
     ) {
       setTopOxygenAtomCenterPoint(topOxygenAtomInitialCenterPoint);
       setMiddleOxygenAtomCenterPoint(middleOxygenAtomInitialCenterPoint);
       setBottomOxygenAtomCenterPoint(bottomOxygenAtomInitialCenterPoint);
     }
-  }, [moleculesOnCanvas]);
+  }, [emittedLines]);
 
   return (
     <Group>

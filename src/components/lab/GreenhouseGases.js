@@ -21,33 +21,51 @@ const GreenhouseGases = () => {
   const selectedMoleculeInSideMenu = useSelector(
     ({ lab }) => lab.selectedMoleculeInSideMenu,
   );
+  const highlightAllSideMenuMolecules = useSelector(
+    ({ lab }) => lab.highlightAllSideMenuMolecules,
+  );
 
   return (
     <GasesContainer gasContainerLabel={t('Greenhouse Gases')}>
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuWater />}
         moleculeLabel={t('Water')}
-        isSelected={selectedMoleculeInSideMenu === WATER_MOLECULE_ID}
+        isSelected={
+          selectedMoleculeInSideMenu === WATER_MOLECULE_ID ||
+          highlightAllSideMenuMolecules
+        }
       />
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuCarbonDioxide />}
         moleculeLabel={t('Carbon Dioxide')}
-        isSelected={selectedMoleculeInSideMenu === CARBON_DIOXIDE_MOLECULE_ID}
+        isSelected={
+          selectedMoleculeInSideMenu === CARBON_DIOXIDE_MOLECULE_ID ||
+          highlightAllSideMenuMolecules
+        }
       />
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuOzone />}
         moleculeLabel={t('Ozone')}
-        isSelected={selectedMoleculeInSideMenu === OZONE_MOLECULE_ID}
+        isSelected={
+          selectedMoleculeInSideMenu === OZONE_MOLECULE_ID ||
+          highlightAllSideMenuMolecules
+        }
       />
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuNitrousOxide />}
         moleculeLabel={t('Nitrous Oxide')}
-        isSelected={selectedMoleculeInSideMenu === NITROUS_OXIDE_MOLECULE_ID}
+        isSelected={
+          selectedMoleculeInSideMenu === NITROUS_OXIDE_MOLECULE_ID ||
+          highlightAllSideMenuMolecules
+        }
       />
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuMethane />}
         moleculeLabel={t('Methane')}
-        isSelected={selectedMoleculeInSideMenu === METHANE_MOLECULE_ID}
+        isSelected={
+          selectedMoleculeInSideMenu === METHANE_MOLECULE_ID ||
+          highlightAllSideMenuMolecules
+        }
       />
     </GasesContainer>
   );

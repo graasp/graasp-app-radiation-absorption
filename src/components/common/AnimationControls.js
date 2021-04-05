@@ -18,6 +18,8 @@ import {
   toggleShowReEmission,
   toggleSpectrum,
   toggleMoleculeOscillation,
+  toggleHighlightAllSideMenuMolecules,
+  selectMoleculeInSideMenu,
 } from '../../actions';
 import { CANVAS_MOLECULE_AREA_STATE, SPECTRUMS } from '../../config/constants';
 
@@ -48,22 +50,20 @@ const AnimationControls = () => {
   const onClickPlay = () => {
     // if some molecule has an active deletion area, clear that area
     // this happens when: (1) animation is playing, (2) user clicks on a molecule (activating it for deletion), (3) user clicks back on play button
-    const moleculeAwaitingDeletionIndex = moleculesOnCanvas.findIndex(
-      (molecule) =>
+    moleculesOnCanvas.forEach((molecule, index) => {
+      if (
         molecule.moleculeAreaStatus ===
-        CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE,
-    );
-    if (moleculeAwaitingDeletionIndex !== -1) {
-      dispatch(
-        setMoleculeAreaStatus({
-          areaIndex: moleculeAwaitingDeletionIndex,
-          newStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
-        }),
-        dispatch(setIsPaused(false)),
-      );
-    } else {
-      dispatch(setIsPaused(false));
-    }
+        CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE
+      ) {
+        dispatch(
+          setMoleculeAreaStatus({
+            areaIndex: index,
+            newStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
+          }),
+        );
+      }
+    });
+    dispatch(setIsPaused(false), dispatch(selectMoleculeInSideMenu(null)));
   };
 
   const onClickPause = () => {
@@ -88,6 +88,8 @@ const AnimationControls = () => {
     dispatch(toggleShowAtomsCharges(false));
     dispatch(toggleShowReEmission(false));
     dispatch(toggleSpectrum(SPECTRUMS.INFRARED));
+    dispatch(toggleHighlightAllSideMenuMolecules(false));
+    dispatch(selectMoleculeInSideMenu(null));
   };
 
   return (

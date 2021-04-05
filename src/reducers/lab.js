@@ -12,6 +12,7 @@ import {
   TOGGLE_SHOW_ATOMS_CHARGES,
   TOGGLE_SHOW_RE_EMISSION,
   TOGGLE_MOLECULE_OSCILLATION,
+  HIGHLIGHT_ALL_SIDE_MENU_MOLECULES,
 } from '../types';
 import {
   CANVAS_MOLECULE_AREA_STATE,
@@ -27,6 +28,7 @@ const INITIAL_STATE = {
   showElectricFieldVector: false,
   showAtomsCharges: false,
   showReEmission: false,
+  highlightAllSideMenuMolecules: false,
   moleculesOnCanvas: [
     {
       molecule: '',
@@ -98,6 +100,8 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         ...state,
         showReEmission: payload,
       };
+    case HIGHLIGHT_ALL_SIDE_MENU_MOLECULES:
+      return { ...state, highlightAllSideMenuMolecules: payload };
     case SET_MOLECULE_AREA_STATUS:
       return {
         ...state,

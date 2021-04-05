@@ -11,6 +11,7 @@ import {
   TOGGLE_SHOW_ELECTRIC_FIELD_VECTOR,
   TOGGLE_SHOW_ATOMS_CHARGES,
   TOGGLE_SHOW_RE_EMISSION,
+  HIGHLIGHT_ALL_SIDE_MENU_MOLECULES,
   TOGGLE_MOLECULE_OSCILLATION,
 } from '../types';
 
@@ -74,6 +75,9 @@ const toggleShowAtomsCharges = (payload) => (dispatch) =>
 const toggleShowReEmission = (payload) => (dispatch) =>
   dispatch({ type: TOGGLE_SHOW_RE_EMISSION, payload });
 
+const toggleHighlightAllSideMenuMolecules = (payload) => (dispatch) =>
+  dispatch({ type: HIGHLIGHT_ALL_SIDE_MENU_MOLECULES, payload });
+
 const toggleMoleculeOscillation = (payload) => (dispatch) =>
   dispatch({ type: TOGGLE_MOLECULE_OSCILLATION, payload });
 
@@ -90,5 +94,6 @@ export {
   toggleShowElectricFieldVector,
   toggleShowAtomsCharges,
   toggleShowReEmission,
+  toggleHighlightAllSideMenuMolecules,
   toggleMoleculeOscillation,
 };
