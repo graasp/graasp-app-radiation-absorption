@@ -10,18 +10,12 @@ import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import { green, yellow, orange } from '@material-ui/core/colors';
 import {
   setIsPaused,
-  resetAllLines,
   setMoleculeAreaStatus,
-  resetAllMoleculeAreas,
-  toggleShowElectricFieldVector,
-  toggleShowAtomsCharges,
-  toggleShowReEmission,
-  toggleSpectrum,
   toggleMoleculeOscillation,
-  toggleHighlightAllSideMenuMolecules,
   selectMoleculeInSideMenu,
+  resetAllSettings,
 } from '../../actions';
-import { CANVAS_MOLECULE_AREA_STATE, SPECTRUMS } from '../../config/constants';
+import { CANVAS_MOLECULE_AREA_STATE } from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
   buttonContainer: {
@@ -81,15 +75,7 @@ const AnimationControls = () => {
   };
 
   const onClickReset = () => {
-    dispatch(resetAllMoleculeAreas());
-    dispatch(resetAllLines());
-    dispatch(setIsPaused(true));
-    dispatch(toggleShowElectricFieldVector(false));
-    dispatch(toggleShowAtomsCharges(false));
-    dispatch(toggleShowReEmission(false));
-    dispatch(toggleSpectrum(SPECTRUMS.INFRARED));
-    dispatch(toggleHighlightAllSideMenuMolecules(false));
-    dispatch(selectMoleculeInSideMenu(null));
+    dispatch(resetAllSettings());
   };
 
   return (

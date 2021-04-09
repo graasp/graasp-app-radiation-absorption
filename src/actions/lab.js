@@ -13,6 +13,7 @@ import {
   TOGGLE_SHOW_RE_EMISSION,
   HIGHLIGHT_ALL_SIDE_MENU_MOLECULES,
   TOGGLE_MOLECULE_OSCILLATION,
+  RESET_ALL_SETTINGS,
 } from '../types';
 
 const selectMoleculeInSideMenu = (molecule) => (dispatch) =>
@@ -81,6 +82,9 @@ const toggleHighlightAllSideMenuMolecules = (payload) => (dispatch) =>
 const toggleMoleculeOscillation = (payload) => (dispatch) =>
   dispatch({ type: TOGGLE_MOLECULE_OSCILLATION, payload });
 
+const resetAllSettings = () => (dispatch) =>
+  dispatch({ type: RESET_ALL_SETTINGS });
+
 export {
   selectMoleculeInSideMenu,
   toggleSpectrum,
@@ -96,4 +100,5 @@ export {
   toggleShowReEmission,
   toggleHighlightAllSideMenuMolecules,
   toggleMoleculeOscillation,
+  resetAllSettings,
 };

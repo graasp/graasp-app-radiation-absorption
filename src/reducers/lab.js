@@ -13,6 +13,7 @@ import {
   TOGGLE_SHOW_RE_EMISSION,
   TOGGLE_MOLECULE_OSCILLATION,
   HIGHLIGHT_ALL_SIDE_MENU_MOLECULES,
+  RESET_ALL_SETTINGS,
 } from '../types';
 import {
   CANVAS_MOLECULE_AREA_STATE,
@@ -209,6 +210,8 @@ export default (state = INITIAL_STATE, { type, payload }) => {
           },
         ],
       };
+    case RESET_ALL_SETTINGS:
+      return { ...INITIAL_STATE };
     default:
       return state;
   }

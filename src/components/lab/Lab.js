@@ -80,8 +80,7 @@ class Lab extends Component {
       width: stageWidth,
       height: stageHeight,
     });
-    // if screen height is made *smaller*, reset radiation lines
-    // otherwise, radiation will no longer be properly 'absorbed' (i.e. radiation lines will move past molecules)
+    // if screen size is adjusted, reset radiation lines
     // since visible light radiation passes through all molecules, this reset is only necessary if the spectrum is infrared
     if (
       (stageDimensions.height !== stageHeight ||
