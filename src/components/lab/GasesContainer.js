@@ -9,6 +9,10 @@ const useStyles = makeStyles(() => ({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
   },
+  moleculeContainer: {
+    // this ensures that molecule names are aligned bottom
+    display: 'flex',
+  },
 }));
 
 const GasesContainer = ({ children, gasContainerLabel }) => {
@@ -22,7 +26,9 @@ const GasesContainer = ({ children, gasContainerLabel }) => {
       <div className={classes.container}>
         {children.map((child, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <div key={index}>{child}</div>
+          <div key={index} className={classes.moleculeContainer}>
+            {child}
+          </div>
         ))}
       </div>
     </div>

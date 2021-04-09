@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Stage, Layer } from 'react-konva';
 import CanvasMoleculeContainer from './canvas/CanvasMoleculeContainer';
-import { setStageDimensions, resetAllLines } from '../../actions';
+import {
+  setStageDimensions,
+  resetAllLines,
+  toggleMoleculeOscillation,
+} from '../../actions';
 import {
   BACKGROUND_COLOR,
   CANVAS_NUMBER_OF_MOLECULES,
@@ -41,10 +45,12 @@ class Lab extends Component {
       PropTypes.shape({
         molecule: PropTypes.string.isRequired,
         moleculeAreaStatus: PropTypes.string.isRequired,
+        shouldOscillate: PropTypes.bool.isRequired,
       }),
     ).isRequired,
     dispatchResetAllLines: PropTypes.func.isRequired,
     spectrum: PropTypes.string.isRequired,
+    dispatchToggleMoleculeOscillation: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -65,6 +71,8 @@ class Lab extends Component {
       dispatchResetAllLines,
       stageDimensions,
       spectrum,
+      moleculesOnCanvas,
+      dispatchToggleMoleculeOscillation,
     } = this.props;
     const stageWidth = this.container?.offsetWidth;
     const stageHeight = this.container?.offsetHeight;
@@ -72,14 +80,22 @@ class Lab extends Component {
       width: stageWidth,
       height: stageHeight,
     });
-    // if screen height is made *smaller*, reset radiation lines
-    // otherwise, radiation will no longer be properly 'absorbed' (i.e. radiation lines will move past molecules)
+    // if screen size is adjusted, reset radiation lines
     // since visible light radiation passes through all molecules, this reset is only necessary if the spectrum is infrared
     if (
-      stageDimensions.height > stageHeight &&
+      (stageDimensions.height !== stageHeight ||
+        stageDimensions.width !== stageWidth) &&
       spectrum === SPECTRUMS.INFRARED
     ) {
       dispatchResetAllLines();
+      moleculesOnCanvas.forEach((molecule, index) => {
+        if (molecule.shouldOscillate) {
+          dispatchToggleMoleculeOscillation({
+            areaIndex: index,
+            shouldOscillate: false,
+          });
+        }
+      });
     }
   };
 
@@ -145,6 +161,7 @@ class Lab extends Component {
                       moleculeAreaStatus={
                         moleculesOnCanvas[index].moleculeAreaStatus
                       }
+                      shouldOscillate={moleculesOnCanvas[index].shouldOscillate}
                     />
                   ))}
                 </Layer>
@@ -167,6 +184,7 @@ const mapStateToProps = ({ layout, lab }) => ({
 const mapDispatchToProps = {
   dispatchSetStageDimensions: setStageDimensions,
   dispatchResetAllLines: resetAllLines,
+  dispatchToggleMoleculeOscillation: toggleMoleculeOscillation,
 };
 
 const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Lab);

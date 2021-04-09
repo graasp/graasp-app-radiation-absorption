@@ -10,13 +10,12 @@ import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import { green, yellow, orange } from '@material-ui/core/colors';
 import {
   setIsPaused,
-  resetAllLines,
   setMoleculeAreaStatus,
-  resetAllMoleculeAreas,
-  toggleShowAtomsCharges,
-  toggleSpectrum,
+  toggleMoleculeOscillation,
+  selectMoleculeInSideMenu,
+  resetAllSettings,
 } from '../../actions';
-import { CANVAS_MOLECULE_AREA_STATE, SPECTRUMS } from '../../config/constants';
+import { CANVAS_MOLECULE_AREA_STATE } from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
   buttonContainer: {
@@ -45,69 +44,77 @@ const AnimationControls = () => {
   const onClickPlay = () => {
     // if some molecule has an active deletion area, clear that area
     // this happens when: (1) animation is playing, (2) user clicks on a molecule (activating it for deletion), (3) user clicks back on play button
-    const moleculeAwaitingDeletionIndex = moleculesOnCanvas.findIndex(
-      (molecule) =>
+    moleculesOnCanvas.forEach((molecule, index) => {
+      if (
         molecule.moleculeAreaStatus ===
-        CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE,
-    );
-    if (moleculeAwaitingDeletionIndex !== -1) {
-      dispatch(
-        setMoleculeAreaStatus({
-          areaIndex: moleculeAwaitingDeletionIndex,
-          newStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
-        }),
-        dispatch(setIsPaused(false)),
-      );
-    } else {
-      dispatch(setIsPaused(false));
-    }
+        CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE
+      ) {
+        dispatch(
+          setMoleculeAreaStatus({
+            areaIndex: index,
+            newStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
+          }),
+        );
+      }
+    });
+    dispatch(setIsPaused(false), dispatch(selectMoleculeInSideMenu(null)));
   };
 
   const onClickPause = () => {
     dispatch(setIsPaused(true));
+    moleculesOnCanvas.forEach((molecule, index) => {
+      if (molecule.shouldOscillate) {
+        dispatch(
+          toggleMoleculeOscillation({
+            areaIndex: index,
+            shouldOscillate: false,
+          }),
+        );
+      }
+    });
   };
 
   const onClickReset = () => {
-    dispatch(resetAllMoleculeAreas());
-    dispatch(resetAllLines());
-    dispatch(setIsPaused(true));
-    dispatch(toggleShowAtomsCharges(false));
-    dispatch(toggleSpectrum(SPECTRUMS.INFRARED));
+    dispatch(resetAllSettings());
   };
 
   return (
     <div className={classes.buttonContainer}>
-      <Tooltip title={t('Play')} placement="left">
-        {/* Note: <span>s added to clear console error: 
+      {isPaused ? (
+        <Tooltip title={t('Play')} placement="left">
+          {/* Note: <span>s added to clear console error: 
         'Material-UI: You are providing a disabled `button` child to the Tooltip component...
         Add a simple wrapper element, such as a `span`.' */}
-        <span>
-          <IconButton
-            disabled={canvasIncomplete || !isPaused}
-            onClick={onClickPlay}
-          >
-            <PlayCircleOutlineIcon
-              className={`${classes.button} ${
-                isPaused && !canvasIncomplete ? classes.playButton : ''
-              }`}
-            />
-          </IconButton>
-        </span>
-      </Tooltip>
-      <Tooltip title={t('Pause')} placement="top">
-        <span>
-          <IconButton
-            disabled={canvasIncomplete || isPaused}
-            onClick={onClickPause}
-          >
-            <PauseCircleOutlineIcon
-              className={`${classes.button} ${
-                !isPaused && !canvasIncomplete ? classes.pauseButton : ''
-              }`}
-            />
-          </IconButton>
-        </span>
-      </Tooltip>
+          <span>
+            <IconButton
+              disabled={canvasIncomplete || !isPaused}
+              onClick={onClickPlay}
+            >
+              <PlayCircleOutlineIcon
+                className={`${classes.button} ${
+                  isPaused && !canvasIncomplete ? classes.playButton : ''
+                }`}
+              />
+            </IconButton>
+          </span>
+        </Tooltip>
+      ) : (
+        <Tooltip title={t('Pause')} placement="left">
+          <span>
+            <IconButton
+              disabled={canvasIncomplete || isPaused}
+              onClick={onClickPause}
+            >
+              <PauseCircleOutlineIcon
+                className={`${classes.button} ${
+                  !isPaused && !canvasIncomplete ? classes.pauseButton : ''
+                }`}
+              />
+            </IconButton>
+          </span>
+        </Tooltip>
+      )}
+
       <Tooltip title={t('Reset')} placement="right">
         <span>
           <IconButton onClick={onClickReset}>

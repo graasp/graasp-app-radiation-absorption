@@ -23,7 +23,7 @@ import {
   WATER_MOLECULE_LOWEST_Y,
   NITROUS_OXIDE_MOLECULE_LOWEST_Y,
 } from '../../config/constants';
-import { updateLinePoints } from '../../actions';
+import { toggleMoleculeOscillation, updateLinePoints } from '../../actions';
 
 class EmittedLine extends Component {
   static propTypes = {
@@ -46,8 +46,10 @@ class EmittedLine extends Component {
       PropTypes.shape({
         molecule: PropTypes.string.isRequired,
         moleculeAreaStatus: PropTypes.string.isRequired,
+        shouldOscillate: PropTypes.bool.isRequired,
       }),
     ).isRequired,
+    dispatchToggleMoleculeOscillation: PropTypes.func.isRequired,
   };
 
   componentDidUpdate({ isPaused: prevIsPaused }) {
@@ -68,6 +70,7 @@ class EmittedLine extends Component {
         spectrum,
         moleculesOnCanvas,
         stageDimensions,
+        dispatchToggleMoleculeOscillation,
       } = this.props;
       const currentLinePoints = emittedLines[lineIndex].points;
       const currentLineOscillationConstant =
@@ -108,6 +111,10 @@ class EmittedLine extends Component {
             currentHeight < NITROUS_OXIDE_MOLECULE_LOWEST_Y)
         ) {
           maxPoints = currentLinePoints.length;
+          dispatchToggleMoleculeOscillation({
+            areaIndex: lineIndex,
+            shouldOscillate: true,
+          });
         }
       }
 
@@ -150,6 +157,7 @@ const mapStateToProps = ({ layout, lab }) => ({
 
 const mapDispatchToProps = {
   dispatchUpdateLinePoints: updateLinePoints,
+  dispatchToggleMoleculeOscillation: toggleMoleculeOscillation,
 };
 
 const ConnectedComponent = connect(

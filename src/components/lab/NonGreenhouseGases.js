@@ -17,23 +17,35 @@ const NonGreenhouseGases = () => {
   const selectedMoleculeInSideMenu = useSelector(
     ({ lab }) => lab.selectedMoleculeInSideMenu,
   );
+  const highlightAllSideMenuMolecules = useSelector(
+    ({ lab }) => lab.highlightAllSideMenuMolecules,
+  );
 
   return (
     <GasesContainer gasContainerLabel={t('Non-greenhouse Gases')}>
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuDinitrogen />}
         moleculeLabel={t('Dinitrogen')}
-        isSelected={selectedMoleculeInSideMenu === DINITROGEN_MOLECULE_ID}
+        isSelected={
+          selectedMoleculeInSideMenu === DINITROGEN_MOLECULE_ID ||
+          highlightAllSideMenuMolecules
+        }
       />
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuDioxygen />}
         moleculeLabel={t('Dioxygen')}
-        isSelected={selectedMoleculeInSideMenu === DIOXYGEN_MOLECULE_ID}
+        isSelected={
+          selectedMoleculeInSideMenu === DIOXYGEN_MOLECULE_ID ||
+          highlightAllSideMenuMolecules
+        }
       />
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuArgonMolecule />}
         moleculeLabel={t('Argon')}
-        isSelected={selectedMoleculeInSideMenu === ARGON_MOLECULE_ID}
+        isSelected={
+          selectedMoleculeInSideMenu === ARGON_MOLECULE_ID ||
+          highlightAllSideMenuMolecules
+        }
       />
     </GasesContainer>
   );

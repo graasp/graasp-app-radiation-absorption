@@ -8,7 +8,12 @@ import {
   SET_MOLECULE_AREA_STATUS,
   CLEAR_MOLECULE_AREA,
   RESET_ALL_MOLECULE_AREAS,
+  TOGGLE_SHOW_ELECTRIC_FIELD_VECTOR,
   TOGGLE_SHOW_ATOMS_CHARGES,
+  TOGGLE_SHOW_RE_EMISSION,
+  HIGHLIGHT_ALL_SIDE_MENU_MOLECULES,
+  TOGGLE_MOLECULE_OSCILLATION,
+  RESET_ALL_SETTINGS,
 } from '../types';
 
 const selectMoleculeInSideMenu = (molecule) => (dispatch) =>
@@ -62,8 +67,23 @@ const resetAllLines = (payload) => (dispatch) =>
 const resetAllMoleculeAreas = () => (dispatch) =>
   dispatch({ type: RESET_ALL_MOLECULE_AREAS });
 
+const toggleShowElectricFieldVector = (payload) => (dispatch) =>
+  dispatch({ type: TOGGLE_SHOW_ELECTRIC_FIELD_VECTOR, payload });
+
 const toggleShowAtomsCharges = (payload) => (dispatch) =>
   dispatch({ type: TOGGLE_SHOW_ATOMS_CHARGES, payload });
+
+const toggleShowReEmission = (payload) => (dispatch) =>
+  dispatch({ type: TOGGLE_SHOW_RE_EMISSION, payload });
+
+const toggleHighlightAllSideMenuMolecules = (payload) => (dispatch) =>
+  dispatch({ type: HIGHLIGHT_ALL_SIDE_MENU_MOLECULES, payload });
+
+const toggleMoleculeOscillation = (payload) => (dispatch) =>
+  dispatch({ type: TOGGLE_MOLECULE_OSCILLATION, payload });
+
+const resetAllSettings = () => (dispatch) =>
+  dispatch({ type: RESET_ALL_SETTINGS });
 
 export {
   selectMoleculeInSideMenu,
@@ -75,5 +95,10 @@ export {
   updateLinePoints,
   resetAllLines,
   resetAllMoleculeAreas,
+  toggleShowElectricFieldVector,
   toggleShowAtomsCharges,
+  toggleShowReEmission,
+  toggleHighlightAllSideMenuMolecules,
+  toggleMoleculeOscillation,
+  resetAllSettings,
 };

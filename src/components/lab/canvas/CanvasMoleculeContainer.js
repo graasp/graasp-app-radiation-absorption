@@ -25,32 +25,49 @@ const CanvasMoleculeContainer = ({
   moleculeToDisplay,
   moleculeAreaStatus,
   containerIndex,
+  shouldOscillate,
 }) => {
   let moleculeComponent = null;
   switch (moleculeToDisplay) {
     case WATER_MOLECULE_ID:
-      moleculeComponent = <CanvasWater x={x} />;
+      moleculeComponent = (
+        <CanvasWater x={x} shouldOscillate={shouldOscillate} />
+      );
       break;
     case CARBON_DIOXIDE_MOLECULE_ID:
-      moleculeComponent = <CanvasCarbonDioxide x={x} />;
+      moleculeComponent = (
+        <CanvasCarbonDioxide x={x} shouldOscillate={shouldOscillate} />
+      );
       break;
     case OZONE_MOLECULE_ID:
-      moleculeComponent = <CanvasOzone x={x} />;
+      moleculeComponent = (
+        <CanvasOzone x={x} shouldOscillate={shouldOscillate} />
+      );
       break;
     case NITROUS_OXIDE_MOLECULE_ID:
-      moleculeComponent = <CanvasNitrousOxide x={x} />;
+      moleculeComponent = (
+        <CanvasNitrousOxide x={x} shouldOscillate={shouldOscillate} />
+      );
       break;
     case METHANE_MOLECULE_ID:
-      moleculeComponent = <CanvasMethane x={x} />;
+      moleculeComponent = (
+        <CanvasMethane x={x} shouldOscillate={shouldOscillate} />
+      );
       break;
     case DINITROGEN_MOLECULE_ID:
-      moleculeComponent = <CanvasDinitrogen x={x} />;
+      moleculeComponent = (
+        <CanvasDinitrogen x={x} shouldOscillate={shouldOscillate} />
+      );
       break;
     case DIOXYGEN_MOLECULE_ID:
-      moleculeComponent = <CanvasDioxygen x={x} />;
+      moleculeComponent = (
+        <CanvasDioxygen x={x} shouldOscillate={shouldOscillate} />
+      );
       break;
     case ARGON_MOLECULE_ID:
-      moleculeComponent = <CanvasArgonMolecule x={x} />;
+      moleculeComponent = (
+        <CanvasArgonMolecule x={x} shouldOscillate={shouldOscillate} />
+      );
       break;
     default:
       moleculeComponent = null;
@@ -72,6 +89,7 @@ CanvasMoleculeContainer.propTypes = {
   moleculeToDisplay: PropTypes.string.isRequired,
   moleculeAreaStatus: PropTypes.string.isRequired,
   containerIndex: PropTypes.number.isRequired,
+  shouldOscillate: PropTypes.bool.isRequired,
 };
 
 export default CanvasMoleculeContainer;

@@ -10,6 +10,10 @@ import {
   selectMoleculeInSideMenu,
   displayMolecule,
   setMoleculeAreaStatus,
+  toggleHighlightAllSideMenuMolecules,
+  resetAllLines,
+  toggleMoleculeOscillation,
+  setIsPaused,
 } from '../../../../actions';
 import { CANVAS_MOLECULE_AREA_STATE } from '../../../../config/constants';
 
@@ -26,68 +30,104 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
     ({ lab }) => lab.selectedMoleculeInSideMenu,
   );
   const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
+  const highlightAllSideMenuMolecules = useSelector(
+    ({ lab }) => lab.highlightAllSideMenuMolecules,
+  );
   const dispatch = useDispatch();
 
   // main function/click handler for this component
   const handleClick = () => {
-    // if some molecule has an active deletion area, clear that area
-    const moleculeAwaitingDeletionIndex = moleculesOnCanvas.findIndex(
-      (molecule) =>
-        molecule.moleculeAreaStatus ===
-        CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE,
-    );
-    if (moleculeAwaitingDeletionIndex !== -1) {
-      dispatch(
-        setMoleculeAreaStatus({
-          areaIndex: moleculeAwaitingDeletionIndex,
-          newStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
-        }),
+    // highlightAllSideMenuMolecules is true only in two cases:
+    // (1) an empty molecule area on the canvas is clicked, becoming active
+    // (2) a full molecule area on the canvas is clicked, becoming 'awaiting delete'
+    // in these cases, the side menu molecules are *all* highlighted, and this branch of logic is followed
+    if (highlightAllSideMenuMolecules) {
+      // index of molecule area which is active (if any)
+      const activeMoleculeIndex = moleculesOnCanvas.findIndex(
+        (molecule) =>
+          molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_STATE.ACTIVE,
       );
-    }
-
-    // if some molecule has an active selection area, and a side menu molecule is clicked, display the molecule in that area
-    // this happens in cases where a canvas area is activated, *then* a side menu molecule is clicked
-    const activeMoleculeIndex = moleculesOnCanvas.findIndex(
-      (molecule) =>
-        molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_STATE.ACTIVE,
-    );
-    if (activeMoleculeIndex !== -1 && !selectedMoleculeInSideMenu) {
-      dispatch(
-        displayMolecule({
-          moleculeId,
-          areaIndex: activeMoleculeIndex,
-        }),
+      // index of molecule area which is awaiting delete (if any)
+      const moleculeAwaitingDeletionIndex = moleculesOnCanvas.findIndex(
+        (molecule) =>
+          molecule.moleculeAreaStatus ===
+          CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE,
       );
+      // if a molecule area is active, display this molecule in that area
+      if (activeMoleculeIndex !== -1) {
+        dispatch(
+          displayMolecule({
+            moleculeId,
+            areaIndex: activeMoleculeIndex,
+          }),
+        );
+        dispatch(toggleHighlightAllSideMenuMolecules(false));
+      }
+      // otherwise, display the molecule in the canvas area which has the status of awaiting delete
+      // (one of the two has to be true)
+      // then reset all radiation lines, since this workflow can happen with radiation lines on the canvas
+      else {
+        dispatch(
+          displayMolecule({
+            moleculeId,
+            areaIndex: moleculeAwaitingDeletionIndex,
+          }),
+        );
+        dispatch(toggleHighlightAllSideMenuMolecules(false));
+        dispatch(resetAllLines());
+      }
     }
+    // this branch followed when molecules are selected in the side menu directly
+    else if (!highlightAllSideMenuMolecules) {
+      // first: pause the animation, and if any molecules are oscillating, stop their oscillation
+      dispatch(setIsPaused(true));
+      moleculesOnCanvas.forEach((molecule, index) => {
+        if (molecule.shouldOscillate) {
+          dispatch(
+            toggleMoleculeOscillation({
+              areaIndex: index,
+              shouldOscillate: false,
+            }),
+          );
+        }
+      });
 
-    // this runs if no molecule is selected in the side menu OR a new molecule is selected in the side menu
-    // in this case, make all empty canvas areas active, and of course update side menu selected molecule
-    else if (
-      !selectedMoleculeInSideMenu ||
-      selectedMoleculeInSideMenu !== moleculeId
-    ) {
-      dispatch(
-        selectMoleculeInSideMenu(moleculeId),
-        moleculesOnCanvas.forEach((molecule, index) => {
-          if (
-            molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_STATE.EMPTY
-          ) {
-            dispatch(
-              setMoleculeAreaStatus({
-                areaIndex: index,
-                newStatus: CANVAS_MOLECULE_AREA_STATE.ACTIVE,
-              }),
-            );
-          }
-        }),
-      );
-    }
+      // base case: no molecule is currently selected in the side menu (this happens when e.g. the app starts)
+      // in this case, when clicked: (1) set the clicked molecule as the selectedMoleculeInSideMenu
+      // (2) change all empty canvas areas to active (indicating that they can be filled with the selected molecule)
+      // (3) change all full canvas areas to 'awaiting delete' (indicating that they can be replaced with the selected molecule)
+      if (!selectedMoleculeInSideMenu) {
+        dispatch(
+          selectMoleculeInSideMenu(moleculeId),
+          moleculesOnCanvas.forEach((molecule, index) => {
+            if (
+              molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_STATE.EMPTY
+            ) {
+              dispatch(
+                setMoleculeAreaStatus({
+                  areaIndex: index,
+                  newStatus: CANVAS_MOLECULE_AREA_STATE.ACTIVE,
+                }),
+              );
+            } else if (
+              molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_STATE.FULL
+            ) {
+              dispatch(
+                setMoleculeAreaStatus({
+                  areaIndex: index,
+                  newStatus: CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE,
+                }),
+              );
+            }
+          }),
+        );
+      }
 
-    // the remaining case: a molecule is selected in the side menu, and that same molecule is clicked, i.e. de-selected
-    // in this case, empty side menu selection, and de-activate all active canvas molecule areas
-    else {
-      dispatch(
-        selectMoleculeInSideMenu(null),
+      // second case: a molecule which is already selected in the side menu is clicked again
+      // this is equivalent to de-selecting the molecule; hence (1) set the selectedMoleculeInSideMenu to null
+      // (2) change all active canvas areas to empty, (3) change all 'awaiting delete' canvas areas to full
+      else if (selectedMoleculeInSideMenu === moleculeId) {
+        dispatch(selectMoleculeInSideMenu(null));
         moleculesOnCanvas.forEach((molecule, index) => {
           if (
             molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_STATE.ACTIVE
@@ -98,9 +138,26 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
                 newStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
               }),
             );
+          } else if (
+            molecule.moleculeAreaStatus ===
+            CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE
+          ) {
+            dispatch(
+              setMoleculeAreaStatus({
+                areaIndex: index,
+                newStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
+              }),
+            );
           }
-        }),
-      );
+        });
+      }
+
+      // third case: a side menu molecule is already selected, and a different molecule is clicked
+      // in this case, just update the molecule selected in the side menu
+      // canvas area states will remain as they are in case 2 above
+      else if (selectedMoleculeInSideMenu !== moleculeId) {
+        dispatch(selectMoleculeInSideMenu(moleculeId));
+      }
     }
   };
 
