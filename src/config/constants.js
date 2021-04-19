@@ -3,7 +3,7 @@ export const DRAWER_WIDTH = 430;
 export const DEFAULT_THEME_DIRECTION = 'rtl';
 export const FORM_CONTROL_MIN_WIDTH = 120;
 export const LOGO_SIZE = '48px';
-export const DEFAULT_HEADER_VISIBLE = true;
+export const DEFAULT_HEADER_VISIBLE = false;
 export const MAXIMUM_Z_INDEX = 999999;
 export const BACKGROUND_COLOR = 'lightgrey';
 
@@ -65,7 +65,6 @@ export const CANVAS_METHANE_FOURTH_ATOM_Y_ADJUSTMENT_FACTOR = 12;
 export const CANVAS_NUMBER_OF_MOLECULES = 4;
 export const CANVAS_MOLECULE_AREA_DEFAULT_RADIUS = 90;
 export const CANVAS_MOLECULE_AREA_DEFAULT_DASH = [];
-export const CANVAS_MOLECULE_AREA_Y_POSITION = 150;
 // distance between vertical atoms is created in order for the bonds between atoms to show
 export const CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS = 5;
 export const CANVAS_BOND_COLOR = 'black';
@@ -114,49 +113,59 @@ export const SPECTRUMS = {
   VISIBLE_LIGHT: 'visible-light',
 };
 
-/* ------CONSTANTS USED TO DETERMINE WHEN EMITTED LINES GET 'ABSORBED'------ */
-// note that *only these greenhouse gases* absorb *infrared* radiation
-// the idea is that emitted lines are sliced once a line's y-point passes a molecule's lowpoint defined here
-// e.g. for CO2 the lowest point is: where the middle (carbon) atom is centered, + one radius of that carbon atom, + one radius of the bottom oxygen atom
-export const CARBON_DIOXIDE_MOLECULE_LOWEST_Y =
-  CANVAS_MOLECULE_AREA_Y_POSITION +
-  CANVAS_ATOM_DIMENSIONS[CARBON.size] +
-  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
-  1.9 * CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
-export const METHANE_MOLECULE_LOWEST_Y = CANVAS_MOLECULE_AREA_Y_POSITION;
-export const NITROUS_OXIDE_MOLECULE_LOWEST_Y =
-  CANVAS_MOLECULE_AREA_Y_POSITION +
-  CANVAS_ATOM_DIMENSIONS[NITROGEN.size] +
-  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
-  1.9 * CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
-export const OZONE_MOLECULE_LOWEST_Y =
-  CANVAS_MOLECULE_AREA_Y_POSITION +
-  CANVAS_ATOM_DIMENSIONS[OXYGEN.size] +
-  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
-  1.9 * CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
-export const WATER_MOLECULE_LOWEST_Y =
-  CANVAS_MOLECULE_AREA_Y_POSITION +
-  CANVAS_ATOM_DIMENSIONS[OXYGEN.size] +
-  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
-  1.8 * CANVAS_ATOM_DIMENSIONS[HYDROGEN.size];
-
 /* ------CONSTANTS TO STYLE RADIATION LINES------ */
 export const EMITTED_LINE_STROKE_COLOR = 'black';
 export const EMITTED_LINE_STROKE_WIDTH = 1.5;
-export const EMITTED_LINE_TENSION = 0.3;
-export const EMITTED_LINE_INTERVAL_TIME = 50;
-export const EMITTED_LINE_AMPLITUDE = 20;
-export const EMITTED_LINE_STEP = 10;
-// this choice of constant comes from app #2 (thermal radiation)
-// it is used so that the infrared wavelength in this app is the same as that in app #2
-export const INFRARED_OSCILLATION_CONSTANT_INCREMENT = 289 / 1500;
-export const VISIBLE_LIGHT_OSCILLATION_CONSTANT_INCREMENT = 1400 / 1500;
-// constants for initializing line state
-export const INITIAL_LINE_POINTS = [0, 0];
-export const INITIAL_OSCILLATION_CONSTANT = 0;
 
 /* ------CONSTANTS FOR MOLECULE OSCILLATION------ */
-export const CANVAS_OZONE_OSCILLATION_AMPLITUDE = 20;
-export const CANVAS_CARBON_DIOXIDE_OSCILLATION_AMPLITUDE = 30;
-export const CANVAS_WATER_OSCILLATION_AMPLITUDE = 20;
-export const CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDE = 30;
+// these contants are used to determine the oscillation amplitude and direction of atoms in each greenhouse gas
+// note that the oscillation amplitude of an atom within a molecule is proportional to its charge-to-mass ratio q/m
+// hence, these constants are chosen to satisfy the relative charges/weights of the atoms in a molecule
+
+// middle oxygen atom has charge of 2-, all atoms have the same mass, hence middle atom oscillates with half the amplitude of other atoms
+export const CANVAS_OZONE_OSCILLATION_AMPLITUDES = {
+  TOP_OXYGEN_ATOM: 30,
+  MIDDLE_OXYGEN_ATOM: -15,
+  BOTTOM_OXYGEN_ATOM: 30,
+};
+// carbon atom has charge of 2+ and atomic mass of 12; hence q/m = 1/6
+// oxygen atom has charge of 1- and atomic mass of 16; hence q/m = 1/16
+// hence oscillation of carbon = (1/6)/(1/16) = 16/6 = 2.7x oscillation of oxygen
+export const CANVAS_CARBON_DIOXIDE_OSCILLATION_AMPLITUDES = {
+  TOP_OXYGEN_ATOM: 15,
+  CARBON_ATOM: -40.5,
+  BOTTOM_OXYGEN_ATOM: 15,
+};
+// oxygen atom has charge of 2- and atomic mass of 16; hence q/m = 1/8
+// hydrogen atom has charge of 1- and atomic mass of 8; hence q/m = 1
+// hence oscillation of hydrogen = 8x oscillation of oxygen
+// for visual purposes, the oscillation of the oxygen atom is doubled (otherwise it will be too small to be visible)
+export const CANVAS_WATER_OSCILLATION_AMPLITUDES = {
+  TOP_HYDROGEN_ATOM: 20,
+  OXYGEN_ATOM: -5,
+  BOTTOM_HYDROGEN_ATOM: 20,
+};
+// nitrogen and oxygen have nearly the same mass (14 and 16)
+// for simplicitly, since the central nitrogen has a charge of 2-, we make it oscillate with half the amplitude of the other atoms
+export const CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES = {
+  TOP_NITROGEN_ATOM: 30,
+  MIDDLE_NITROGEN_ATOM: -15,
+  BOTTOM_OXYGEN_ATOM: 30,
+};
+
+/* ------CONSTANTS FOR GENERATING SINE CURVES (RADIATION LINES)------ */
+// Y_INCREMENT_PER_POINT => e.g. generate an x point at y=0, y=π/8, y=π/8 * 2, y=π/8 * 3, ...
+export const Y_INCREMENT_PER_POINT = Math.PI / 8;
+// Y_SHIFT_PER_INTERVAL => every timer interval, shift the sine curve upwards by this much
+export const Y_SHIFT_PER_INTERVAL = Math.PI;
+export const SINE_CURVE_AMPLITUDE = 30;
+// note that the 'natural' period of the sine curve is 2π
+// hence, with INFRARED_RADIATION_PERIOD = 1 / 64, curve period = 2π / (1 / 64) = 128π
+// (indeed, on the canvas, given a Y_SHIFT_PER_INTERVAL of π, one period will complete after 128 intervals, with a distance of 128π from the bottom of the screen)
+export const INFRARED_RADIATION_PERIOD = 1 / 64;
+export const VISIBLE_LIGHT_PERIOD = 1 / 32;
+// 192π => chosen for aesthetic purposes (1.5 periods from bottom of screen)
+export const MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS = 192 * Math.PI;
+export const INTERVALS_TO_REACH_MOLECULE_CENTER =
+  MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS / Y_SHIFT_PER_INTERVAL;
+export const APPLICATION_INTERVAL = 20;

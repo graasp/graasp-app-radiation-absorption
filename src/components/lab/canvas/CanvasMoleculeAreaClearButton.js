@@ -12,7 +12,7 @@ import {
 } from '../../../config/constants';
 import {
   clearMoleculeArea,
-  resetAllLines,
+  resetIntervalCount,
   toggleHighlightAllSideMenuMolecules,
 } from '../../../actions';
 
@@ -23,7 +23,7 @@ const CanvasMoleculeAreaClearButton = ({ x, y, containerIndex }) => {
     dispatch(
       clearMoleculeArea({ areaIndex: containerIndex }),
       dispatch(
-        resetAllLines(),
+        resetIntervalCount(),
         dispatch(toggleHighlightAllSideMenuMolecules(false)),
       ),
     );

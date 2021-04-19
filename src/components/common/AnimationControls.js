@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,11 +11,15 @@ import { green, yellow, orange } from '@material-ui/core/colors';
 import {
   setIsPaused,
   setMoleculeAreaStatus,
-  toggleMoleculeOscillation,
   selectMoleculeInSideMenu,
   resetAllSettings,
+  incrementIntervalCount,
+  toggleHighlightAllSideMenuMolecules,
 } from '../../actions';
-import { CANVAS_MOLECULE_AREA_STATE } from '../../config/constants';
+import {
+  APPLICATION_INTERVAL,
+  CANVAS_MOLECULE_AREA_STATE,
+} from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
   buttonContainer: {
@@ -36,10 +40,25 @@ const AnimationControls = () => {
   const dispatch = useDispatch();
   const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
   const isPaused = useSelector(({ lab }) => lab.isPaused);
+  const applicationInterval = useRef();
 
   const canvasIncomplete = moleculesOnCanvas.some(
     ({ molecule }) => molecule === '',
   );
+
+  const startInterval = () => {
+    applicationInterval.current = setInterval(() => {
+      dispatch(incrementIntervalCount());
+    }, APPLICATION_INTERVAL);
+  };
+
+  useEffect(() => {
+    if (isPaused) {
+      clearInterval(applicationInterval.current);
+    } else if (!isPaused) {
+      startInterval();
+    }
+  }, [isPaused]);
 
   const onClickPlay = () => {
     // if some molecule has an active deletion area, clear that area
@@ -57,21 +76,13 @@ const AnimationControls = () => {
         );
       }
     });
-    dispatch(setIsPaused(false), dispatch(selectMoleculeInSideMenu(null)));
+    dispatch(setIsPaused(false));
+    dispatch(selectMoleculeInSideMenu(null));
+    dispatch(toggleHighlightAllSideMenuMolecules(false));
   };
 
   const onClickPause = () => {
     dispatch(setIsPaused(true));
-    moleculesOnCanvas.forEach((molecule, index) => {
-      if (molecule.shouldOscillate) {
-        dispatch(
-          toggleMoleculeOscillation({
-            areaIndex: index,
-            shouldOscillate: false,
-          }),
-        );
-      }
-    });
   };
 
   const onClickReset = () => {

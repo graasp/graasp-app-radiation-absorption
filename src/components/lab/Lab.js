@@ -4,16 +4,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Stage, Layer } from 'react-konva';
 import CanvasMoleculeContainer from './canvas/CanvasMoleculeContainer';
-import {
-  setStageDimensions,
-  resetAllLines,
-  toggleMoleculeOscillation,
-} from '../../actions';
+import { setStageDimensions } from '../../actions';
 import {
   BACKGROUND_COLOR,
   CANVAS_NUMBER_OF_MOLECULES,
   CANVAS_MOLECULE_AREA_DEFAULT_RADIUS,
-  SPECTRUMS,
+  MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS,
 } from '../../config/constants';
 import EmittedLines from './EmittedLines';
 
@@ -45,12 +41,8 @@ class Lab extends Component {
       PropTypes.shape({
         molecule: PropTypes.string.isRequired,
         moleculeAreaStatus: PropTypes.string.isRequired,
-        shouldOscillate: PropTypes.bool.isRequired,
       }),
     ).isRequired,
-    dispatchResetAllLines: PropTypes.func.isRequired,
-    spectrum: PropTypes.string.isRequired,
-    dispatchToggleMoleculeOscillation: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -66,37 +58,13 @@ class Lab extends Component {
   }
 
   checkSize = () => {
-    const {
-      dispatchSetStageDimensions,
-      dispatchResetAllLines,
-      stageDimensions,
-      spectrum,
-      moleculesOnCanvas,
-      dispatchToggleMoleculeOscillation,
-    } = this.props;
+    const { dispatchSetStageDimensions } = this.props;
     const stageWidth = this.container?.offsetWidth;
     const stageHeight = this.container?.offsetHeight;
     dispatchSetStageDimensions({
       width: stageWidth,
       height: stageHeight,
     });
-    // if screen size is adjusted, reset radiation lines
-    // since visible light radiation passes through all molecules, this reset is only necessary if the spectrum is infrared
-    if (
-      (stageDimensions.height !== stageHeight ||
-        stageDimensions.width !== stageWidth) &&
-      spectrum === SPECTRUMS.INFRARED
-    ) {
-      dispatchResetAllLines();
-      moleculesOnCanvas.forEach((molecule, index) => {
-        if (molecule.shouldOscillate) {
-          dispatchToggleMoleculeOscillation({
-            areaIndex: index,
-            shouldOscillate: false,
-          });
-        }
-      });
-    }
   };
 
   determineMoleculeContainersCenterPoints = (
@@ -154,6 +122,10 @@ class Lab extends Component {
                   {moleculeContainerCenterPoints.map((centerPoint, index) => (
                     <CanvasMoleculeContainer
                       x={centerPoint}
+                      y={
+                        stageDimensions.height -
+                        MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS
+                      }
                       key={centerPoint}
                       isActive={selectedMoleculeInSideMenu !== ''}
                       containerIndex={index}
@@ -161,7 +133,6 @@ class Lab extends Component {
                       moleculeAreaStatus={
                         moleculesOnCanvas[index].moleculeAreaStatus
                       }
-                      shouldOscillate={moleculesOnCanvas[index].shouldOscillate}
                     />
                   ))}
                 </Layer>
@@ -178,13 +149,10 @@ const mapStateToProps = ({ layout, lab }) => ({
   stageDimensions: layout.lab.stageDimensions,
   selectedMoleculeInSideMenu: lab.selectedMoleculeInSideMenu,
   moleculesOnCanvas: lab.moleculesOnCanvas,
-  spectrum: lab.spectrum,
 });
 
 const mapDispatchToProps = {
   dispatchSetStageDimensions: setStageDimensions,
-  dispatchResetAllLines: resetAllLines,
-  dispatchToggleMoleculeOscillation: toggleMoleculeOscillation,
 };
 
 const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Lab);

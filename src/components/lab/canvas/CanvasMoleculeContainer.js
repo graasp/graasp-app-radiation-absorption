@@ -22,52 +22,36 @@ import CanvasArgonMolecule from './molecules/CanvasArgonMolecule';
 
 const CanvasMoleculeContainer = ({
   x,
+  y,
   moleculeToDisplay,
   moleculeAreaStatus,
   containerIndex,
-  shouldOscillate,
 }) => {
   let moleculeComponent = null;
   switch (moleculeToDisplay) {
     case WATER_MOLECULE_ID:
-      moleculeComponent = (
-        <CanvasWater x={x} shouldOscillate={shouldOscillate} />
-      );
+      moleculeComponent = <CanvasWater x={x} y={y} />;
       break;
     case CARBON_DIOXIDE_MOLECULE_ID:
-      moleculeComponent = (
-        <CanvasCarbonDioxide x={x} shouldOscillate={shouldOscillate} />
-      );
+      moleculeComponent = <CanvasCarbonDioxide x={x} y={y} />;
       break;
     case OZONE_MOLECULE_ID:
-      moleculeComponent = (
-        <CanvasOzone x={x} shouldOscillate={shouldOscillate} />
-      );
+      moleculeComponent = <CanvasOzone x={x} y={y} />;
       break;
     case NITROUS_OXIDE_MOLECULE_ID:
-      moleculeComponent = (
-        <CanvasNitrousOxide x={x} shouldOscillate={shouldOscillate} />
-      );
+      moleculeComponent = <CanvasNitrousOxide x={x} y={y} />;
       break;
     case METHANE_MOLECULE_ID:
-      moleculeComponent = (
-        <CanvasMethane x={x} shouldOscillate={shouldOscillate} />
-      );
+      moleculeComponent = <CanvasMethane x={x} y={y} />;
       break;
     case DINITROGEN_MOLECULE_ID:
-      moleculeComponent = (
-        <CanvasDinitrogen x={x} shouldOscillate={shouldOscillate} />
-      );
+      moleculeComponent = <CanvasDinitrogen x={x} y={y} />;
       break;
     case DIOXYGEN_MOLECULE_ID:
-      moleculeComponent = (
-        <CanvasDioxygen x={x} shouldOscillate={shouldOscillate} />
-      );
+      moleculeComponent = <CanvasDioxygen x={x} y={y} />;
       break;
     case ARGON_MOLECULE_ID:
-      moleculeComponent = (
-        <CanvasArgonMolecule x={x} shouldOscillate={shouldOscillate} />
-      );
+      moleculeComponent = <CanvasArgonMolecule x={x} y={y} />;
       break;
     default:
       moleculeComponent = null;
@@ -76,6 +60,7 @@ const CanvasMoleculeContainer = ({
   return (
     <CanvasMoleculeArea
       x={x}
+      y={y}
       moleculeStatus={moleculeAreaStatus}
       containerIndex={containerIndex}
     >
@@ -86,10 +71,10 @@ const CanvasMoleculeContainer = ({
 
 CanvasMoleculeContainer.propTypes = {
   x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
   moleculeToDisplay: PropTypes.string.isRequired,
   moleculeAreaStatus: PropTypes.string.isRequired,
   containerIndex: PropTypes.number.isRequired,
-  shouldOscillate: PropTypes.bool.isRequired,
 };
 
 export default CanvasMoleculeContainer;

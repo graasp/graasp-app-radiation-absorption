@@ -11,9 +11,8 @@ import {
   displayMolecule,
   setMoleculeAreaStatus,
   toggleHighlightAllSideMenuMolecules,
-  resetAllLines,
-  toggleMoleculeOscillation,
   setIsPaused,
+  resetIntervalCount,
 } from '../../../../actions';
 import { CANVAS_MOLECULE_AREA_STATE } from '../../../../config/constants';
 
@@ -65,7 +64,7 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
       }
       // otherwise, display the molecule in the canvas area which has the status of awaiting delete
       // (one of the two has to be true)
-      // then reset all radiation lines, since this workflow can happen with radiation lines on the canvas
+      // then reset the interval count to 0, since this workflow can happen when radiation lines are on the canvas
       else {
         dispatch(
           displayMolecule({
@@ -74,23 +73,13 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
           }),
         );
         dispatch(toggleHighlightAllSideMenuMolecules(false));
-        dispatch(resetAllLines());
+        dispatch(resetIntervalCount());
       }
     }
-    // this branch followed when molecules are selected in the side menu directly
+    // this branch is followed when molecules are selected in the side menu directly
     else if (!highlightAllSideMenuMolecules) {
-      // first: pause the animation, and if any molecules are oscillating, stop their oscillation
+      // first: pause the animation
       dispatch(setIsPaused(true));
-      moleculesOnCanvas.forEach((molecule, index) => {
-        if (molecule.shouldOscillate) {
-          dispatch(
-            toggleMoleculeOscillation({
-              areaIndex: index,
-              shouldOscillate: false,
-            }),
-          );
-        }
-      });
 
       // base case: no molecule is currently selected in the side menu (this happens when e.g. the app starts)
       // in this case, when clicked: (1) set the clicked molecule as the selectedMoleculeInSideMenu

@@ -1,32 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import CanvasArgon from './atoms/CanvasArgon';
-import { CANVAS_MOLECULE_AREA_Y_POSITION } from '../../../../config/constants';
 
-const CanvasArgonMolecule = ({ x, shouldOscillate }) => {
+const CanvasArgonMolecule = ({ x, y }) => {
   const argonAtomInitialCenterPoint = {
     x,
-    y: CANVAS_MOLECULE_AREA_Y_POSITION,
+    y,
   };
-
-  const [argonAtomCenterPoint, setArgonAtomCenterPoint] = useState(
-    argonAtomInitialCenterPoint,
-  );
 
   return (
     <CanvasArgon
-      x={argonAtomCenterPoint.x}
-      y={argonAtomCenterPoint.y}
-      shouldOscillate={shouldOscillate}
-      initialCenterPoint={argonAtomInitialCenterPoint}
-      setCenterPoint={setArgonAtomCenterPoint}
+      x={argonAtomInitialCenterPoint.x}
+      y={argonAtomInitialCenterPoint.y}
     />
   );
 };
 
 CanvasArgonMolecule.propTypes = {
   x: PropTypes.number.isRequired,
-  shouldOscillate: PropTypes.bool.isRequired,
+  y: PropTypes.number.isRequired,
 };
 
 export default CanvasArgonMolecule;
