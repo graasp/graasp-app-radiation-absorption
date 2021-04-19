@@ -7,7 +7,9 @@ import IconButton from '@material-ui/core/IconButton';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
-import { green, yellow, orange } from '@material-ui/core/colors';
+import FastForwardIcon from '@material-ui/icons/FastForward';
+import FastRewindIcon from '@material-ui/icons/FastRewind';
+import { green, yellow, orange, blue, red } from '@material-ui/core/colors';
 import {
   setIsPaused,
   setMoleculeAreaStatus,
@@ -15,6 +17,7 @@ import {
   resetAllSettings,
   incrementIntervalCount,
   toggleHighlightAllSideMenuMolecules,
+  decrementIntervalCount,
 } from '../../actions';
 import {
   APPLICATION_INTERVAL,
@@ -32,6 +35,8 @@ const useStyles = makeStyles(() => ({
   playButton: { color: green[800] },
   pauseButton: { color: yellow[800] },
   resetButton: { color: orange[800] },
+  rewindButton: { color: red[800] },
+  forwardButton: { color: blue[800] },
 }));
 
 const AnimationControls = () => {
@@ -40,6 +45,7 @@ const AnimationControls = () => {
   const dispatch = useDispatch();
   const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
   const isPaused = useSelector(({ lab }) => lab.isPaused);
+  const intervalCount = useSelector(({ lab }) => lab.intervalCount);
   const applicationInterval = useRef();
 
   const canvasIncomplete = moleculesOnCanvas.some(
@@ -89,6 +95,14 @@ const AnimationControls = () => {
     dispatch(resetAllSettings());
   };
 
+  const onClickRewind = () => {
+    dispatch(decrementIntervalCount());
+  };
+
+  const onClickForward = () => {
+    dispatch(incrementIntervalCount());
+  };
+
   return (
     <div className={classes.buttonContainer}>
       {isPaused ? (
@@ -126,11 +140,43 @@ const AnimationControls = () => {
         </Tooltip>
       )}
 
-      <Tooltip title={t('Reset')} placement="right">
+      <Tooltip title={t('Reset')} placement="top">
         <span>
           <IconButton onClick={onClickReset}>
             <RotateLeftIcon
               className={`${classes.button} ${classes.resetButton}`}
+            />
+          </IconButton>
+        </span>
+      </Tooltip>
+
+      <Tooltip title={t('Move Back')} placement="top">
+        <span>
+          <IconButton
+            onClick={onClickRewind}
+            disabled={canvasIncomplete || !isPaused || intervalCount === 0}
+          >
+            <FastRewindIcon
+              className={`${classes.button} ${
+                !canvasIncomplete && isPaused && intervalCount !== 0
+                  ? classes.rewindButton
+                  : ''
+              }`}
+            />
+          </IconButton>
+        </span>
+      </Tooltip>
+
+      <Tooltip title={t('Move Forward')} placement="top">
+        <span>
+          <IconButton
+            onClick={onClickForward}
+            disabled={canvasIncomplete || !isPaused}
+          >
+            <FastForwardIcon
+              className={`${classes.button} ${
+                !canvasIncomplete && isPaused ? classes.forwardButton : ''
+              }`}
             />
           </IconButton>
         </span>

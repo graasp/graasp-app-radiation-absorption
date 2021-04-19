@@ -12,6 +12,7 @@ import {
   HIGHLIGHT_ALL_SIDE_MENU_MOLECULES,
   RESET_ALL_SETTINGS,
   INCREMENT_INTERVAL_COUNT,
+  DECREMENT_INTERVAL_COUNT,
   RESET_INTERVAL_COUNT,
 } from '../types';
 import { CANVAS_MOLECULE_AREA_STATE, SPECTRUMS } from '../config/constants';
@@ -139,6 +140,8 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       };
     case INCREMENT_INTERVAL_COUNT:
       return { ...state, intervalCount: state.intervalCount + 1 };
+    case DECREMENT_INTERVAL_COUNT:
+      return { ...state, intervalCount: state.intervalCount - 1 };
     case RESET_INTERVAL_COUNT:
       return {
         ...state,

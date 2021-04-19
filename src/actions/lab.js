@@ -13,6 +13,7 @@ import {
   RESET_ALL_SETTINGS,
   INCREMENT_INTERVAL_COUNT,
   RESET_INTERVAL_COUNT,
+  DECREMENT_INTERVAL_COUNT,
 } from '../types';
 
 const selectMoleculeInSideMenu = (molecule) => (dispatch) =>
@@ -69,6 +70,9 @@ const toggleHighlightAllSideMenuMolecules = (payload) => (dispatch) =>
 const incrementIntervalCount = () => (dispatch) =>
   dispatch({ type: INCREMENT_INTERVAL_COUNT });
 
+const decrementIntervalCount = () => (dispatch) =>
+  dispatch({ type: DECREMENT_INTERVAL_COUNT });
+
 const resetIntervalCount = () => (dispatch) =>
   dispatch({ type: RESET_INTERVAL_COUNT });
 
@@ -88,6 +92,7 @@ export {
   toggleShowReEmission,
   toggleHighlightAllSideMenuMolecules,
   incrementIntervalCount,
+  decrementIntervalCount,
   resetIntervalCount,
   resetAllSettings,
 };
