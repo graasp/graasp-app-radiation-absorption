@@ -3,8 +3,6 @@ import {
   TOGGLE_SPECTRUM,
   DISPLAY_MOLECULE,
   SET_IS_PAUSED,
-  UPDATE_LINE_POINTS,
-  RESET_ALL_LINES,
   SET_MOLECULE_AREA_STATUS,
   CLEAR_MOLECULE_AREA,
   RESET_ALL_MOLECULE_AREAS,
@@ -12,8 +10,10 @@ import {
   TOGGLE_SHOW_ATOMS_CHARGES,
   TOGGLE_SHOW_RE_EMISSION,
   HIGHLIGHT_ALL_SIDE_MENU_MOLECULES,
-  TOGGLE_MOLECULE_OSCILLATION,
   RESET_ALL_SETTINGS,
+  INCREMENT_INTERVAL_COUNT,
+  RESET_INTERVAL_COUNT,
+  DECREMENT_INTERVAL_COUNT,
 } from '../types';
 
 const selectMoleculeInSideMenu = (molecule) => (dispatch) =>
@@ -52,22 +52,10 @@ const setIsPaused = (payload) => (dispatch) =>
     payload,
   });
 
-const updateLinePoints = (payload) => (dispatch) =>
-  dispatch({
-    type: UPDATE_LINE_POINTS,
-    payload,
-  });
-
-const resetAllLines = (payload) => (dispatch) =>
-  dispatch({
-    type: RESET_ALL_LINES,
-    payload,
-  });
-
 const resetAllMoleculeAreas = () => (dispatch) =>
   dispatch({ type: RESET_ALL_MOLECULE_AREAS });
 
-const toggleShowElectricFieldVector = (payload) => (dispatch) =>
+const toggleShowElectricFieldVectors = (payload) => (dispatch) =>
   dispatch({ type: TOGGLE_SHOW_ELECTRIC_FIELD_VECTOR, payload });
 
 const toggleShowAtomsCharges = (payload) => (dispatch) =>
@@ -79,8 +67,14 @@ const toggleShowReEmission = (payload) => (dispatch) =>
 const toggleHighlightAllSideMenuMolecules = (payload) => (dispatch) =>
   dispatch({ type: HIGHLIGHT_ALL_SIDE_MENU_MOLECULES, payload });
 
-const toggleMoleculeOscillation = (payload) => (dispatch) =>
-  dispatch({ type: TOGGLE_MOLECULE_OSCILLATION, payload });
+const incrementIntervalCount = () => (dispatch) =>
+  dispatch({ type: INCREMENT_INTERVAL_COUNT });
+
+const decrementIntervalCount = () => (dispatch) =>
+  dispatch({ type: DECREMENT_INTERVAL_COUNT });
+
+const resetIntervalCount = () => (dispatch) =>
+  dispatch({ type: RESET_INTERVAL_COUNT });
 
 const resetAllSettings = () => (dispatch) =>
   dispatch({ type: RESET_ALL_SETTINGS });
@@ -92,13 +86,13 @@ export {
   setMoleculeAreaStatus,
   clearMoleculeArea,
   setIsPaused,
-  updateLinePoints,
-  resetAllLines,
   resetAllMoleculeAreas,
-  toggleShowElectricFieldVector,
+  toggleShowElectricFieldVectors,
   toggleShowAtomsCharges,
   toggleShowReEmission,
   toggleHighlightAllSideMenuMolecules,
-  toggleMoleculeOscillation,
+  incrementIntervalCount,
+  decrementIntervalCount,
+  resetIntervalCount,
   resetAllSettings,
 };

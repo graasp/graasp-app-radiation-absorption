@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Group } from 'react-konva';
 import CanvasOxygen from './atoms/CanvasOxygen';
@@ -6,53 +6,35 @@ import CanvasBondContainer from './CanvasBondContainer';
 import {
   CANVAS_ATOM_DIMENSIONS,
   OXYGEN,
-  CANVAS_MOLECULE_AREA_Y_POSITION,
   CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
 } from '../../../../config/constants';
 
-const CanvasDioxygen = ({ x, shouldOscillate }) => {
+const CanvasDioxygen = ({ x, y }) => {
   const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
   const topOxygenAtomInitialCenterPoint = {
     x,
-    y:
-      CANVAS_MOLECULE_AREA_Y_POSITION -
-      oxygenAtomRadius -
-      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
+    y: y - oxygenAtomRadius - CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
   };
   const bottomOxygenAtomInitialCenterPoint = {
     x,
-    y: CANVAS_MOLECULE_AREA_Y_POSITION + oxygenAtomRadius,
+    y: y + oxygenAtomRadius,
   };
-
-  const [topOxygenAtomCenterPoint, setTopOxygenAtomCenterPoint] = useState(
-    topOxygenAtomInitialCenterPoint,
-  );
-  const [
-    bottomOxygenAtomCenterPoint,
-    setBottomOxygenAtomCenterPoint,
-  ] = useState(bottomOxygenAtomInitialCenterPoint);
 
   return (
     <Group>
       {/* CanvasBondContainers need to be at the top here so that they fall behind atoms in the canvas */}
       <CanvasBondContainer
-        from={topOxygenAtomCenterPoint}
-        to={bottomOxygenAtomCenterPoint}
+        from={topOxygenAtomInitialCenterPoint}
+        to={bottomOxygenAtomInitialCenterPoint}
         numberOfBonds={2}
       />
       <CanvasOxygen
-        x={topOxygenAtomCenterPoint.x}
-        y={topOxygenAtomCenterPoint.y}
-        shouldOscillate={shouldOscillate}
-        initialCenterPoint={topOxygenAtomInitialCenterPoint}
-        setCenterPoint={setTopOxygenAtomCenterPoint}
+        x={topOxygenAtomInitialCenterPoint.x}
+        y={topOxygenAtomInitialCenterPoint.y}
       />
       <CanvasOxygen
-        x={bottomOxygenAtomCenterPoint.x}
-        y={bottomOxygenAtomCenterPoint.y}
-        shouldOscillate={shouldOscillate}
-        initialCenterPoint={bottomOxygenAtomInitialCenterPoint}
-        setCenterPoint={setBottomOxygenAtomCenterPoint}
+        x={bottomOxygenAtomInitialCenterPoint.x}
+        y={bottomOxygenAtomInitialCenterPoint.y}
       />
     </Group>
   );
@@ -60,7 +42,7 @@ const CanvasDioxygen = ({ x, shouldOscillate }) => {
 
 CanvasDioxygen.propTypes = {
   x: PropTypes.number.isRequired,
-  shouldOscillate: PropTypes.bool.isRequired,
+  y: PropTypes.number.isRequired,
 };
 
 export default CanvasDioxygen;

@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Circle, Group } from 'react-konva';
 import {
-  CANVAS_MOLECULE_AREA_Y_POSITION,
   CANVAS_MOLECULE_AREA_DEFAULT_RADIUS,
   CANVAS_MOLECULE_AREA_DEFAULT_DASH,
   CANVAS_MOLECULE_AREA_STROKE,
@@ -20,15 +19,16 @@ import {
   displayMolecule,
   setMoleculeAreaStatus,
   setIsPaused,
-  toggleMoleculeOscillation,
   toggleHighlightAllSideMenuMolecules,
-  resetAllLines,
+  resetIntervalCount,
+  toggleShowElectricFieldVectors,
 } from '../../../actions';
 import CanvasMoleculeAreaClearButton from './CanvasMoleculeAreaClearButton';
 import ActiveMoleculeAreaPlus from './ActiveMoleculeAreaPlus';
 
 const CanvasMoleculeArea = ({
   x,
+  y,
   moleculeStatus,
   containerIndex,
   children,
@@ -80,7 +80,8 @@ const CanvasMoleculeArea = ({
     // (1) a molecule has been selected in the side menu,
     // (2) no molecule has been selected in the side menu (hence these molecule areas are being clicked directly)
     if (selectedMoleculeInSideMenu) {
-      // if a molecule has been selected in the side menu, then all canvas areas are converted to either (1) active (if they were empty), (2) awaiting delete (if they were full)
+      // if a molecule has been selected in the side menu, then all canvas areas are converted to either:
+      // (1) active (if they were empty), (2) awaiting delete (if they were full)
       // in such a case, when the area is clicked, simply update it with the selected molecule
       // then reset all active/awaiting delete areas and de-select the previously selected molecule from the side menu
       dispatch(
@@ -91,9 +92,13 @@ const CanvasMoleculeArea = ({
         moleculesOnCanvas.forEach(resetActiveAndAwaitingDeleteAreas),
       );
       dispatch(selectMoleculeInSideMenu(null));
-      // if a molecule is replaced with another while there are radiation lines on the canvas, reset those lines
-      dispatch(resetAllLines());
-    } else if (!selectedMoleculeInSideMenu) {
+      // in case a molecule is replaced with another while there are radiation lines/vectors on the canvas -->
+      // reset animation interval and toggle off electric field vectors
+      dispatch(resetIntervalCount());
+      dispatch(toggleShowElectricFieldVectors(false));
+    }
+    // second branch of main logic for this handler (no molecule has been selected in the side menu)
+    else if (!selectedMoleculeInSideMenu) {
       // if canvas area is empty, (1) reset any other areas that are active/awaiting delete, (2) make area active,
       // (3) highlight all side menu molecules (indicating that they can be chosen to fill this now active area)
       if (currentMoleculeStatus === CANVAS_MOLECULE_AREA_STATE.EMPTY) {
@@ -106,8 +111,8 @@ const CanvasMoleculeArea = ({
           }),
         );
       }
-      // this basically de-selects an active area: an area is made active, then clicked again
-      // in this case, (1) return the area to empty, (2) remove highlight of all side menu molecules
+      // if canvas area is active, (1) return the area to empty, (2) remove highlight of all side menu molecules
+      // i.e. this is de-selecting an active area molecule area (e.g. an area is made active, then clicked again)
       else if (currentMoleculeStatus === CANVAS_MOLECULE_AREA_STATE.ACTIVE) {
         dispatch(toggleHighlightAllSideMenuMolecules(false));
         dispatch(
@@ -117,19 +122,9 @@ const CanvasMoleculeArea = ({
           }),
         );
       }
-      // if canvas area is full (contains molecule), (1) pause any ongoing animations, (2) convert area to awaiting delete,
-      // (3) highlight all side menu molecules (indicating that they can be chosen to replace the molecule in this now awaiting delete area)
+      // if canvas area is full (contains molecule), (1) pause animation, (2) convert area to awaiting delete,
+      // (3) highlight all sidemenu molecules (indicating that they can be chosen to replace the molecule in this now awaiting delete area)
       else if (currentMoleculeStatus === CANVAS_MOLECULE_AREA_STATE.FULL) {
-        moleculesOnCanvas.forEach((molecule, index) => {
-          if (molecule.shouldOscillate) {
-            dispatch(
-              toggleMoleculeOscillation({
-                areaIndex: index,
-                shouldOscillate: false,
-              }),
-            );
-          }
-        });
         dispatch(setIsPaused(true));
         moleculesOnCanvas.forEach(resetActiveAndAwaitingDeleteAreas);
         dispatch(toggleHighlightAllSideMenuMolecules(true));
@@ -140,8 +135,8 @@ const CanvasMoleculeArea = ({
           }),
         );
       }
-      // this basically de-selects an area which is awaiting delete
-      // if an area is awaiting delete and is clicked again, return it to its original ('full') state, and remove highlight of all side menu molecules
+      // if canvas area is awaiting delete, (1) return it to its original ('full') state, (2)) remove highlight of all side menu molecules
+      // i.e. this is de-selecting an area which is awaiting delete
       else if (
         currentMoleculeStatus === CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE
       ) {
@@ -196,7 +191,7 @@ const CanvasMoleculeArea = ({
     >
       <Circle
         x={x}
-        y={CANVAS_MOLECULE_AREA_Y_POSITION}
+        y={y}
         radius={moleculeAreaRadius}
         fill={moleculeAreaFill}
         stroke={CANVAS_MOLECULE_AREA_STROKE}
@@ -204,7 +199,7 @@ const CanvasMoleculeArea = ({
         dash={moleculeAreaDash}
       />
       {moleculeStatus === CANVAS_MOLECULE_AREA_STATE.ACTIVE && (
-        <ActiveMoleculeAreaPlus x={x} y={CANVAS_MOLECULE_AREA_Y_POSITION} />
+        <ActiveMoleculeAreaPlus x={x} y={y} />
       )}
       {(moleculeStatus === CANVAS_MOLECULE_AREA_STATE.FULL ||
         moleculeStatus === CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE) &&
@@ -212,7 +207,7 @@ const CanvasMoleculeArea = ({
       {moleculeStatus === CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE && (
         <CanvasMoleculeAreaClearButton
           x={x}
-          y={CANVAS_MOLECULE_AREA_Y_POSITION}
+          y={y}
           containerIndex={containerIndex}
         />
       )}
@@ -222,6 +217,7 @@ const CanvasMoleculeArea = ({
 
 CanvasMoleculeArea.propTypes = {
   x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
   moleculeStatus: PropTypes.string.isRequired,
   containerIndex: PropTypes.number.isRequired,
   children: PropTypes.oneOfType([

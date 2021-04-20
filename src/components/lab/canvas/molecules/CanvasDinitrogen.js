@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Group } from 'react-konva';
 import CanvasNitrogen from './atoms/CanvasNitrogen';
@@ -6,53 +6,36 @@ import CanvasBondContainer from './CanvasBondContainer';
 import {
   CANVAS_ATOM_DIMENSIONS,
   NITROGEN,
-  CANVAS_MOLECULE_AREA_Y_POSITION,
   CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
 } from '../../../../config/constants';
 
-const CanvasDinitrogen = ({ x, shouldOscillate }) => {
+const CanvasDinitrogen = ({ x, y }) => {
   const nitrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[NITROGEN.size];
   const topNitrogenAtomInitialCenterPoint = {
     x,
     y:
-      CANVAS_MOLECULE_AREA_Y_POSITION -
-      nitrogenAtomRadius -
-      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
+      y - nitrogenAtomRadius - CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
   };
   const bottomNitrogenAtomInitialCenterPoint = {
     x,
-    y: CANVAS_MOLECULE_AREA_Y_POSITION + nitrogenAtomRadius,
+    y: y + nitrogenAtomRadius,
   };
-
-  const [topNitrogenAtomCenterPoint, setTopNitrogenAtomCenterPoint] = useState(
-    topNitrogenAtomInitialCenterPoint,
-  );
-  const [
-    bottomNitrogenAtomCenterPoint,
-    setBottomNitrogenAtomCenterPoint,
-  ] = useState(bottomNitrogenAtomInitialCenterPoint);
 
   return (
     <Group>
       {/* CanvasBondContainers need to be at the top here so that they fall behind atoms in the canvas */}
       <CanvasBondContainer
-        from={topNitrogenAtomCenterPoint}
-        to={bottomNitrogenAtomCenterPoint}
+        from={topNitrogenAtomInitialCenterPoint}
+        to={bottomNitrogenAtomInitialCenterPoint}
         numberOfBonds={3}
       />
       <CanvasNitrogen
-        x={topNitrogenAtomCenterPoint.x}
-        y={topNitrogenAtomCenterPoint.y}
-        shouldOscillate={shouldOscillate}
-        initialCenterPoint={topNitrogenAtomInitialCenterPoint}
-        setCenterPoint={setTopNitrogenAtomCenterPoint}
+        x={topNitrogenAtomInitialCenterPoint.x}
+        y={topNitrogenAtomInitialCenterPoint.y}
       />
       <CanvasNitrogen
-        x={bottomNitrogenAtomCenterPoint.x}
-        y={bottomNitrogenAtomCenterPoint.y}
-        shouldOscillate={shouldOscillate}
-        initialCenterPoint={bottomNitrogenAtomInitialCenterPoint}
-        setCenterPoint={setBottomNitrogenAtomCenterPoint}
+        x={bottomNitrogenAtomInitialCenterPoint.x}
+        y={bottomNitrogenAtomInitialCenterPoint.y}
       />
     </Group>
   );
@@ -60,7 +43,7 @@ const CanvasDinitrogen = ({ x, shouldOscillate }) => {
 
 CanvasDinitrogen.propTypes = {
   x: PropTypes.number.isRequired,
-  shouldOscillate: PropTypes.bool.isRequired,
+  y: PropTypes.number.isRequired,
 };
 
 export default CanvasDinitrogen;

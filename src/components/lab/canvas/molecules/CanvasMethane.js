@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Group } from 'react-konva';
 import CanvasCarbon from './atoms/CanvasCarbon';
@@ -7,7 +7,6 @@ import {
   CANVAS_ATOM_DIMENSIONS,
   HYDROGEN,
   CARBON,
-  CANVAS_MOLECULE_AREA_Y_POSITION,
   CANVAS_METHANE_FIRST_ATOM_X_ADJUSTMENT_FACTOR,
   CANVAS_METHANE_FIRST_ATOM_Y_ADJUSTMENT_FACTOR,
   CANVAS_METHANE_SECOND_ATOM_X_ADJUSTMENT_FACTOR,
@@ -20,19 +19,19 @@ import {
   POSITIVE_CHARGE,
 } from '../../../../config/constants';
 
-const CanvasMethane = ({ x }) => {
+const CanvasMethane = ({ x, y }) => {
   // constants to determine initial center points of atoms in this molecule when component mounts
   // the 'initial center points' are also used in the useEffect hook below, to reset an oscillating molecule
   const hydrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[HYDROGEN.size];
   const carbonAtomRadius = CANVAS_ATOM_DIMENSIONS[CARBON.size];
   const carbonAtomInitialCenterPoint = {
     x,
-    y: CANVAS_MOLECULE_AREA_Y_POSITION,
+    y,
   };
   const topLeftHydrogenAtomInitialCenterPoint = {
     x: x - CANVAS_METHANE_FIRST_ATOM_X_ADJUSTMENT_FACTOR,
     y:
-      CANVAS_MOLECULE_AREA_Y_POSITION -
+      y -
       carbonAtomRadius -
       hydrogenAtomRadius +
       CANVAS_METHANE_FIRST_ATOM_Y_ADJUSTMENT_FACTOR,
@@ -40,7 +39,7 @@ const CanvasMethane = ({ x }) => {
   const topRightHydrogenAtomInitialCenterPoint = {
     x: x + CANVAS_METHANE_SECOND_ATOM_X_ADJUSTMENT_FACTOR,
     y:
-      CANVAS_MOLECULE_AREA_Y_POSITION -
+      y -
       carbonAtomRadius -
       hydrogenAtomRadius +
       CANVAS_METHANE_SECOND_ATOM_Y_ADJUSTMENT_FACTOR,
@@ -48,7 +47,7 @@ const CanvasMethane = ({ x }) => {
   const bottomRightHydrogenAtomInitialCenterPoint = {
     x: x + CANVAS_METHANE_THIRD_ATOM_X_ADJUSTMENT_FACTOR,
     y:
-      CANVAS_MOLECULE_AREA_Y_POSITION +
+      y +
       carbonAtomRadius +
       hydrogenAtomRadius -
       CANVAS_METHANE_THIRD_ATOM_Y_ADJUSTMENT_FACTOR,
@@ -56,69 +55,38 @@ const CanvasMethane = ({ x }) => {
   const bottomLeftHydrogenAtomInitialCenterPoint = {
     x: x - CANVAS_METHANE_FOURTH_ATOM_X_ADJUSTMENT_FACTOR,
     y:
-      CANVAS_MOLECULE_AREA_Y_POSITION +
+      y +
       carbonAtomRadius +
       hydrogenAtomRadius -
       CANVAS_METHANE_FOURTH_ATOM_Y_ADJUSTMENT_FACTOR,
   };
 
-  // initialize state with initial center point constants above
-  const [carbonAtomCenterPoint, setCarbonAtomCenterPoint] = useState(
-    carbonAtomInitialCenterPoint,
-  );
-  const [
-    topLeftHydrogenAtomCenterPoint,
-    setTopLeftHydrogenAtomCenterPoint,
-  ] = useState(topLeftHydrogenAtomInitialCenterPoint);
-  const [
-    topRightHydrogenAtomCenterPoint,
-    setTopRightHydrogenAtomCenterPoint,
-  ] = useState(topRightHydrogenAtomInitialCenterPoint);
-  const [
-    bottomRightHydrogenAtomCenterPoint,
-    setBottomRightHydrogenAtomCenterPoint,
-  ] = useState(bottomRightHydrogenAtomInitialCenterPoint);
-  const [
-    bottomLeftHydrogenAtomCenterPoint,
-    setBottomLeftHydrogenAtomCenterPoint,
-  ] = useState(bottomLeftHydrogenAtomInitialCenterPoint);
-
   return (
     <Group>
       <CanvasCarbon
-        x={carbonAtomCenterPoint.x}
-        y={carbonAtomCenterPoint.y}
+        x={carbonAtomInitialCenterPoint.x}
+        y={carbonAtomInitialCenterPoint.y}
         charge={NEGATIVE_CHARGE}
-        initialCenterPoint={carbonAtomInitialCenterPoint}
-        setCenterPoint={setCarbonAtomCenterPoint}
       />
       <CanvasHydrogen
-        x={topLeftHydrogenAtomCenterPoint.x}
-        y={topLeftHydrogenAtomCenterPoint.y}
+        x={topLeftHydrogenAtomInitialCenterPoint.x}
+        y={topLeftHydrogenAtomInitialCenterPoint.y}
         charge={POSITIVE_CHARGE}
-        initialCenterPoint={topLeftHydrogenAtomInitialCenterPoint}
-        setCenterPoint={setTopLeftHydrogenAtomCenterPoint}
       />
       <CanvasHydrogen
-        x={topRightHydrogenAtomCenterPoint.x}
-        y={topRightHydrogenAtomCenterPoint.y}
+        x={topRightHydrogenAtomInitialCenterPoint.x}
+        y={topRightHydrogenAtomInitialCenterPoint.y}
         charge={POSITIVE_CHARGE}
-        initialCenterPoint={topRightHydrogenAtomInitialCenterPoint}
-        setCenterPoint={setTopRightHydrogenAtomCenterPoint}
       />
       <CanvasHydrogen
-        x={bottomRightHydrogenAtomCenterPoint.x}
-        y={bottomRightHydrogenAtomCenterPoint.y}
+        x={bottomRightHydrogenAtomInitialCenterPoint.x}
+        y={bottomRightHydrogenAtomInitialCenterPoint.y}
         charge={POSITIVE_CHARGE}
-        initialCenterPoint={bottomRightHydrogenAtomInitialCenterPoint}
-        setCenterPoint={setBottomRightHydrogenAtomCenterPoint}
       />
       <CanvasHydrogen
-        x={bottomLeftHydrogenAtomCenterPoint.x}
-        y={bottomLeftHydrogenAtomCenterPoint.y}
+        x={bottomLeftHydrogenAtomInitialCenterPoint.x}
+        y={bottomLeftHydrogenAtomInitialCenterPoint.y}
         charge={POSITIVE_CHARGE}
-        initialCenterPoint={bottomLeftHydrogenAtomInitialCenterPoint}
-        setCenterPoint={setBottomLeftHydrogenAtomCenterPoint}
       />
     </Group>
   );
@@ -126,6 +94,7 @@ const CanvasMethane = ({ x }) => {
 
 CanvasMethane.propTypes = {
   x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
 };
 
 export default CanvasMethane;

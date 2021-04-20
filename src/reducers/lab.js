@@ -3,30 +3,26 @@ import {
   DISPLAY_MOLECULE,
   TOGGLE_SPECTRUM,
   SET_IS_PAUSED,
-  UPDATE_LINE_POINTS,
-  RESET_ALL_LINES,
   SET_MOLECULE_AREA_STATUS,
   CLEAR_MOLECULE_AREA,
   RESET_ALL_MOLECULE_AREAS,
   TOGGLE_SHOW_ELECTRIC_FIELD_VECTOR,
   TOGGLE_SHOW_ATOMS_CHARGES,
   TOGGLE_SHOW_RE_EMISSION,
-  TOGGLE_MOLECULE_OSCILLATION,
   HIGHLIGHT_ALL_SIDE_MENU_MOLECULES,
   RESET_ALL_SETTINGS,
+  INCREMENT_INTERVAL_COUNT,
+  DECREMENT_INTERVAL_COUNT,
+  RESET_INTERVAL_COUNT,
 } from '../types';
-import {
-  CANVAS_MOLECULE_AREA_STATE,
-  SPECTRUMS,
-  INITIAL_LINE_POINTS,
-  INITIAL_OSCILLATION_CONSTANT,
-} from '../config/constants';
+import { CANVAS_MOLECULE_AREA_STATE, SPECTRUMS } from '../config/constants';
 
 const INITIAL_STATE = {
   isPaused: true,
+  intervalCount: 0,
   selectedMoleculeInSideMenu: null,
   spectrum: SPECTRUMS.INFRARED,
-  showElectricFieldVector: false,
+  showElectricFieldVectors: false,
   showAtomsCharges: false,
   showReEmission: false,
   highlightAllSideMenuMolecules: false,
@@ -34,40 +30,18 @@ const INITIAL_STATE = {
     {
       molecule: '',
       moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
-      shouldOscillate: false,
     },
     {
       molecule: '',
       moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
-      shouldOscillate: false,
     },
     {
       molecule: '',
       moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
-      shouldOscillate: false,
     },
     {
       molecule: '',
       moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
-      shouldOscillate: false,
-    },
-  ],
-  emittedLines: [
-    {
-      points: INITIAL_LINE_POINTS,
-      oscillationConstant: INITIAL_OSCILLATION_CONSTANT,
-    },
-    {
-      points: INITIAL_LINE_POINTS,
-      oscillationConstant: INITIAL_OSCILLATION_CONSTANT,
-    },
-    {
-      points: INITIAL_LINE_POINTS,
-      oscillationConstant: INITIAL_OSCILLATION_CONSTANT,
-    },
-    {
-      points: INITIAL_LINE_POINTS,
-      oscillationConstant: INITIAL_OSCILLATION_CONSTANT,
     },
   ],
 };
@@ -89,7 +63,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case TOGGLE_SHOW_ELECTRIC_FIELD_VECTOR:
       return {
         ...state,
-        showElectricFieldVector: payload,
+        showElectricFieldVectors: payload,
       };
     case TOGGLE_SHOW_ATOMS_CHARGES:
       return {
@@ -124,7 +98,6 @@ export default (state = INITIAL_STATE, { type, payload }) => {
             ...state.moleculesOnCanvas[payload.areaIndex],
             molecule: payload.moleculeId,
             moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
-            shouldOscillate: false,
           },
           ...state.moleculesOnCanvas.slice(payload.areaIndex + 1),
         ],
@@ -142,52 +115,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
           ...state.moleculesOnCanvas.slice(payload.areaIndex + 1),
         ],
       };
-    case TOGGLE_MOLECULE_OSCILLATION:
-      return {
-        ...state,
-        moleculesOnCanvas: [
-          ...state.moleculesOnCanvas.slice(0, payload.areaIndex),
-          {
-            ...state.moleculesOnCanvas[payload.areaIndex],
-            shouldOscillate: payload.shouldOscillate,
-          },
-          ...state.moleculesOnCanvas.slice(payload.areaIndex + 1),
-        ],
-      };
-    case UPDATE_LINE_POINTS:
-      return {
-        ...state,
-        emittedLines: [
-          ...state.emittedLines.slice(0, payload.lineIndex),
-          {
-            points: payload.points,
-            oscillationConstant: payload.oscillationConstant,
-          },
-          ...state.emittedLines.slice(payload.lineIndex + 1),
-        ],
-      };
-    case RESET_ALL_LINES:
-      return {
-        ...state,
-        emittedLines: [
-          {
-            points: INITIAL_LINE_POINTS,
-            oscillationConstant: INITIAL_OSCILLATION_CONSTANT,
-          },
-          {
-            points: INITIAL_LINE_POINTS,
-            oscillationConstant: INITIAL_OSCILLATION_CONSTANT,
-          },
-          {
-            points: INITIAL_LINE_POINTS,
-            oscillationConstant: INITIAL_OSCILLATION_CONSTANT,
-          },
-          {
-            points: INITIAL_LINE_POINTS,
-            oscillationConstant: INITIAL_OSCILLATION_CONSTANT,
-          },
-        ],
-      };
+
     case RESET_ALL_MOLECULE_AREAS:
       return {
         ...state,
@@ -209,6 +137,15 @@ export default (state = INITIAL_STATE, { type, payload }) => {
             moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
           },
         ],
+      };
+    case INCREMENT_INTERVAL_COUNT:
+      return { ...state, intervalCount: state.intervalCount + 1 };
+    case DECREMENT_INTERVAL_COUNT:
+      return { ...state, intervalCount: state.intervalCount - 1 };
+    case RESET_INTERVAL_COUNT:
+      return {
+        ...state,
+        intervalCount: 0,
       };
     case RESET_ALL_SETTINGS:
       return { ...INITIAL_STATE };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,15 +7,25 @@ import IconButton from '@material-ui/core/IconButton';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
-import { green, yellow, orange } from '@material-ui/core/colors';
+import FastForwardIcon from '@material-ui/icons/FastForward';
+import FastRewindIcon from '@material-ui/icons/FastRewind';
+import { green, yellow, orange, blue, red } from '@material-ui/core/colors';
+import clsx from 'clsx';
 import {
   setIsPaused,
   setMoleculeAreaStatus,
-  toggleMoleculeOscillation,
   selectMoleculeInSideMenu,
   resetAllSettings,
+  incrementIntervalCount,
+  toggleHighlightAllSideMenuMolecules,
+  decrementIntervalCount,
+  toggleShowElectricFieldVectors,
 } from '../../actions';
-import { CANVAS_MOLECULE_AREA_STATE } from '../../config/constants';
+import {
+  APPLICATION_INTERVAL,
+  CANVAS_MOLECULE_AREA_STATE,
+  INTERVALS_TO_REACH_MOLECULE_CENTER,
+} from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
   buttonContainer: {
@@ -28,6 +38,8 @@ const useStyles = makeStyles(() => ({
   playButton: { color: green[800] },
   pauseButton: { color: yellow[800] },
   resetButton: { color: orange[800] },
+  rewindButton: { color: red[800] },
+  forwardButton: { color: blue[800] },
 }));
 
 const AnimationControls = () => {
@@ -36,10 +48,26 @@ const AnimationControls = () => {
   const dispatch = useDispatch();
   const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
   const isPaused = useSelector(({ lab }) => lab.isPaused);
+  const intervalCount = useSelector(({ lab }) => lab.intervalCount);
+  const applicationInterval = useRef();
 
   const canvasIncomplete = moleculesOnCanvas.some(
     ({ molecule }) => molecule === '',
   );
+
+  const startInterval = () => {
+    applicationInterval.current = setInterval(() => {
+      dispatch(incrementIntervalCount());
+    }, APPLICATION_INTERVAL);
+  };
+
+  useEffect(() => {
+    if (isPaused) {
+      clearInterval(applicationInterval.current);
+    } else if (!isPaused) {
+      startInterval();
+    }
+  }, [isPaused]);
 
   const onClickPlay = () => {
     // if some molecule has an active deletion area, clear that area
@@ -57,25 +85,28 @@ const AnimationControls = () => {
         );
       }
     });
-    dispatch(setIsPaused(false), dispatch(selectMoleculeInSideMenu(null)));
+    dispatch(setIsPaused(false));
+    dispatch(selectMoleculeInSideMenu(null));
+    dispatch(toggleHighlightAllSideMenuMolecules(false));
   };
 
   const onClickPause = () => {
     dispatch(setIsPaused(true));
-    moleculesOnCanvas.forEach((molecule, index) => {
-      if (molecule.shouldOscillate) {
-        dispatch(
-          toggleMoleculeOscillation({
-            areaIndex: index,
-            shouldOscillate: false,
-          }),
-        );
-      }
-    });
   };
 
   const onClickReset = () => {
     dispatch(resetAllSettings());
+  };
+
+  const onClickRewind = () => {
+    dispatch(decrementIntervalCount());
+    if (intervalCount === INTERVALS_TO_REACH_MOLECULE_CENTER) {
+      dispatch(toggleShowElectricFieldVectors(false));
+    }
+  };
+
+  const onClickForward = () => {
+    dispatch(incrementIntervalCount());
   };
 
   return (
@@ -91,9 +122,9 @@ const AnimationControls = () => {
               onClick={onClickPlay}
             >
               <PlayCircleOutlineIcon
-                className={`${classes.button} ${
-                  isPaused && !canvasIncomplete ? classes.playButton : ''
-                }`}
+                className={clsx(classes.button, {
+                  [classes.playButton]: !canvasIncomplete && isPaused,
+                })}
               />
             </IconButton>
           </span>
@@ -106,14 +137,45 @@ const AnimationControls = () => {
               onClick={onClickPause}
             >
               <PauseCircleOutlineIcon
-                className={`${classes.button} ${
-                  !isPaused && !canvasIncomplete ? classes.pauseButton : ''
-                }`}
+                className={clsx(classes.button, {
+                  [classes.pauseButton]: !isPaused && !canvasIncomplete,
+                })}
               />
             </IconButton>
           </span>
         </Tooltip>
       )}
+
+      <Tooltip title={t('Move Back')} placement="top">
+        <span>
+          <IconButton
+            onClick={onClickRewind}
+            disabled={canvasIncomplete || !isPaused || intervalCount === 0}
+          >
+            <FastRewindIcon
+              className={clsx(classes.button, {
+                [classes.rewindButton]:
+                  !canvasIncomplete && isPaused && intervalCount !== 0,
+              })}
+            />
+          </IconButton>
+        </span>
+      </Tooltip>
+
+      <Tooltip title={t('Move Forward')} placement="top">
+        <span>
+          <IconButton
+            onClick={onClickForward}
+            disabled={canvasIncomplete || !isPaused}
+          >
+            <FastForwardIcon
+              className={clsx(classes.button, {
+                [classes.forwardButton]: !canvasIncomplete && isPaused,
+              })}
+            />
+          </IconButton>
+        </span>
+      </Tooltip>
 
       <Tooltip title={t('Reset')} placement="right">
         <span>

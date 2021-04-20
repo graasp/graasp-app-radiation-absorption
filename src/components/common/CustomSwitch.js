@@ -17,7 +17,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomSwitch = ({ switchStatus, switchDispatch, switchLabel }) => {
+const CustomSwitch = ({
+  switchStatus,
+  switchDispatch,
+  switchLabel,
+  disabled,
+}) => {
   const classes = useStyles();
 
   const onSwitchToggle = () => {
@@ -45,6 +50,7 @@ const CustomSwitch = ({ switchStatus, switchDispatch, switchLabel }) => {
       control={Control}
       label={Label}
       labelPlacement="start"
+      disabled={disabled}
     />
   );
 };
@@ -53,6 +59,7 @@ CustomSwitch.propTypes = {
   switchStatus: PropTypes.bool.isRequired,
   switchDispatch: PropTypes.func.isRequired,
   switchLabel: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default CustomSwitch;
