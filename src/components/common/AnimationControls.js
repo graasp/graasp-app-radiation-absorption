@@ -18,10 +18,12 @@ import {
   incrementIntervalCount,
   toggleHighlightAllSideMenuMolecules,
   decrementIntervalCount,
+  toggleShowElectricFieldVectors,
 } from '../../actions';
 import {
   APPLICATION_INTERVAL,
   CANVAS_MOLECULE_AREA_STATE,
+  INTERVALS_TO_REACH_MOLECULE_CENTER,
 } from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
@@ -97,6 +99,9 @@ const AnimationControls = () => {
 
   const onClickRewind = () => {
     dispatch(decrementIntervalCount());
+    if (intervalCount === INTERVALS_TO_REACH_MOLECULE_CENTER) {
+      dispatch(toggleShowElectricFieldVectors(false));
+    }
   };
 
   const onClickForward = () => {
@@ -140,16 +145,6 @@ const AnimationControls = () => {
         </Tooltip>
       )}
 
-      <Tooltip title={t('Reset')} placement="top">
-        <span>
-          <IconButton onClick={onClickReset}>
-            <RotateLeftIcon
-              className={`${classes.button} ${classes.resetButton}`}
-            />
-          </IconButton>
-        </span>
-      </Tooltip>
-
       <Tooltip title={t('Move Back')} placement="top">
         <span>
           <IconButton
@@ -177,6 +172,16 @@ const AnimationControls = () => {
               className={`${classes.button} ${
                 !canvasIncomplete && isPaused ? classes.forwardButton : ''
               }`}
+            />
+          </IconButton>
+        </span>
+      </Tooltip>
+
+      <Tooltip title={t('Reset')} placement="right">
+        <span>
+          <IconButton onClick={onClickReset}>
+            <RotateLeftIcon
+              className={`${classes.button} ${classes.resetButton}`}
             />
           </IconButton>
         </span>

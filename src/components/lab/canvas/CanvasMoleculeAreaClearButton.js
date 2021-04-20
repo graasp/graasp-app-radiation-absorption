@@ -14,6 +14,7 @@ import {
   clearMoleculeArea,
   resetIntervalCount,
   toggleHighlightAllSideMenuMolecules,
+  toggleShowElectricFieldVectors,
 } from '../../../actions';
 
 const CanvasMoleculeAreaClearButton = ({ x, y, containerIndex }) => {
@@ -27,6 +28,7 @@ const CanvasMoleculeAreaClearButton = ({ x, y, containerIndex }) => {
         dispatch(toggleHighlightAllSideMenuMolecules(false)),
       ),
     );
+    dispatch(toggleShowElectricFieldVectors(false));
   };
 
   return (

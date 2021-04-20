@@ -55,7 +55,7 @@ const setIsPaused = (payload) => (dispatch) =>
 const resetAllMoleculeAreas = () => (dispatch) =>
   dispatch({ type: RESET_ALL_MOLECULE_AREAS });
 
-const toggleShowElectricFieldVector = (payload) => (dispatch) =>
+const toggleShowElectricFieldVectors = (payload) => (dispatch) =>
   dispatch({ type: TOGGLE_SHOW_ELECTRIC_FIELD_VECTOR, payload });
 
 const toggleShowAtomsCharges = (payload) => (dispatch) =>
@@ -87,7 +87,7 @@ export {
   clearMoleculeArea,
   setIsPaused,
   resetAllMoleculeAreas,
-  toggleShowElectricFieldVector,
+  toggleShowElectricFieldVectors,
   toggleShowAtomsCharges,
   toggleShowReEmission,
   toggleHighlightAllSideMenuMolecules,

@@ -22,7 +22,7 @@ const INITIAL_STATE = {
   intervalCount: 0,
   selectedMoleculeInSideMenu: null,
   spectrum: SPECTRUMS.INFRARED,
-  showElectricFieldVector: false,
+  showElectricFieldVectors: false,
   showAtomsCharges: false,
   showReEmission: false,
   highlightAllSideMenuMolecules: false,
@@ -63,7 +63,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case TOGGLE_SHOW_ELECTRIC_FIELD_VECTOR:
       return {
         ...state,
-        showElectricFieldVector: payload,
+        showElectricFieldVectors: payload,
       };
     case TOGGLE_SHOW_ATOMS_CHARGES:
       return {

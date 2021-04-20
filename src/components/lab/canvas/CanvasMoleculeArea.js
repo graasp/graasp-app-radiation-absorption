@@ -21,6 +21,7 @@ import {
   setIsPaused,
   toggleHighlightAllSideMenuMolecules,
   resetIntervalCount,
+  toggleShowElectricFieldVectors,
 } from '../../../actions';
 import CanvasMoleculeAreaClearButton from './CanvasMoleculeAreaClearButton';
 import ActiveMoleculeAreaPlus from './ActiveMoleculeAreaPlus';
@@ -90,8 +91,9 @@ const CanvasMoleculeArea = ({
         moleculesOnCanvas.forEach(resetActiveAndAwaitingDeleteAreas),
       );
       dispatch(selectMoleculeInSideMenu(null));
-      // in case a molecule is replaced with another while there are radiation lines on the canvas, reset animation interval
+      // in case a molecule is replaced with another while there are radiation lines/vectors on the canvas, reset animation interval and toggle off electric field vectors
       dispatch(resetIntervalCount());
+      dispatch(toggleShowElectricFieldVectors(false));
     }
     // second branch of main logic for this handler (no molecule has been selected in the side menu)
     else if (!selectedMoleculeInSideMenu) {

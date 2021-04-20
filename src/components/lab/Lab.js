@@ -10,8 +10,10 @@ import {
   CANVAS_NUMBER_OF_MOLECULES,
   CANVAS_MOLECULE_AREA_DEFAULT_RADIUS,
   MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS,
+  SPECTRUMS,
 } from '../../config/constants';
 import EmittedLines from './EmittedLines';
+import ElectricFieldVectorGroups from './ElectricFieldVectorGroups';
 
 const styles = () => ({
   container: {
@@ -43,6 +45,8 @@ class Lab extends Component {
         moleculeAreaStatus: PropTypes.string.isRequired,
       }),
     ).isRequired,
+    spectrum: PropTypes.string.isRequired,
+    showElectricFieldVectors: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -92,6 +96,8 @@ class Lab extends Component {
       stageDimensions,
       selectedMoleculeInSideMenu,
       moleculesOnCanvas,
+      spectrum,
+      showElectricFieldVectors,
     } = this.props;
     const moleculeContainerCenterPoints = this.determineMoleculeContainersCenterPoints(
       stageDimensions.width,
@@ -119,6 +125,12 @@ class Lab extends Component {
               <Provider store={store}>
                 <Layer>
                   <EmittedLines xPoints={moleculeContainerCenterPoints} />
+                  {spectrum === SPECTRUMS.INFRARED &&
+                    showElectricFieldVectors &&
+                    moleculeContainerCenterPoints.map((centerPoint, index) => (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <ElectricFieldVectorGroups x={centerPoint} key={index} />
+                    ))}
                   {moleculeContainerCenterPoints.map((centerPoint, index) => (
                     <CanvasMoleculeContainer
                       x={centerPoint}
@@ -149,6 +161,8 @@ const mapStateToProps = ({ layout, lab }) => ({
   stageDimensions: layout.lab.stageDimensions,
   selectedMoleculeInSideMenu: lab.selectedMoleculeInSideMenu,
   moleculesOnCanvas: lab.moleculesOnCanvas,
+  spectrum: lab.spectrum,
+  showElectricFieldVectors: lab.showElectricFieldVectors,
 });
 
 const mapDispatchToProps = {

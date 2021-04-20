@@ -169,3 +169,22 @@ export const MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS = 192 * Math.PI;
 export const INTERVALS_TO_REACH_MOLECULE_CENTER =
   MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS / Y_SHIFT_PER_INTERVAL;
 export const APPLICATION_INTERVAL = 20;
+// note here that INFRARED_RADIATION_CURVE_''INTERVAL'' is used in its mathematical sense of distance (and not its JavaScript sense of time)
+// every sine curve period has 4 intervals (0 to peak, peak to 0, 0 to -peak, -peak to 0)
+export const INFRARED_RADIATION_CURVE_INTERVAL =
+  (2 * Math.PI) / INFRARED_RADIATION_PERIOD / 4;
+// and here the two senses of 'intervals' are combined...
+export const INTERVALS_TO_COMPLETE_INFRARED_RADIATION_INTERVAL =
+  INFRARED_RADIATION_CURVE_INTERVAL / Y_SHIFT_PER_INTERVAL;
+
+/* ------CONSTANTS ELECTRIC FIELD VECTORS (ARROWS)------ */
+export const ARROW_POINTER_LENGTH = 2;
+export const ARROW_POINTER_WIDTH = 4;
+export const ARROW_STROKE_WIDTH = 6;
+// large arrow meets the sine curve at its peak (amplitude), plus a little more taken off (- 2) because it's nicer
+export const LARGE_ALLOW_LENGTH =
+  SINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 2;
+export const SMALL_ARROW_LENGTH =
+  SINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 6;
+export const SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW = 20;
+export const ARROW_STROKE_COLOR = 'darkblue';

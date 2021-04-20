@@ -5,7 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 import { SPECTRUMS } from '../../config/constants';
-import { resetIntervalCount, toggleSpectrum } from '../../actions';
+import {
+  resetIntervalCount,
+  toggleShowElectricFieldVectors,
+  toggleSpectrum,
+} from '../../actions';
 
 const useStyles = makeStyles(() => ({
   switchWithTwoLabelsContainer: {
@@ -30,6 +34,7 @@ const SpectrumToggle = () => {
         resetIntervalCount(),
         dispatch(toggleSpectrum(SPECTRUMS.VISIBLE_LIGHT)),
       );
+      dispatch(toggleShowElectricFieldVectors(false));
     }
   };
 

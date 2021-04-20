@@ -10,12 +10,17 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {
-  toggleShowElectricFieldVector,
+  toggleShowElectricFieldVectors,
   toggleShowAtomsCharges,
   toggleShowReEmission,
   toggleSideMenu,
 } from '../../actions';
-import { DRAWER_WIDTH, DEFAULT_THEME_DIRECTION } from '../../config/constants';
+import {
+  DRAWER_WIDTH,
+  DEFAULT_THEME_DIRECTION,
+  INTERVALS_TO_REACH_MOLECULE_CENTER,
+  SPECTRUMS,
+} from '../../config/constants';
 import GreenhouseGases from '../lab/GreenhouseGases';
 import NonGreenhouseGases from '../lab/NonGreenhouseGases';
 import SpectrumToggle from './SpectrumToggle';
@@ -56,12 +61,14 @@ class SideMenu extends React.Component {
     t: PropTypes.func.isRequired,
     showSideMenu: PropTypes.bool.isRequired,
     dispatchToggleSideMenu: PropTypes.func.isRequired,
-    showElectricFieldVector: PropTypes.bool.isRequired,
+    showElectricFieldVectors: PropTypes.bool.isRequired,
     showAtomsCharges: PropTypes.bool.isRequired,
     showReEmission: PropTypes.bool.isRequired,
-    dispatchToggleShowElectricFieldVector: PropTypes.func.isRequired,
+    dispatchToggleShowElectricFieldVectors: PropTypes.func.isRequired,
     dispatchToggleShowAtomsCharges: PropTypes.func.isRequired,
     dispatchToggleShowReEmission: PropTypes.func.isRequired,
+    intervalCount: PropTypes.number.isRequired,
+    spectrum: PropTypes.string.isRequired,
   };
 
   handleToggleSideMenu = (open) => () => {
@@ -92,13 +99,15 @@ class SideMenu extends React.Component {
     const {
       classes,
       showSideMenu,
-      showElectricFieldVector,
+      showElectricFieldVectors,
       showAtomsCharges,
       showReEmission,
-      dispatchToggleShowElectricFieldVector,
+      dispatchToggleShowElectricFieldVectors,
       dispatchToggleShowAtomsCharges,
       dispatchToggleShowReEmission,
       t,
+      intervalCount,
+      spectrum,
     } = this.props;
 
     return (
@@ -122,14 +131,19 @@ class SideMenu extends React.Component {
             <NonGreenhouseGases />
             <Divider className={classes.sideMenuDivider} />
             <CustomSwitch
-              switchLabel={t('Electric field vector')}
-              switchStatus={showElectricFieldVector}
-              switchDispatch={dispatchToggleShowElectricFieldVector}
+              switchLabel={t('Electric field vectors')}
+              switchStatus={showElectricFieldVectors}
+              switchDispatch={dispatchToggleShowElectricFieldVectors}
+              disabled={
+                intervalCount < INTERVALS_TO_REACH_MOLECULE_CENTER ||
+                spectrum === SPECTRUMS.VISIBLE_LIGHT
+              }
             />
             <CustomSwitch
               switchLabel={t('Sign of charges')}
               switchStatus={showAtomsCharges}
               switchDispatch={dispatchToggleShowAtomsCharges}
+              disabled={false}
             />
             <CustomSwitch
               switchLabel={t('Re-emission')}
@@ -145,14 +159,16 @@ class SideMenu extends React.Component {
 
 const mapStateToProps = ({ layout, lab }) => ({
   showSideMenu: layout.showSideMenu,
-  showElectricFieldVector: lab.showElectricFieldVector,
+  showElectricFieldVectors: lab.showElectricFieldVectors,
   showAtomsCharges: lab.showAtomsCharges,
   showReEmission: lab.showReEmission,
+  intervalCount: lab.intervalCount,
+  spectrum: lab.spectrum,
 });
 
 const mapDispatchToProps = {
   dispatchToggleSideMenu: toggleSideMenu,
-  dispatchToggleShowElectricFieldVector: toggleShowElectricFieldVector,
+  dispatchToggleShowElectricFieldVectors: toggleShowElectricFieldVectors,
   dispatchToggleShowAtomsCharges: toggleShowAtomsCharges,
   dispatchToggleShowReEmission: toggleShowReEmission,
 };
