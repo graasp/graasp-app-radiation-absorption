@@ -3,18 +3,14 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Line } from 'react-konva';
 import {
-  CARBON_DIOXIDE_MOLECULE_ID,
   EMITTED_LINE_STROKE_COLOR,
   EMITTED_LINE_STROKE_WIDTH,
+  GREENHOUSE_GASES,
   INFRARED_RADIATION_PERIOD,
-  METHANE_MOLECULE_ID,
   MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS,
-  NITROUS_OXIDE_MOLECULE_ID,
-  OZONE_MOLECULE_ID,
   SINE_CURVE_AMPLITUDE,
   SPECTRUMS,
   VISIBLE_LIGHT_PERIOD,
-  WATER_MOLECULE_ID,
   Y_INCREMENT_PER_POINT,
   Y_SHIFT_PER_INTERVAL,
 } from '../../config/constants';
@@ -36,13 +32,7 @@ const EmittedLine = ({ x, lineIndex }) => {
   let absorptionPoint = 0;
   if (spectrum === SPECTRUMS.INFRARED) {
     period = INFRARED_RADIATION_PERIOD;
-    if (
-      currentLineMolecule === OZONE_MOLECULE_ID ||
-      currentLineMolecule === METHANE_MOLECULE_ID ||
-      currentLineMolecule === WATER_MOLECULE_ID ||
-      currentLineMolecule === CARBON_DIOXIDE_MOLECULE_ID ||
-      currentLineMolecule === NITROUS_OXIDE_MOLECULE_ID
-    ) {
+    if (GREENHOUSE_GASES.includes(currentLineMolecule)) {
       absorptionPoint = stageHeight - MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS;
     }
   }

@@ -10,6 +10,7 @@ import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import FastForwardIcon from '@material-ui/icons/FastForward';
 import FastRewindIcon from '@material-ui/icons/FastRewind';
 import { green, yellow, orange, blue, red } from '@material-ui/core/colors';
+import clsx from 'clsx';
 import {
   setIsPaused,
   setMoleculeAreaStatus,
@@ -121,9 +122,9 @@ const AnimationControls = () => {
               onClick={onClickPlay}
             >
               <PlayCircleOutlineIcon
-                className={`${classes.button} ${
-                  isPaused && !canvasIncomplete ? classes.playButton : ''
-                }`}
+                className={clsx(classes.button, {
+                  [classes.playButton]: !canvasIncomplete && isPaused,
+                })}
               />
             </IconButton>
           </span>
@@ -136,9 +137,9 @@ const AnimationControls = () => {
               onClick={onClickPause}
             >
               <PauseCircleOutlineIcon
-                className={`${classes.button} ${
-                  !isPaused && !canvasIncomplete ? classes.pauseButton : ''
-                }`}
+                className={clsx(classes.button, {
+                  [classes.pauseButton]: !isPaused && !canvasIncomplete,
+                })}
               />
             </IconButton>
           </span>
@@ -152,11 +153,10 @@ const AnimationControls = () => {
             disabled={canvasIncomplete || !isPaused || intervalCount === 0}
           >
             <FastRewindIcon
-              className={`${classes.button} ${
-                !canvasIncomplete && isPaused && intervalCount !== 0
-                  ? classes.rewindButton
-                  : ''
-              }`}
+              className={clsx(classes.button, {
+                [classes.rewindButton]:
+                  !canvasIncomplete && isPaused && intervalCount !== 0,
+              })}
             />
           </IconButton>
         </span>
@@ -169,9 +169,9 @@ const AnimationControls = () => {
             disabled={canvasIncomplete || !isPaused}
           >
             <FastForwardIcon
-              className={`${classes.button} ${
-                !canvasIncomplete && isPaused ? classes.forwardButton : ''
-              }`}
+              className={clsx(classes.button, {
+                [classes.forwardButton]: !canvasIncomplete && isPaused,
+              })}
             />
           </IconButton>
         </span>

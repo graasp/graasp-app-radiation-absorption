@@ -105,6 +105,13 @@ export const METHANE_MOLECULE_ID = 'methane';
 export const NITROUS_OXIDE_MOLECULE_ID = 'nitrous-oxide';
 export const OZONE_MOLECULE_ID = 'ozone';
 export const WATER_MOLECULE_ID = 'water';
+export const GREENHOUSE_GASES = [
+  CARBON_DIOXIDE_MOLECULE_ID,
+  OZONE_MOLECULE_ID,
+  WATER_MOLECULE_ID,
+  NITROUS_OXIDE_MOLECULE_ID,
+  METHANE_MOLECULE_ID,
+];
 // other 'text ids'
 export const POSITIVE_CHARGE = 'positive';
 export const NEGATIVE_CHARGE = 'negative';
@@ -177,12 +184,12 @@ export const INFRARED_RADIATION_CURVE_INTERVAL =
 export const INTERVALS_TO_COMPLETE_INFRARED_RADIATION_INTERVAL =
   INFRARED_RADIATION_CURVE_INTERVAL / Y_SHIFT_PER_INTERVAL;
 
-/* ------CONSTANTS ELECTRIC FIELD VECTORS (ARROWS)------ */
+/* ------CONSTANTS FOR ELECTRIC FIELD VECTORS (ARROWS)------ */
 export const ARROW_POINTER_LENGTH = 2;
 export const ARROW_POINTER_WIDTH = 4;
 export const ARROW_STROKE_WIDTH = 6;
 // large arrow meets the sine curve at its peak (amplitude), plus a little more taken off (- 2) because it's nicer
-export const LARGE_ALLOW_LENGTH =
+export const LARGE_ARROW_LENGTH =
   SINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 2;
 export const SMALL_ARROW_LENGTH =
   SINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 6;

@@ -6,14 +6,14 @@ import {
   ARROW_POINTER_WIDTH,
   ARROW_STROKE_COLOR,
   ARROW_STROKE_WIDTH,
-  LARGE_ALLOW_LENGTH,
+  LARGE_ARROW_LENGTH,
   SMALL_ARROW_LENGTH,
   SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW,
 } from '../../config/constants';
 
 const ElectricFieldVectorGroup = ({ x, y, direction }) => {
   return (
-    <Group draggable>
+    <Group>
       <Arrow
         x={x}
         y={y - SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW}
@@ -26,7 +26,7 @@ const ElectricFieldVectorGroup = ({ x, y, direction }) => {
       <Arrow
         x={x}
         y={y}
-        points={[0, 0, direction * LARGE_ALLOW_LENGTH, 0]}
+        points={[0, 0, direction * LARGE_ARROW_LENGTH, 0]}
         pointerLength={ARROW_POINTER_LENGTH}
         pointerWidth={ARROW_POINTER_WIDTH}
         stroke={ARROW_STROKE_COLOR}

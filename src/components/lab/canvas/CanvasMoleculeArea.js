@@ -80,7 +80,8 @@ const CanvasMoleculeArea = ({
     // (1) a molecule has been selected in the side menu,
     // (2) no molecule has been selected in the side menu (hence these molecule areas are being clicked directly)
     if (selectedMoleculeInSideMenu) {
-      // if a molecule has been selected in the side menu, then all canvas areas are converted to either (1) active (if they were empty), (2) awaiting delete (if they were full)
+      // if a molecule has been selected in the side menu, then all canvas areas are converted to either:
+      // (1) active (if they were empty), (2) awaiting delete (if they were full)
       // in such a case, when the area is clicked, simply update it with the selected molecule
       // then reset all active/awaiting delete areas and de-select the previously selected molecule from the side menu
       dispatch(
@@ -91,7 +92,8 @@ const CanvasMoleculeArea = ({
         moleculesOnCanvas.forEach(resetActiveAndAwaitingDeleteAreas),
       );
       dispatch(selectMoleculeInSideMenu(null));
-      // in case a molecule is replaced with another while there are radiation lines/vectors on the canvas, reset animation interval and toggle off electric field vectors
+      // in case a molecule is replaced with another while there are radiation lines/vectors on the canvas -->
+      // reset animation interval and toggle off electric field vectors
       dispatch(resetIntervalCount());
       dispatch(toggleShowElectricFieldVectors(false));
     }
@@ -121,7 +123,7 @@ const CanvasMoleculeArea = ({
         );
       }
       // if canvas area is full (contains molecule), (1) pause animation, (2) convert area to awaiting delete,
-      // (3) highlight all side menu molecules (indicating that they can be chosen to replace the molecule in this now awaiting delete area)
+      // (3) highlight all sidemenu molecules (indicating that they can be chosen to replace the molecule in this now awaiting delete area)
       else if (currentMoleculeStatus === CANVAS_MOLECULE_AREA_STATE.FULL) {
         dispatch(setIsPaused(true));
         moleculesOnCanvas.forEach(resetActiveAndAwaitingDeleteAreas);
