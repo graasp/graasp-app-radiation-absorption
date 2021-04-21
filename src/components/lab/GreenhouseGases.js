@@ -14,6 +14,7 @@ import {
   OZONE_MOLECULE_ID,
   NITROUS_OXIDE_MOLECULE_ID,
   METHANE_MOLECULE_ID,
+  GREENHOUSE_GASES,
 } from '../../config/constants';
 
 const GreenhouseGases = () => {
@@ -24,9 +25,19 @@ const GreenhouseGases = () => {
   const highlightAllSideMenuMolecules = useSelector(
     ({ lab }) => lab.highlightAllSideMenuMolecules,
   );
+  const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
+  const canvasIncomplete = moleculesOnCanvas.some(
+    ({ molecule }) => molecule === '',
+  );
 
   return (
-    <GasesContainer gasContainerLabel={t('Greenhouse Gases')}>
+    <GasesContainer
+      gasContainerLabel={t('Greenhouse Gases')}
+      showFillAllButton={
+        GREENHOUSE_GASES.includes(selectedMoleculeInSideMenu) &&
+        canvasIncomplete
+      }
+    >
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuWater />}
         moleculeLabel={t('Water')}

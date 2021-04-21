@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Circle, Line, Group } from 'react-konva';
 import {
@@ -9,26 +9,50 @@ import {
   CANVAS_MOLECULE_AREA_CLEAR_BUTTON_LINE_FILL,
   CANVAS_MOLECULE_AREA_CLEAR_BUTTON_LINE_STROKE_WIDTH,
   CANVAS_MOLECULE_AREA_CLEAR_BUTTON_LINE_LENGTH,
+  CANVAS_MOLECULE_AREA_STATE,
 } from '../../../config/constants';
 import {
   clearMoleculeArea,
   resetIntervalCount,
+  selectMoleculeInSideMenu,
+  setMoleculeAreaStatus,
   toggleHighlightAllSideMenuMolecules,
   toggleShowElectricFieldVectors,
 } from '../../../actions';
 
 const CanvasMoleculeAreaClearButton = ({ x, y, containerIndex }) => {
   const dispatch = useDispatch();
+  const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
 
   const handleClear = () => {
-    dispatch(
-      clearMoleculeArea({ areaIndex: containerIndex }),
-      dispatch(
-        resetIntervalCount(),
-        dispatch(toggleHighlightAllSideMenuMolecules(false)),
-      ),
-    );
+    moleculesOnCanvas.forEach((molecule, index) => {
+      if (index === containerIndex) {
+        dispatch(clearMoleculeArea({ areaIndex: containerIndex }));
+      } else if (
+        molecule.moleculeAreaStatus === CANVAS_MOLECULE_AREA_STATE.ACTIVE
+      ) {
+        dispatch(
+          setMoleculeAreaStatus({
+            areaIndex: index,
+            newStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
+          }),
+        );
+      } else if (
+        molecule.moleculeAreaStatus ===
+        CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE
+      ) {
+        dispatch(
+          setMoleculeAreaStatus({
+            areaIndex: index,
+            newStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
+          }),
+        );
+      }
+    });
+    dispatch(resetIntervalCount());
+    dispatch(toggleHighlightAllSideMenuMolecules(false));
     dispatch(toggleShowElectricFieldVectors(false));
+    dispatch(selectMoleculeInSideMenu(null));
   };
 
   return (

@@ -10,6 +10,7 @@ import {
   DINITROGEN_MOLECULE_ID,
   DIOXYGEN_MOLECULE_ID,
   ARGON_MOLECULE_ID,
+  GREENHOUSE_GASES,
 } from '../../config/constants';
 
 const NonGreenhouseGases = () => {
@@ -20,9 +21,20 @@ const NonGreenhouseGases = () => {
   const highlightAllSideMenuMolecules = useSelector(
     ({ lab }) => lab.highlightAllSideMenuMolecules,
   );
+  const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
+  const canvasIncomplete = moleculesOnCanvas.some(
+    ({ molecule }) => molecule === '',
+  );
 
   return (
-    <GasesContainer gasContainerLabel={t('Non-greenhouse Gases')}>
+    <GasesContainer
+      gasContainerLabel={t('Non-greenhouse Gases')}
+      showFillAllButton={
+        selectedMoleculeInSideMenu &&
+        !GREENHOUSE_GASES.includes(selectedMoleculeInSideMenu) &&
+        canvasIncomplete
+      }
+    >
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuDinitrogen />}
         moleculeLabel={t('Dinitrogen')}

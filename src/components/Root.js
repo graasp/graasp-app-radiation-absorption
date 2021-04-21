@@ -43,6 +43,7 @@ const theme = createMuiTheme({
     background: {
       paper: '#fff',
     },
+    secondary: { main: '#006400' },
   },
   status: {
     danger: {
