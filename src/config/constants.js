@@ -127,33 +127,33 @@ export const EMITTED_LINE_STROKE_WIDTH = 1.5;
 
 // middle oxygen atom has charge of 2-, all atoms have the same mass, hence middle atom oscillates with half the amplitude of other atoms
 export const CANVAS_OZONE_OSCILLATION_AMPLITUDES = {
-  TOP_OXYGEN_ATOM: 30,
-  MIDDLE_OXYGEN_ATOM: -15,
-  BOTTOM_OXYGEN_ATOM: 30,
+  TOP_OXYGEN_ATOM: -30,
+  MIDDLE_OXYGEN_ATOM: 15,
+  BOTTOM_OXYGEN_ATOM: -30,
 };
 // carbon atom has charge of 2+ and atomic mass of 12; hence q/m = 1/6
 // oxygen atom has charge of 1- and atomic mass of 16; hence q/m = 1/16
 // hence oscillation of carbon = (1/6)/(1/16) = 16/6 = 2.7x oscillation of oxygen
 export const CANVAS_CARBON_DIOXIDE_OSCILLATION_AMPLITUDES = {
-  TOP_OXYGEN_ATOM: 15,
-  CARBON_ATOM: -40.5,
-  BOTTOM_OXYGEN_ATOM: 15,
+  TOP_OXYGEN_ATOM: -15,
+  CARBON_ATOM: 40.5,
+  BOTTOM_OXYGEN_ATOM: -15,
 };
 // oxygen atom has charge of 2- and atomic mass of 16; hence q/m = 1/8
 // hydrogen atom has charge of 1- and atomic mass of 8; hence q/m = 1
 // hence oscillation of hydrogen = 8x oscillation of oxygen
 // for visual purposes, the oscillation of the oxygen atom is doubled (otherwise it will be too small to be visible)
 export const CANVAS_WATER_OSCILLATION_AMPLITUDES = {
-  TOP_HYDROGEN_ATOM: 20,
-  OXYGEN_ATOM: -5,
-  BOTTOM_HYDROGEN_ATOM: 20,
+  TOP_HYDROGEN_ATOM: -20,
+  OXYGEN_ATOM: 5,
+  BOTTOM_HYDROGEN_ATOM: -20,
 };
 // nitrogen and oxygen have nearly the same mass (14 and 16)
 // for simplicitly, since the central nitrogen has a charge of 2-, we make it oscillate with half the amplitude of the other atoms
 export const CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES = {
-  TOP_NITROGEN_ATOM: 30,
-  MIDDLE_NITROGEN_ATOM: -15,
-  BOTTOM_OXYGEN_ATOM: 30,
+  TOP_NITROGEN_ATOM: -30,
+  MIDDLE_NITROGEN_ATOM: 15,
+  BOTTOM_OXYGEN_ATOM: -30,
 };
 
 /* ------CONSTANTS FOR GENERATING SINE CURVES (RADIATION LINES)------ */
@@ -167,8 +167,8 @@ export const SINE_CURVE_AMPLITUDE = 30;
 // (indeed, on the canvas, given a Y_SHIFT_PER_INTERVAL of π, one period will complete after 128 intervals, with a distance of 128π from the bottom of the screen)
 export const INFRARED_RADIATION_PERIOD = 1 / 64;
 export const VISIBLE_LIGHT_PERIOD = 1 / 32;
-// 192π => chosen for aesthetic purposes (1.5 periods from bottom of screen)
-export const MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS = 192 * Math.PI;
+// 128π => chosen for aesthetic purposes (1 period from bottom of screen)
+export const MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS = 128 * Math.PI;
 export const INTERVALS_TO_REACH_MOLECULE_CENTER =
   MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS / Y_SHIFT_PER_INTERVAL;
 export const APPLICATION_INTERVAL = 20;
