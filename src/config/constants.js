@@ -184,10 +184,10 @@ export const INTERVALS_TO_COMPLETE_INFRARED_RADIATION_INTERVAL =
 export const ARROW_POINTER_LENGTH = 2;
 export const ARROW_POINTER_WIDTH = 4;
 export const ARROW_STROKE_WIDTH = 6;
-// large arrow meets the sine curve at its peak (amplitude), plus a little more taken off (- 2) because it's nicer
+// large arrow meets the sine curve at its peak (amplitude), plus a little more taken off (- 2) because it looks nicer
 export const LARGE_ARROW_LENGTH =
   SINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 2;
 export const SMALL_ARROW_LENGTH =
-  SINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 6;
-export const SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW = 20;
+  SINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 10;
+export const SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW = 40;
 export const ARROW_STROKE_COLOR = 'darkblue';

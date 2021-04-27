@@ -30,7 +30,7 @@ const NonGreenhouseGases = () => {
     <GasesContainer
       gasContainerLabel={t('Non-greenhouse Gases')}
       showFillAllButton={
-        selectedMoleculeInSideMenu &&
+        selectedMoleculeInSideMenu !== null &&
         !GREENHOUSE_GASES.includes(selectedMoleculeInSideMenu) &&
         canvasIncomplete
       }
