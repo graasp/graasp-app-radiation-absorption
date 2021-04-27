@@ -157,14 +157,21 @@ export const CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES = {
   MIDDLE_NITROGEN_ATOM: 15,
   BOTTOM_OXYGEN_ATOM: -30,
 };
+export const CANVAS_METHANE_OSCILLATION_AMPLITUDES = {
+  TOP_LEFT_HYDROGEN_ATOM: -10,
+  TOP_RIGHT_HYDROGEN_ATOM: 5,
+  BOTTOM_RIGHT_HYDROGEN_ATOM: 5,
+  BOTTOM_LEFT_HYDROGEN_ATOM: -10,
+  CARBON_ATOM: 0,
+};
 
 /* ------CONSTANTS FOR GENERATING SINE CURVES (RADIATION LINES)------ */
 // Y_INCREMENT_PER_POINT => e.g. generate an x point at y=0, y=π/8, y=π/8 * 2, y=π/8 * 3, ...
 export const Y_INCREMENT_PER_POINT = Math.PI / 8;
 // Y_SHIFT_PER_INTERVAL => every timer interval, shift the sine curve upwards by this much
 export const Y_SHIFT_PER_INTERVAL = Math.PI;
-export const RADIATION_LINE_CURVE_AMPLITUDE = 30;
-export const RE_EMISSION_LINE_CURVE_AMPLITUDE = 20;
+export const RADIATION_LINE_CURVE_AMPLITUDE = 25;
+export const RE_EMISSION_LINE_CURVE_AMPLITUDE = 15;
 // note that the 'natural' period of the sine curve is 2π
 // hence, with INFRARED_RADIATION_PERIOD = 1 / 64, curve period = 2π / (1 / 64) = 128π
 // (indeed, on the canvas, given a Y_SHIFT_PER_INTERVAL of π, one period will complete after 128 intervals, with a distance of 128π from the bottom of the screen)
