@@ -128,8 +128,12 @@ class Lab extends Component {
                   {spectrum === SPECTRUMS.INFRARED &&
                     showElectricFieldVectors &&
                     moleculeContainerCenterPoints.map((centerPoint, index) => (
-                      // eslint-disable-next-line react/no-array-index-key
-                      <ElectricFieldVectorGroups x={centerPoint} key={index} />
+                      <ElectricFieldVectorGroups
+                        x={centerPoint}
+                        // eslint-disable-next-line react/no-array-index-key
+                        key={index}
+                        groupIndex={index}
+                      />
                     ))}
                   {moleculeContainerCenterPoints.map((centerPoint, index) => (
                     <CanvasMoleculeContainer

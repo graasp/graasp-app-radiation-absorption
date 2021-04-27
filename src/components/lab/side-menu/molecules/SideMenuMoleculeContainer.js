@@ -14,6 +14,7 @@ import {
   setIsPaused,
   resetIntervalCount,
   toggleShowElectricFieldVectors,
+  toggleShowReEmission,
 } from '../../../../actions';
 import { CANVAS_MOLECULE_AREA_STATE } from '../../../../config/constants';
 
@@ -30,6 +31,7 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
     ({ lab }) => lab.selectedMoleculeInSideMenu,
   );
   const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
+  const intervalCount = useSelector(({ lab }) => lab.intervalCount);
   const highlightAllSideMenuMolecules = useSelector(
     ({ lab }) => lab.highlightAllSideMenuMolecules,
   );
@@ -65,7 +67,7 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
       }
       // otherwise, display the molecule in the canvas area which has the status of awaiting delete
       // (one of the two has to be true)
-      // then reset interval count to 0 and toggle off electric field vectors -->
+      // then reset interval count to 0 and toggle off electric field vectors and re-emission -->
       // (since this workflow can happen when radiation lines are on the canvas)
       else {
         dispatch(
@@ -75,8 +77,11 @@ const SideMenuMoleculeContainer = ({ children, moleculeId }) => {
           }),
         );
         dispatch(toggleHighlightAllSideMenuMolecules(false));
-        dispatch(resetIntervalCount());
-        dispatch(toggleShowElectricFieldVectors(false));
+        if (intervalCount > 0) {
+          dispatch(resetIntervalCount());
+          dispatch(toggleShowElectricFieldVectors(false));
+          dispatch(toggleShowReEmission(false));
+        }
       }
     }
     // this branch is followed when molecules are selected in the side menu directly

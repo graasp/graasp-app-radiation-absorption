@@ -117,8 +117,10 @@ export const SPECTRUMS = {
 };
 
 /* ------CONSTANTS TO STYLE RADIATION LINES------ */
-export const EMITTED_LINE_STROKE_COLOR = 'black';
-export const EMITTED_LINE_STROKE_WIDTH = 1.5;
+export const RADIATION_LINE_STROKE_COLOR = 'black';
+export const RADIATION_LINE_STROKE_WIDTH = 1.5;
+export const RE_EMISSION_LINE_STROKE_COLOR = 'darkgrey';
+export const RE_EMISSION_LINE_STROKE_WIDTH = 1.5;
 
 /* ------CONSTANTS FOR MOLECULE OSCILLATION------ */
 // these contants are used to determine the oscillation amplitude and direction of atoms in each greenhouse gas
@@ -161,7 +163,8 @@ export const CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES = {
 export const Y_INCREMENT_PER_POINT = Math.PI / 8;
 // Y_SHIFT_PER_INTERVAL => every timer interval, shift the sine curve upwards by this much
 export const Y_SHIFT_PER_INTERVAL = Math.PI;
-export const SINE_CURVE_AMPLITUDE = 30;
+export const RADIATION_LINE_CURVE_AMPLITUDE = 30;
+export const RE_EMISSION_LINE_CURVE_AMPLITUDE = 20;
 // note that the 'natural' period of the sine curve is 2π
 // hence, with INFRARED_RADIATION_PERIOD = 1 / 64, curve period = 2π / (1 / 64) = 128π
 // (indeed, on the canvas, given a Y_SHIFT_PER_INTERVAL of π, one period will complete after 128 intervals, with a distance of 128π from the bottom of the screen)
@@ -186,8 +189,8 @@ export const ARROW_POINTER_WIDTH = 4;
 export const ARROW_STROKE_WIDTH = 6;
 // large arrow meets the sine curve at its peak (amplitude), plus a little more taken off (- 2) because it looks nicer
 export const LARGE_ARROW_LENGTH =
-  SINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 2;
+  RADIATION_LINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 2;
 export const SMALL_ARROW_LENGTH =
-  SINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 10;
+  RADIATION_LINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 10;
 export const SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW = 40;
 export const ARROW_STROKE_COLOR = 'darkblue';

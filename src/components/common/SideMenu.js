@@ -143,7 +143,7 @@ class SideMenu extends React.Component {
               switchLabel={t('Re-emission')}
               switchStatus={showReEmission}
               switchDispatch={dispatchToggleShowReEmission}
-              disabled={false}
+              disabled={spectrum === SPECTRUMS.VISIBLE_LIGHT}
             />
           </div>
         </Drawer>
