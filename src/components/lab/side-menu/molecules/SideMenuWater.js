@@ -14,14 +14,14 @@ const SideMenuWater = () => {
     <SideMenuMoleculeContainer moleculeId={WATER_MOLECULE_ID}>
       <SideMenuHydrogen
         charge={POSITIVE_CHARGE}
-        customPositioningStyles={{ marginRight: -4 }}
+        customPositioningStyles={{ marginRight: '-4px' }}
       />
       <SideMenuBondContainer numberOfBonds={1} rotation={30} />
       <SideMenuOxygen charge={NEGATIVE_CHARGE} />
       <SideMenuBondContainer numberOfBonds={1} rotation={-30} />
       <SideMenuHydrogen
         charge={POSITIVE_CHARGE}
-        customPositioningStyles={{ marginLeft: -4 }}
+        customPositioningStyles={{ marginLeft: '-4px' }}
       />
     </SideMenuMoleculeContainer>
   );

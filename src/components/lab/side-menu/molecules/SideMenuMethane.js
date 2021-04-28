@@ -32,14 +32,14 @@ const SideMenuMethane = () => {
       <div className={classes.leftHydrogenAtoms}>
         <SideMenuHydrogen
           customPositioningStyles={{
-            marginBottom: 15,
-            marginTop: -1.5,
-            marginLeft: -2,
+            marginBottom: '15px',
+            marginTop: '-1.5px',
+            marginLeft: '-2px',
           }}
           charge={POSITIVE_CHARGE}
         />
         <SideMenuHydrogen
-          customPositioningStyles={{ marginLeft: -2 }}
+          customPositioningStyles={{ marginLeft: '-2px' }}
           charge={POSITIVE_CHARGE}
         />
       </div>
@@ -51,7 +51,7 @@ const SideMenuMethane = () => {
         </div>
       </div>
       <SideMenuCarbon
-        customPositioningStyles={{ marginTop: 8 }}
+        customPositioningStyles={{ marginTop: '8px' }}
         charge={NEGATIVE_CHARGE}
       />
       <div className={classes.bondContainer}>
@@ -63,11 +63,11 @@ const SideMenuMethane = () => {
       </div>
       <div className={classes.rightHydrogenAtoms}>
         <SideMenuHydrogen
-          customPositioningStyles={{ marginBottom: 5, marginLeft: 1 }}
+          customPositioningStyles={{ marginBottom: '5px', marginLeft: '1px' }}
           charge={POSITIVE_CHARGE}
         />
         <SideMenuHydrogen
-          customPositioningStyles={{ marginLeft: 1 }}
+          customPositioningStyles={{ marginLeft: '1px' }}
           charge={POSITIVE_CHARGE}
         />
       </div>

@@ -83,4 +83,4 @@ const generateElectricFieldVectorGroupYPoints = (
   return electricFieldVectorYPoints;
 };
 
-module.exports = generateElectricFieldVectorGroupYPoints;
+export default generateElectricFieldVectorGroupYPoints;

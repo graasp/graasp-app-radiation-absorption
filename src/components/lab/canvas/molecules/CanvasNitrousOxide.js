@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Group } from 'react-konva';
 import CanvasNitrogen from './atoms/CanvasNitrogen';
@@ -12,33 +11,22 @@ import {
   CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
   NEGATIVE_CHARGE,
   POSITIVE_CHARGE,
-  SPECTRUMS,
-  INTERVALS_TO_REACH_MOLECULE_CENTER,
-  INFRARED_RADIATION_PERIOD,
-  Y_SHIFT_PER_INTERVAL,
   CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES,
 } from '../../../../config/constants';
 
-const CanvasNitrousOxide = ({ x, y }) => {
-  const intervalCount = useSelector(({ lab }) => lab.intervalCount);
-  const spectrum = useSelector(({ lab }) => lab.spectrum);
+const CanvasNitrousOxide = ({ x, y, shouldOscillate, oscillationFormula }) => {
+  // destructure the oscillation amplitudes of atoms in this molecule
+  const {
+    TOP_NITROGEN_AMPLITUDE,
+    MIDDLE_NITROGEN_AMPLITUDE,
+    BOTTOM_OXYGEN_AMPLITUDE,
+  } = CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES;
 
   // variables for determining center points of atoms in this molecule
-  // we know that after INTERVALS_TO_REACH_MOLECULE_CENTER, the radiation lines have reached the center of the molecule
-  // at this point, if the spectrum is INFRARED, the molecule should begin oscillating
-  // hence, after INTERVALS_TO_REACH_MOLECULE_CENTER, the x position of the molecule is moved every interval
   const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
   const nitrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[NITROGEN.size];
   const topNitrogenAtomCenterPoint = {
-    x:
-      intervalCount > INTERVALS_TO_REACH_MOLECULE_CENTER &&
-      spectrum === SPECTRUMS.INFRARED
-        ? x +
-          CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES.TOP_NITROGEN_ATOM *
-            Math.sin(
-              intervalCount * Y_SHIFT_PER_INTERVAL * INFRARED_RADIATION_PERIOD,
-            )
-        : x,
+    x: shouldOscillate ? x + TOP_NITROGEN_AMPLITUDE * oscillationFormula : x,
     y:
       y -
       nitrogenAtomRadius -
@@ -46,27 +34,11 @@ const CanvasNitrousOxide = ({ x, y }) => {
       nitrogenAtomRadius,
   };
   const middleNitrogenAtomCenterPoint = {
-    x:
-      intervalCount > INTERVALS_TO_REACH_MOLECULE_CENTER &&
-      spectrum === SPECTRUMS.INFRARED
-        ? x +
-          CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES.MIDDLE_NITROGEN_ATOM *
-            Math.sin(
-              intervalCount * Y_SHIFT_PER_INTERVAL * INFRARED_RADIATION_PERIOD,
-            )
-        : x,
+    x: shouldOscillate ? x + MIDDLE_NITROGEN_AMPLITUDE * oscillationFormula : x,
     y,
   };
   const bottomOxygenAtomCenterPoint = {
-    x:
-      intervalCount > INTERVALS_TO_REACH_MOLECULE_CENTER &&
-      spectrum === SPECTRUMS.INFRARED
-        ? x +
-          CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES.BOTTOM_OXYGEN_ATOM *
-            Math.sin(
-              intervalCount * Y_SHIFT_PER_INTERVAL * INFRARED_RADIATION_PERIOD,
-            )
-        : x,
+    x: shouldOscillate ? x + BOTTOM_OXYGEN_AMPLITUDE * oscillationFormula : x,
     y:
       y +
       nitrogenAtomRadius +
@@ -109,6 +81,8 @@ const CanvasNitrousOxide = ({ x, y }) => {
 CanvasNitrousOxide.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
+  shouldOscillate: PropTypes.bool.isRequired,
+  oscillationFormula: PropTypes.func.isRequired,
 };
 
 export default CanvasNitrousOxide;
