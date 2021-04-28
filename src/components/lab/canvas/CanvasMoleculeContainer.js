@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   WATER_MOLECULE_ID,
@@ -9,6 +10,10 @@ import {
   DINITROGEN_MOLECULE_ID,
   DIOXYGEN_MOLECULE_ID,
   ARGON_MOLECULE_ID,
+  INTERVALS_TO_REACH_MOLECULE_CENTER,
+  SPECTRUMS,
+  Y_SHIFT_PER_INTERVAL,
+  INFRARED_RADIATION_PERIOD,
 } from '../../../config/constants';
 import CanvasMoleculeArea from './CanvasMoleculeArea';
 import CanvasWater from './molecules/CanvasWater';
@@ -27,22 +32,70 @@ const CanvasMoleculeContainer = ({
   moleculeAreaStatus,
   containerIndex,
 }) => {
+  const intervalCount = useSelector(({ lab }) => lab.intervalCount);
+  const spectrum = useSelector(({ lab }) => lab.spectrum);
+
+  // we know that after INTERVALS_TO_REACH_MOLECULE_CENTER, the radiation lines have reached the center of the molecule
+  // at this point, if the spectrum is INFRARED, the molecule should begin oscillating
+  // shouldOscillate and oscillationFormula are passed as props to molecules which oscillate (greenhouse gases)
+  const shouldOscillate =
+    intervalCount > INTERVALS_TO_REACH_MOLECULE_CENTER &&
+    spectrum === SPECTRUMS.INFRARED;
+  const oscillationFormula = Math.sin(
+    intervalCount * Y_SHIFT_PER_INTERVAL * INFRARED_RADIATION_PERIOD,
+  );
+
   let moleculeComponent = null;
   switch (moleculeToDisplay) {
     case WATER_MOLECULE_ID:
-      moleculeComponent = <CanvasWater x={x} y={y} />;
+      moleculeComponent = (
+        <CanvasWater
+          x={x}
+          y={y}
+          shouldOscillate={shouldOscillate}
+          oscillationFormula={oscillationFormula}
+        />
+      );
       break;
     case CARBON_DIOXIDE_MOLECULE_ID:
-      moleculeComponent = <CanvasCarbonDioxide x={x} y={y} />;
+      moleculeComponent = (
+        <CanvasCarbonDioxide
+          x={x}
+          y={y}
+          shouldOscillate={shouldOscillate}
+          oscillationFormula={oscillationFormula}
+        />
+      );
       break;
     case OZONE_MOLECULE_ID:
-      moleculeComponent = <CanvasOzone x={x} y={y} />;
+      moleculeComponent = (
+        <CanvasOzone
+          x={x}
+          y={y}
+          shouldOscillate={shouldOscillate}
+          oscillationFormula={oscillationFormula}
+        />
+      );
       break;
     case NITROUS_OXIDE_MOLECULE_ID:
-      moleculeComponent = <CanvasNitrousOxide x={x} y={y} />;
+      moleculeComponent = (
+        <CanvasNitrousOxide
+          x={x}
+          y={y}
+          shouldOscillate={shouldOscillate}
+          oscillationFormula={oscillationFormula}
+        />
+      );
       break;
     case METHANE_MOLECULE_ID:
-      moleculeComponent = <CanvasMethane x={x} y={y} />;
+      moleculeComponent = (
+        <CanvasMethane
+          x={x}
+          y={y}
+          shouldOscillate={shouldOscillate}
+          oscillationFormula={oscillationFormula}
+        />
+      );
       break;
     case DINITROGEN_MOLECULE_ID:
       moleculeComponent = <CanvasDinitrogen x={x} y={y} />;

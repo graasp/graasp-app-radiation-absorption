@@ -8,6 +8,7 @@ import { SPECTRUMS } from '../../config/constants';
 import {
   resetIntervalCount,
   toggleShowElectricFieldVectors,
+  toggleShowReEmission,
   toggleSpectrum,
 } from '../../actions';
 
@@ -35,6 +36,7 @@ const SpectrumToggle = () => {
         dispatch(toggleSpectrum(SPECTRUMS.VISIBLE_LIGHT)),
       );
       dispatch(toggleShowElectricFieldVectors(false));
+      dispatch(toggleShowReEmission(false));
     }
   };
 

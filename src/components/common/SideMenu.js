@@ -18,7 +18,6 @@ import {
 import {
   DRAWER_WIDTH,
   DEFAULT_THEME_DIRECTION,
-  INTERVALS_TO_REACH_MOLECULE_CENTER,
   SPECTRUMS,
 } from '../../config/constants';
 import GreenhouseGases from '../lab/GreenhouseGases';
@@ -67,7 +66,6 @@ class SideMenu extends React.Component {
     dispatchToggleShowElectricFieldVectors: PropTypes.func.isRequired,
     dispatchToggleShowAtomsCharges: PropTypes.func.isRequired,
     dispatchToggleShowReEmission: PropTypes.func.isRequired,
-    intervalCount: PropTypes.number.isRequired,
     spectrum: PropTypes.string.isRequired,
   };
 
@@ -106,7 +104,6 @@ class SideMenu extends React.Component {
       dispatchToggleShowAtomsCharges,
       dispatchToggleShowReEmission,
       t,
-      intervalCount,
       spectrum,
     } = this.props;
 
@@ -134,10 +131,7 @@ class SideMenu extends React.Component {
               switchLabel={t('Electric field vectors')}
               switchStatus={showElectricFieldVectors}
               switchDispatch={dispatchToggleShowElectricFieldVectors}
-              disabled={
-                intervalCount < INTERVALS_TO_REACH_MOLECULE_CENTER ||
-                spectrum === SPECTRUMS.VISIBLE_LIGHT
-              }
+              disabled={spectrum === SPECTRUMS.VISIBLE_LIGHT}
             />
             <CustomSwitch
               switchLabel={t('Sign of charges')}
@@ -149,6 +143,7 @@ class SideMenu extends React.Component {
               switchLabel={t('Re-emission')}
               switchStatus={showReEmission}
               switchDispatch={dispatchToggleShowReEmission}
+              disabled={spectrum === SPECTRUMS.VISIBLE_LIGHT}
             />
           </div>
         </Drawer>
@@ -162,7 +157,6 @@ const mapStateToProps = ({ layout, lab }) => ({
   showElectricFieldVectors: lab.showElectricFieldVectors,
   showAtomsCharges: lab.showAtomsCharges,
   showReEmission: lab.showReEmission,
-  intervalCount: lab.intervalCount,
   spectrum: lab.spectrum,
 });
 

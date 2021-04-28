@@ -51,14 +51,10 @@ export const SIDE_MENU_STANDARD_CHARGE_FONT_SIZE = 12;
 // constants used to adjust select atoms within a molecule to achieve required styling
 export const CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR = 20;
 export const CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR = 20;
-export const CANVAS_METHANE_FIRST_ATOM_X_ADJUSTMENT_FACTOR = 25;
-export const CANVAS_METHANE_FIRST_ATOM_Y_ADJUSTMENT_FACTOR = 12;
-export const CANVAS_METHANE_SECOND_ATOM_X_ADJUSTMENT_FACTOR = 25;
-export const CANVAS_METHANE_SECOND_ATOM_Y_ADJUSTMENT_FACTOR = 20;
-export const CANVAS_METHANE_THIRD_ATOM_X_ADJUSTMENT_FACTOR = 25;
-export const CANVAS_METHANE_THIRD_ATOM_Y_ADJUSTMENT_FACTOR = 20;
-export const CANVAS_METHANE_FOURTH_ATOM_X_ADJUSTMENT_FACTOR = 25;
-export const CANVAS_METHANE_FOURTH_ATOM_Y_ADJUSTMENT_FACTOR = 12;
+export const CANVAS_METHANE_TOP_LEFT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR = 30;
+export const CANVAS_METHANE_TOP_RIGHT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR = 35;
+export const CANVAS_METHANE_BOTTOM_RIGHT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR = 35;
+export const CANVAS_METHANE_BOTTOM_LEFT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR = 30;
 
 /* ------CONSTANTS FOR CANVAS 'MOLECULE AREAS'------ */
 // the 'molecule area' is the circular area in which a molecule is displayed on the canvas
@@ -121,8 +117,10 @@ export const SPECTRUMS = {
 };
 
 /* ------CONSTANTS TO STYLE RADIATION LINES------ */
-export const EMITTED_LINE_STROKE_COLOR = 'black';
-export const EMITTED_LINE_STROKE_WIDTH = 1.5;
+export const RADIATION_LINE_STROKE_COLOR = 'black';
+export const RADIATION_LINE_STROKE_WIDTH = 1.5;
+export const RE_EMISSION_LINE_STROKE_COLOR = 'darkgrey';
+export const RE_EMISSION_LINE_STROKE_WIDTH = 1.5;
 
 /* ------CONSTANTS FOR MOLECULE OSCILLATION------ */
 // these contants are used to determine the oscillation amplitude and direction of atoms in each greenhouse gas
@@ -131,33 +129,40 @@ export const EMITTED_LINE_STROKE_WIDTH = 1.5;
 
 // middle oxygen atom has charge of 2-, all atoms have the same mass, hence middle atom oscillates with half the amplitude of other atoms
 export const CANVAS_OZONE_OSCILLATION_AMPLITUDES = {
-  TOP_OXYGEN_ATOM: 30,
-  MIDDLE_OXYGEN_ATOM: -15,
-  BOTTOM_OXYGEN_ATOM: 30,
+  TOP_OXYGEN_AMPLITUDE: -30,
+  MIDDLE_OXYGEN_AMPLITUDE: 15,
+  BOTTOM_OXYGEN_AMPLITUDE: -30,
 };
 // carbon atom has charge of 2+ and atomic mass of 12; hence q/m = 1/6
 // oxygen atom has charge of 1- and atomic mass of 16; hence q/m = 1/16
 // hence oscillation of carbon = (1/6)/(1/16) = 16/6 = 2.7x oscillation of oxygen
 export const CANVAS_CARBON_DIOXIDE_OSCILLATION_AMPLITUDES = {
-  TOP_OXYGEN_ATOM: 15,
-  CARBON_ATOM: -40.5,
-  BOTTOM_OXYGEN_ATOM: 15,
+  TOP_OXYGEN_AMPLITUDE: -15,
+  CARBON_AMPLITUDE: 40.5,
+  BOTTOM_OXYGEN_AMPLITUDE: -15,
 };
 // oxygen atom has charge of 2- and atomic mass of 16; hence q/m = 1/8
 // hydrogen atom has charge of 1- and atomic mass of 8; hence q/m = 1
 // hence oscillation of hydrogen = 8x oscillation of oxygen
 // for visual purposes, the oscillation of the oxygen atom is doubled (otherwise it will be too small to be visible)
 export const CANVAS_WATER_OSCILLATION_AMPLITUDES = {
-  TOP_HYDROGEN_ATOM: 20,
-  OXYGEN_ATOM: -5,
-  BOTTOM_HYDROGEN_ATOM: 20,
+  TOP_HYDROGEN_AMPLITUDE: -20,
+  OXYGEN_AMPLITUDE: 5,
+  BOTTOM_HYDROGEN_AMPLITUDE: -20,
 };
 // nitrogen and oxygen have nearly the same mass (14 and 16)
 // for simplicitly, since the central nitrogen has a charge of 2-, we make it oscillate with half the amplitude of the other atoms
 export const CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES = {
-  TOP_NITROGEN_ATOM: 30,
-  MIDDLE_NITROGEN_ATOM: -15,
-  BOTTOM_OXYGEN_ATOM: 30,
+  TOP_NITROGEN_AMPLITUDE: -30,
+  MIDDLE_NITROGEN_AMPLITUDE: 15,
+  BOTTOM_OXYGEN_AMPLITUDE: -30,
+};
+export const CANVAS_METHANE_OSCILLATION_AMPLITUDES = {
+  TOP_LEFT_HYDROGEN_AMPLITUDE: -10,
+  TOP_RIGHT_HYDROGEN_AMPLITUDE: 5,
+  BOTTOM_RIGHT_HYDROGEN_AMPLITUDE: 5,
+  BOTTOM_LEFT_HYDROGEN_AMPLITUDE: -10,
+  CARBON_AMPLITUDE: 0,
 };
 
 /* ------CONSTANTS FOR GENERATING SINE CURVES (RADIATION LINES)------ */
@@ -165,14 +170,15 @@ export const CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES = {
 export const Y_INCREMENT_PER_POINT = Math.PI / 8;
 // Y_SHIFT_PER_INTERVAL => every timer interval, shift the sine curve upwards by this much
 export const Y_SHIFT_PER_INTERVAL = Math.PI;
-export const SINE_CURVE_AMPLITUDE = 30;
+export const RADIATION_LINE_CURVE_AMPLITUDE = 25;
+export const RE_EMISSION_LINE_CURVE_AMPLITUDE = 15;
 // note that the 'natural' period of the sine curve is 2π
 // hence, with INFRARED_RADIATION_PERIOD = 1 / 64, curve period = 2π / (1 / 64) = 128π
 // (indeed, on the canvas, given a Y_SHIFT_PER_INTERVAL of π, one period will complete after 128 intervals, with a distance of 128π from the bottom of the screen)
 export const INFRARED_RADIATION_PERIOD = 1 / 64;
 export const VISIBLE_LIGHT_PERIOD = 1 / 32;
-// 192π => chosen for aesthetic purposes (1.5 periods from bottom of screen)
-export const MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS = 192 * Math.PI;
+// 128π => chosen for aesthetic purposes (1 period from bottom of screen)
+export const MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS = 128 * Math.PI;
 export const INTERVALS_TO_REACH_MOLECULE_CENTER =
   MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS / Y_SHIFT_PER_INTERVAL;
 export const APPLICATION_INTERVAL = 20;
@@ -188,10 +194,10 @@ export const INTERVALS_TO_COMPLETE_INFRARED_RADIATION_INTERVAL =
 export const ARROW_POINTER_LENGTH = 2;
 export const ARROW_POINTER_WIDTH = 4;
 export const ARROW_STROKE_WIDTH = 6;
-// large arrow meets the sine curve at its peak (amplitude), plus a little more taken off (- 2) because it's nicer
+// large arrow meets the sine curve at its peak (amplitude), plus a little more taken off (- 2) because it looks nicer
 export const LARGE_ARROW_LENGTH =
-  SINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 2;
+  RADIATION_LINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 2;
 export const SMALL_ARROW_LENGTH =
-  SINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 6;
-export const SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW = 20;
+  RADIATION_LINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 10;
+export const SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW = 40;
 export const ARROW_STROKE_COLOR = 'darkblue';

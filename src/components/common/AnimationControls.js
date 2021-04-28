@@ -19,12 +19,10 @@ import {
   incrementIntervalCount,
   toggleHighlightAllSideMenuMolecules,
   decrementIntervalCount,
-  toggleShowElectricFieldVectors,
 } from '../../actions';
 import {
   APPLICATION_INTERVAL,
   CANVAS_MOLECULE_AREA_STATE,
-  INTERVALS_TO_REACH_MOLECULE_CENTER,
 } from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
@@ -100,9 +98,6 @@ const AnimationControls = () => {
 
   const onClickRewind = () => {
     dispatch(decrementIntervalCount());
-    if (intervalCount === INTERVALS_TO_REACH_MOLECULE_CENTER) {
-      dispatch(toggleShowElectricFieldVectors(false));
-    }
   };
 
   const onClickForward = () => {

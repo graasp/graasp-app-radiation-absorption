@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Group } from 'react-konva';
 import CanvasOxygen from './atoms/CanvasOxygen';
@@ -12,35 +11,27 @@ import {
   CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
   POSITIVE_CHARGE,
   NEGATIVE_CHARGE,
-  SPECTRUMS,
-  INTERVALS_TO_REACH_MOLECULE_CENTER,
-  INFRARED_RADIATION_PERIOD,
-  Y_SHIFT_PER_INTERVAL,
   CANVAS_WATER_OSCILLATION_AMPLITUDES,
 } from '../../../../config/constants';
 import CanvasBondContainer from './CanvasBondContainer';
 
-const CanvasWater = ({ x, y }) => {
-  const intervalCount = useSelector(({ lab }) => lab.intervalCount);
-  const spectrum = useSelector(({ lab }) => lab.spectrum);
+const CanvasWater = ({ x, y, shouldOscillate, oscillationFormula }) => {
+  // destructure the oscillation amplitudes of atoms in this molecule
+  const {
+    TOP_HYDROGEN_AMPLITUDE,
+    OXYGEN_AMPLITUDE,
+    BOTTOM_HYDROGEN_AMPLITUDE,
+  } = CANVAS_WATER_OSCILLATION_AMPLITUDES;
 
   // variables for determining center points of atoms in this molecule
-  // we know that after INTERVALS_TO_REACH_MOLECULE_CENTER, the radiation lines have reached the center of the molecule
-  // at this point, if the spectrum is INFRARED, the molecule should begin oscillating
-  // hence, after INTERVALS_TO_REACH_MOLECULE_CENTER, the x position of the molecule is moved every interval
   const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
   const hydrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[HYDROGEN.size];
   const topHydrogenAtomCenterPoint = {
-    x:
-      intervalCount > INTERVALS_TO_REACH_MOLECULE_CENTER &&
-      spectrum === SPECTRUMS.INFRARED
-        ? x +
-          CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR +
-          CANVAS_WATER_OSCILLATION_AMPLITUDES.TOP_HYDROGEN_ATOM *
-            Math.sin(
-              intervalCount * Y_SHIFT_PER_INTERVAL * INFRARED_RADIATION_PERIOD,
-            )
-        : x + CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
+    x: shouldOscillate
+      ? x +
+        CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR +
+        TOP_HYDROGEN_AMPLITUDE * oscillationFormula
+      : x + CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
     y:
       y -
       oxygenAtomRadius -
@@ -48,28 +39,15 @@ const CanvasWater = ({ x, y }) => {
       hydrogenAtomRadius,
   };
   const oxygenAtomCenterPoint = {
-    x:
-      intervalCount > INTERVALS_TO_REACH_MOLECULE_CENTER &&
-      spectrum === SPECTRUMS.INFRARED
-        ? x +
-          CANVAS_WATER_OSCILLATION_AMPLITUDES.OXYGEN_ATOM *
-            Math.sin(
-              intervalCount * Y_SHIFT_PER_INTERVAL * INFRARED_RADIATION_PERIOD,
-            )
-        : x,
+    x: shouldOscillate ? x + OXYGEN_AMPLITUDE * oscillationFormula : x,
     y,
   };
   const bottomHydrogenAtomCenterPoint = {
-    x:
-      intervalCount > INTERVALS_TO_REACH_MOLECULE_CENTER &&
-      spectrum === SPECTRUMS.INFRARED
-        ? x +
-          CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR +
-          CANVAS_WATER_OSCILLATION_AMPLITUDES.BOTTOM_HYDROGEN_ATOM *
-            Math.sin(
-              intervalCount * Y_SHIFT_PER_INTERVAL * INFRARED_RADIATION_PERIOD,
-            )
-        : x + CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
+    x: shouldOscillate
+      ? x +
+        CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR +
+        BOTTOM_HYDROGEN_AMPLITUDE * oscillationFormula
+      : x + CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
     y:
       y +
       oxygenAtomRadius +
@@ -112,6 +90,8 @@ const CanvasWater = ({ x, y }) => {
 CanvasWater.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
+  shouldOscillate: PropTypes.bool.isRequired,
+  oscillationFormula: PropTypes.func.isRequired,
 };
 
 export default CanvasWater;

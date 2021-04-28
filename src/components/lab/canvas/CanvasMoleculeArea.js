@@ -22,6 +22,7 @@ import {
   toggleHighlightAllSideMenuMolecules,
   resetIntervalCount,
   toggleShowElectricFieldVectors,
+  toggleShowReEmission,
 } from '../../../actions';
 import CanvasMoleculeAreaClearButton from './CanvasMoleculeAreaClearButton';
 import ActiveMoleculeAreaPlus from './ActiveMoleculeAreaPlus';
@@ -37,6 +38,7 @@ const CanvasMoleculeArea = ({
     ({ lab }) => lab.selectedMoleculeInSideMenu,
   );
   const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
+  const intervalCount = useSelector(({ lab }) => lab.intervalCount);
   const dispatch = useDispatch();
 
   const onMouseEnter = (event) => {
@@ -93,9 +95,12 @@ const CanvasMoleculeArea = ({
       );
       dispatch(selectMoleculeInSideMenu(null));
       // in case a molecule is replaced with another while there are radiation lines/vectors on the canvas -->
-      // reset animation interval and toggle off electric field vectors
-      dispatch(resetIntervalCount());
-      dispatch(toggleShowElectricFieldVectors(false));
+      // reset animation interval and toggle off electric field vectors and re-emission
+      if (intervalCount > 0) {
+        dispatch(resetIntervalCount());
+        dispatch(toggleShowElectricFieldVectors(false));
+        dispatch(toggleShowReEmission(false));
+      }
     }
     // second branch of main logic for this handler (no molecule has been selected in the side menu)
     else if (!selectedMoleculeInSideMenu) {

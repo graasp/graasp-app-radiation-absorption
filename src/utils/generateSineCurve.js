@@ -40,4 +40,4 @@ const generateSineCurve = (
   return sineCurvePoints;
 };
 
-module.exports = generateSineCurve;
+export default generateSineCurve;
