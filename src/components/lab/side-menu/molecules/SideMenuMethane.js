@@ -4,6 +4,7 @@ import SideMenuMoleculeContainer from './SideMenuMoleculeContainer';
 import SideMenuCarbon from './atoms/SideMenuCarbon';
 import SideMenuHydrogen from './atoms/SideMenuHydrogen';
 import {
+  HYDROGEN,
   METHANE_MOLECULE_ID,
   NEGATIVE_CHARGE,
   POSITIVE_CHARGE,
@@ -37,10 +38,12 @@ const SideMenuMethane = () => {
             marginLeft: '-2px',
           }}
           charge={POSITIVE_CHARGE}
+          atomColor={HYDROGEN.atomColor.STANDARD}
         />
         <SideMenuHydrogen
           customPositioningStyles={{ marginLeft: '-2px' }}
           charge={POSITIVE_CHARGE}
+          atomColor={HYDROGEN.atomColor.STANDARD}
         />
       </div>
       <div className={classes.bondContainer}>
@@ -65,10 +68,12 @@ const SideMenuMethane = () => {
         <SideMenuHydrogen
           customPositioningStyles={{ marginBottom: '5px', marginLeft: '1px' }}
           charge={POSITIVE_CHARGE}
+          atomColor={HYDROGEN.atomColor.DARKER}
         />
         <SideMenuHydrogen
           customPositioningStyles={{ marginLeft: '1px' }}
           charge={POSITIVE_CHARGE}
+          atomColor={HYDROGEN.atomColor.LIGHTER}
         />
       </div>
     </SideMenuMoleculeContainer>

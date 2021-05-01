@@ -22,7 +22,7 @@ export const OXYGEN = {
   chargeSymbolColor: 'black',
 };
 export const HYDROGEN = {
-  atomColor: 'gray',
+  atomColor: { DARKER: '#484848', STANDARD: 'gray', LIGHTER: '#A0A0A0' },
   size: 'small',
   chargeSymbolColor: 'black',
 };

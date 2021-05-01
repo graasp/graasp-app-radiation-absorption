@@ -114,21 +114,25 @@ const CanvasMethane = ({
         x={topLeftHydrogenAtomCenterPoint.x}
         y={topLeftHydrogenAtomCenterPoint.y}
         charge={POSITIVE_CHARGE}
+        atomColor={HYDROGEN.atomColor.STANDARD}
       />
       <CanvasHydrogen
         x={topRightHydrogenAtomCenterPoint.x}
         y={topRightHydrogenAtomCenterPoint.y}
         charge={POSITIVE_CHARGE}
+        atomColor={HYDROGEN.atomColor.DARKER}
       />
       <CanvasHydrogen
         x={bottomRightHydrogenAtomCenterPoint.x}
         y={bottomRightHydrogenAtomCenterPoint.y}
         charge={POSITIVE_CHARGE}
+        atomColor={HYDROGEN.atomColor.LIGHTER}
       />
       <CanvasHydrogen
         x={bottomLeftHydrogenAtomCenterPoint.x}
         y={bottomLeftHydrogenAtomCenterPoint.y}
         charge={POSITIVE_CHARGE}
+        atomColor={HYDROGEN.atomColor.STANDARD}
       />
     </Group>
   );

@@ -4,6 +4,7 @@ import SideMenuOxygen from './atoms/SideMenuOxygen';
 import SideMenuHydrogen from './atoms/SideMenuHydrogen';
 import SideMenuBondContainer from '../SideMenuBondContainer';
 import {
+  HYDROGEN,
   NEGATIVE_CHARGE,
   POSITIVE_CHARGE,
   WATER_MOLECULE_ID,
@@ -15,6 +16,7 @@ const SideMenuWater = () => {
       <SideMenuHydrogen
         charge={POSITIVE_CHARGE}
         customPositioningStyles={{ marginRight: '-4px' }}
+        atomColor={HYDROGEN.atomColor.STANDARD}
       />
       <SideMenuBondContainer numberOfBonds={1} rotation={30} />
       <SideMenuOxygen charge={NEGATIVE_CHARGE} />
@@ -22,6 +24,7 @@ const SideMenuWater = () => {
       <SideMenuHydrogen
         charge={POSITIVE_CHARGE}
         customPositioningStyles={{ marginLeft: '-4px' }}
+        atomColor={HYDROGEN.atomColor.STANDARD}
       />
     </SideMenuMoleculeContainer>
   );

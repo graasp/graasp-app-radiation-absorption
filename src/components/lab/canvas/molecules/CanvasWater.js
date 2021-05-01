@@ -72,6 +72,7 @@ const CanvasWater = ({ x, y, shouldOscillate, sinusoidalOscillationPoint }) => {
         x={topHydrogenAtomCenterPoint.x}
         y={topHydrogenAtomCenterPoint.y}
         charge={POSITIVE_CHARGE}
+        atomColor={HYDROGEN.atomColor.STANDARD}
       />
       <CanvasOxygen
         x={oxygenAtomCenterPoint.x}
@@ -82,6 +83,7 @@ const CanvasWater = ({ x, y, shouldOscillate, sinusoidalOscillationPoint }) => {
         x={bottomHydrogenAtomCenterPoint.x}
         y={bottomHydrogenAtomCenterPoint.y}
         charge={POSITIVE_CHARGE}
+        atomColor={HYDROGEN.atomColor.STANDARD}
       />
     </Group>
   );
