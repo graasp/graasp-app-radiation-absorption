@@ -12,7 +12,7 @@ import {
   MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS,
   SPECTRUMS,
 } from '../../config/constants';
-import EmittedLines from './EmittedLines';
+import RadiationLines from './RadiationLines';
 import ElectricFieldVectorGroups from './ElectricFieldVectorGroups';
 
 const styles = () => ({
@@ -124,7 +124,7 @@ class Lab extends Component {
             >
               <Provider store={store}>
                 <Layer>
-                  <EmittedLines xPoints={moleculeContainerCenterPoints} />
+                  <RadiationLines xPoints={moleculeContainerCenterPoints} />
                   {spectrum === SPECTRUMS.INFRARED &&
                     showElectricFieldVectors &&
                     moleculeContainerCenterPoints.map((centerPoint, index) => (

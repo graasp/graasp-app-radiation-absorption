@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmittedLine from './EmittedLine';
+import RadiationLine from './RadiationLine';
 
-const EmittedLines = ({ xPoints }) => {
+const RadiationLines = ({ xPoints }) => {
   return xPoints.map((xPoint, index) => (
     // eslint-disable-next-line react/no-array-index-key
-    <EmittedLine x={xPoint} key={index} lineIndex={index} />
+    <RadiationLine x={xPoint} key={index} lineIndex={index} />
   ));
 };
 
-EmittedLines.propTypes = {
+RadiationLines.propTypes = {
   xPoints: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
-export default EmittedLines;
+export default RadiationLines;

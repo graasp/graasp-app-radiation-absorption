@@ -9,18 +9,14 @@ import {
   INFRARED_RADIATION_PERIOD,
   MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS,
   RADIATION_LINE_CURVE_AMPLITUDE,
-  RE_EMISSION_LINE_CURVE_AMPLITUDE,
   SPECTRUMS,
   VISIBLE_LIGHT_PERIOD,
-  Y_INCREMENT_PER_POINT,
-  Y_SHIFT_PER_INTERVAL,
-  RE_EMISSION_LINE_STROKE_COLOR,
-  RE_EMISSION_LINE_STROKE_WIDTH,
   INTERVALS_TO_REACH_MOLECULE_CENTER,
 } from '../../config/constants';
 import generateSineCurve from '../../utils/generateSineCurve';
+import ReEmittedLines from './ReEmittedLines';
 
-const EmittedLine = ({ x, lineIndex }) => {
+const RadiationLine = ({ x, lineIndex }) => {
   const intervalCount = useSelector(({ lab }) => lab.intervalCount);
   const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
   const spectrum = useSelector(({ lab }) => lab.spectrum);
@@ -43,9 +39,6 @@ const EmittedLine = ({ x, lineIndex }) => {
     }
   }
 
-  // re-emission lines get 'absorbed' at the top of the canvas
-  const reEmissionLineAbsorptionPoint = 0;
-
   return (
     <Group>
       <Line
@@ -57,39 +50,23 @@ const EmittedLine = ({ x, lineIndex }) => {
           intervalCount,
           stageHeight,
           radiationLineAbsorptionPoint,
-          Y_SHIFT_PER_INTERVAL,
-          Y_INCREMENT_PER_POINT,
           RADIATION_LINE_CURVE_AMPLITUDE,
           period,
         )}
       />
-      {/* re-emission line */}
+      {/* re-emission lines */}
       {showReEmission &&
         GREENHOUSE_GASES.includes(currentLineMolecule) &&
         intervalCount >= INTERVALS_TO_REACH_MOLECULE_CENTER && (
-          <Line
-            x={x}
-            y={radiationLineAbsorptionPoint}
-            stroke={RE_EMISSION_LINE_STROKE_COLOR}
-            strokeWidth={RE_EMISSION_LINE_STROKE_WIDTH}
-            points={generateSineCurve(
-              intervalCount - INTERVALS_TO_REACH_MOLECULE_CENTER,
-              radiationLineAbsorptionPoint,
-              reEmissionLineAbsorptionPoint,
-              Y_SHIFT_PER_INTERVAL,
-              Y_INCREMENT_PER_POINT,
-              RE_EMISSION_LINE_CURVE_AMPLITUDE,
-              INFRARED_RADIATION_PERIOD,
-            )}
-          />
+          <ReEmittedLines x={x} y={radiationLineAbsorptionPoint} />
         )}
     </Group>
   );
 };
 
-EmittedLine.propTypes = {
+RadiationLine.propTypes = {
   x: PropTypes.number.isRequired,
   lineIndex: PropTypes.number.isRequired,
 };
 
-export default EmittedLine;
+export default RadiationLine;

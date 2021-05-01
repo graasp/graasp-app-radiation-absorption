@@ -1,3 +1,9 @@
+import {
+  INFRARED_RADIATION_PERIOD,
+  Y_INCREMENT_PER_POINT,
+  Y_SHIFT_PER_INTERVAL,
+} from '../config/constants';
+
 // remember, points on a Konva line are an array of the form [x_0, y_0, x_1, y_1, ..., x_n, y_n]
 // each pair in that array represents an offset from the origin of the line
 // we want to draw the line y = amplitude * sin(period * x)
@@ -7,21 +13,24 @@
 // the choice of increment is relevant: the more y points are input, the more the line is 'filled out'
 const generateSineCurve = (
   currentInterval,
-  stageHeight,
+  startingPoint,
   absorptionPoint,
-  yShiftPerInterval,
-  yIncrement,
   amplitude,
-  period,
+  period = INFRARED_RADIATION_PERIOD,
+  yShiftPerInterval = Y_SHIFT_PER_INTERVAL,
+  yIncrement = Y_INCREMENT_PER_POINT,
 ) => {
   const sineCurvePoints = [];
-  const curveHeight = stageHeight - absorptionPoint;
+  const curveDirection = startingPoint > absorptionPoint ? 1 : -1;
+  const curveHeight = Math.abs(startingPoint - absorptionPoint);
   const intervalsToReachAbsorptionPoint = curveHeight / yShiftPerInterval;
   if (currentInterval <= intervalsToReachAbsorptionPoint) {
     let y = 0;
     while (y < currentInterval * yShiftPerInterval) {
       sineCurvePoints.push(amplitude * Math.sin(y * period));
-      sineCurvePoints.push(y - currentInterval * yShiftPerInterval);
+      sineCurvePoints.push(
+        curveDirection * (y - currentInterval * yShiftPerInterval),
+      );
       y += yIncrement;
     }
   } else {
@@ -33,7 +42,9 @@ const generateSineCurve = (
         (currentInterval - intervalsToReachAbsorptionPoint) * yShiftPerInterval
     ) {
       sineCurvePoints.push(amplitude * Math.sin(y * period));
-      sineCurvePoints.push(y - currentInterval * yShiftPerInterval);
+      sineCurvePoints.push(
+        curveDirection * (y - currentInterval * yShiftPerInterval),
+      );
       y += yIncrement;
     }
   }
