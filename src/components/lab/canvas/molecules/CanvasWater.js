@@ -15,7 +15,7 @@ import {
 } from '../../../../config/constants';
 import CanvasBondContainer from './CanvasBondContainer';
 
-const CanvasWater = ({ x, y, shouldOscillate, oscillationFormula }) => {
+const CanvasWater = ({ x, y, shouldOscillate, sinusoidalOscillationPoint }) => {
   // destructure the oscillation amplitudes of atoms in this molecule
   const {
     TOP_HYDROGEN_AMPLITUDE,
@@ -30,7 +30,7 @@ const CanvasWater = ({ x, y, shouldOscillate, oscillationFormula }) => {
     x: shouldOscillate
       ? x +
         CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR +
-        TOP_HYDROGEN_AMPLITUDE * oscillationFormula
+        TOP_HYDROGEN_AMPLITUDE * sinusoidalOscillationPoint
       : x + CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
     y:
       y -
@@ -39,14 +39,14 @@ const CanvasWater = ({ x, y, shouldOscillate, oscillationFormula }) => {
       hydrogenAtomRadius,
   };
   const oxygenAtomCenterPoint = {
-    x: shouldOscillate ? x + OXYGEN_AMPLITUDE * oscillationFormula : x,
+    x: shouldOscillate ? x + OXYGEN_AMPLITUDE * sinusoidalOscillationPoint : x,
     y,
   };
   const bottomHydrogenAtomCenterPoint = {
     x: shouldOscillate
       ? x +
         CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR +
-        BOTTOM_HYDROGEN_AMPLITUDE * oscillationFormula
+        BOTTOM_HYDROGEN_AMPLITUDE * sinusoidalOscillationPoint
       : x + CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
     y:
       y +
@@ -91,7 +91,7 @@ CanvasWater.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   shouldOscillate: PropTypes.bool.isRequired,
-  oscillationFormula: PropTypes.func.isRequired,
+  sinusoidalOscillationPoint: PropTypes.number.isRequired,
 };
 
 export default CanvasWater;

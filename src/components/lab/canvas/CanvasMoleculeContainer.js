@@ -37,11 +37,11 @@ const CanvasMoleculeContainer = ({
 
   // we know that after INTERVALS_TO_REACH_MOLECULE_CENTER, the radiation lines have reached the center of the molecule
   // at this point, if the spectrum is INFRARED, the molecule should begin oscillating
-  // shouldOscillate and oscillationFormula are passed as props to molecules which oscillate (greenhouse gases)
+  // shouldOscillate and sinusoidalOscillationPoint are passed as props to molecules which oscillate (greenhouse gases)
   const shouldOscillate =
     intervalCount > INTERVALS_TO_REACH_MOLECULE_CENTER &&
     spectrum === SPECTRUMS.INFRARED;
-  const oscillationFormula = Math.sin(
+  const sinusoidalOscillationPoint = Math.sin(
     intervalCount * Y_SHIFT_PER_INTERVAL * INFRARED_RADIATION_PERIOD,
   );
 
@@ -53,7 +53,7 @@ const CanvasMoleculeContainer = ({
           x={x}
           y={y}
           shouldOscillate={shouldOscillate}
-          oscillationFormula={oscillationFormula}
+          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
         />
       );
       break;
@@ -63,7 +63,7 @@ const CanvasMoleculeContainer = ({
           x={x}
           y={y}
           shouldOscillate={shouldOscillate}
-          oscillationFormula={oscillationFormula}
+          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
         />
       );
       break;
@@ -73,7 +73,7 @@ const CanvasMoleculeContainer = ({
           x={x}
           y={y}
           shouldOscillate={shouldOscillate}
-          oscillationFormula={oscillationFormula}
+          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
         />
       );
       break;
@@ -83,7 +83,7 @@ const CanvasMoleculeContainer = ({
           x={x}
           y={y}
           shouldOscillate={shouldOscillate}
-          oscillationFormula={oscillationFormula}
+          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
         />
       );
       break;
@@ -93,7 +93,7 @@ const CanvasMoleculeContainer = ({
           x={x}
           y={y}
           shouldOscillate={shouldOscillate}
-          oscillationFormula={oscillationFormula}
+          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
         />
       );
       break;

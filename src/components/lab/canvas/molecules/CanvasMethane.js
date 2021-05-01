@@ -17,7 +17,12 @@ import {
 } from '../../../../config/constants';
 import CanvasBondContainer from './CanvasBondContainer';
 
-const CanvasMethane = ({ x, y, shouldOscillate, oscillationFormula }) => {
+const CanvasMethane = ({
+  x,
+  y,
+  shouldOscillate,
+  sinusoidalOscillationPoint,
+}) => {
   // destructure the oscillation amplitudes of atoms in this molecule
   const {
     TOP_LEFT_HYDROGEN_AMPLITUDE,
@@ -31,14 +36,14 @@ const CanvasMethane = ({ x, y, shouldOscillate, oscillationFormula }) => {
   const hydrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[HYDROGEN.size];
   const carbonAtomRadius = CANVAS_ATOM_DIMENSIONS[CARBON.size];
   const carbonAtomCenterPoint = {
-    x: shouldOscillate ? x + CARBON_AMPLITUDE * oscillationFormula : x,
+    x: shouldOscillate ? x + CARBON_AMPLITUDE * sinusoidalOscillationPoint : x,
     y,
   };
   const topLeftHydrogenAtomCenterPoint = {
     x: shouldOscillate
       ? x -
         CANVAS_METHANE_TOP_LEFT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR +
-        TOP_LEFT_HYDROGEN_AMPLITUDE * oscillationFormula
+        TOP_LEFT_HYDROGEN_AMPLITUDE * sinusoidalOscillationPoint
       : x - CANVAS_METHANE_TOP_LEFT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR,
     y: y - carbonAtomRadius - hydrogenAtomRadius,
   };
@@ -46,23 +51,33 @@ const CanvasMethane = ({ x, y, shouldOscillate, oscillationFormula }) => {
     x: shouldOscillate
       ? x +
         CANVAS_METHANE_TOP_RIGHT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR +
-        TOP_RIGHT_HYDROGEN_AMPLITUDE * oscillationFormula
+        TOP_RIGHT_HYDROGEN_AMPLITUDE.X * sinusoidalOscillationPoint
       : x + CANVAS_METHANE_TOP_RIGHT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR,
-    y: y - carbonAtomRadius - 0.25 * hydrogenAtomRadius,
+    y: shouldOscillate
+      ? y -
+        carbonAtomRadius -
+        0.25 * hydrogenAtomRadius +
+        TOP_RIGHT_HYDROGEN_AMPLITUDE.Y * sinusoidalOscillationPoint
+      : y - carbonAtomRadius - 0.25 * hydrogenAtomRadius,
   };
   const bottomRightHydrogenAtomCenterPoint = {
     x: shouldOscillate
       ? x +
         CANVAS_METHANE_BOTTOM_RIGHT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR +
-        BOTTOM_RIGHT_HYDROGEN_AMPLITUDE * oscillationFormula
+        BOTTOM_RIGHT_HYDROGEN_AMPLITUDE.X * sinusoidalOscillationPoint
       : x + CANVAS_METHANE_BOTTOM_RIGHT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR,
-    y: y + carbonAtomRadius + 0.25 * hydrogenAtomRadius,
+    y: shouldOscillate
+      ? y +
+        carbonAtomRadius +
+        0.25 * hydrogenAtomRadius +
+        BOTTOM_RIGHT_HYDROGEN_AMPLITUDE.Y * sinusoidalOscillationPoint
+      : y + carbonAtomRadius + 0.25 * hydrogenAtomRadius,
   };
   const bottomLeftHydrogenAtomCenterPoint = {
     x: shouldOscillate
       ? x -
         CANVAS_METHANE_BOTTOM_LEFT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR +
-        BOTTOM_LEFT_HYDROGEN_AMPLITUDE * oscillationFormula
+        BOTTOM_LEFT_HYDROGEN_AMPLITUDE * sinusoidalOscillationPoint
       : x - CANVAS_METHANE_BOTTOM_LEFT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR,
     y: y + carbonAtomRadius + hydrogenAtomRadius,
   };
@@ -123,7 +138,7 @@ CanvasMethane.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   shouldOscillate: PropTypes.bool.isRequired,
-  oscillationFormula: PropTypes.func.isRequired,
+  sinusoidalOscillationPoint: PropTypes.number.isRequired,
 };
 
 export default CanvasMethane;

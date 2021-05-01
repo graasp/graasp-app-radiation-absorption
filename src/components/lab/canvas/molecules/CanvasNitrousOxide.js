@@ -14,7 +14,12 @@ import {
   CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES,
 } from '../../../../config/constants';
 
-const CanvasNitrousOxide = ({ x, y, shouldOscillate, oscillationFormula }) => {
+const CanvasNitrousOxide = ({
+  x,
+  y,
+  shouldOscillate,
+  sinusoidalOscillationPoint,
+}) => {
   // destructure the oscillation amplitudes of atoms in this molecule
   const {
     TOP_NITROGEN_AMPLITUDE,
@@ -26,7 +31,9 @@ const CanvasNitrousOxide = ({ x, y, shouldOscillate, oscillationFormula }) => {
   const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
   const nitrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[NITROGEN.size];
   const topNitrogenAtomCenterPoint = {
-    x: shouldOscillate ? x + TOP_NITROGEN_AMPLITUDE * oscillationFormula : x,
+    x: shouldOscillate
+      ? x + TOP_NITROGEN_AMPLITUDE * sinusoidalOscillationPoint
+      : x,
     y:
       y -
       nitrogenAtomRadius -
@@ -34,11 +41,15 @@ const CanvasNitrousOxide = ({ x, y, shouldOscillate, oscillationFormula }) => {
       nitrogenAtomRadius,
   };
   const middleNitrogenAtomCenterPoint = {
-    x: shouldOscillate ? x + MIDDLE_NITROGEN_AMPLITUDE * oscillationFormula : x,
+    x: shouldOscillate
+      ? x + MIDDLE_NITROGEN_AMPLITUDE * sinusoidalOscillationPoint
+      : x,
     y,
   };
   const bottomOxygenAtomCenterPoint = {
-    x: shouldOscillate ? x + BOTTOM_OXYGEN_AMPLITUDE * oscillationFormula : x,
+    x: shouldOscillate
+      ? x + BOTTOM_OXYGEN_AMPLITUDE * sinusoidalOscillationPoint
+      : x,
     y:
       y +
       nitrogenAtomRadius +
@@ -82,7 +93,7 @@ CanvasNitrousOxide.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   shouldOscillate: PropTypes.bool.isRequired,
-  oscillationFormula: PropTypes.func.isRequired,
+  sinusoidalOscillationPoint: PropTypes.number.isRequired,
 };
 
 export default CanvasNitrousOxide;

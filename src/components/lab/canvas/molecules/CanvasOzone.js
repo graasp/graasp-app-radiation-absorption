@@ -13,7 +13,7 @@ import {
 } from '../../../../config/constants';
 import CanvasBondContainer from './CanvasBondContainer';
 
-const CanvasOzone = ({ x, y, shouldOscillate, oscillationFormula }) => {
+const CanvasOzone = ({ x, y, shouldOscillate, sinusoidalOscillationPoint }) => {
   // destructure the oscillation amplitudes of atoms in this molecule
   const {
     TOP_OXYGEN_AMPLITUDE,
@@ -27,7 +27,7 @@ const CanvasOzone = ({ x, y, shouldOscillate, oscillationFormula }) => {
     x: shouldOscillate
       ? x +
         CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR +
-        TOP_OXYGEN_AMPLITUDE * oscillationFormula
+        TOP_OXYGEN_AMPLITUDE * sinusoidalOscillationPoint
       : x + CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
     y:
       y -
@@ -36,14 +36,16 @@ const CanvasOzone = ({ x, y, shouldOscillate, oscillationFormula }) => {
       oxygenAtomRadius,
   };
   const middleOxygenAtomCenterPoint = {
-    x: shouldOscillate ? x + MIDDLE_OXYGEN_AMPLITUDE * oscillationFormula : x,
+    x: shouldOscillate
+      ? x + MIDDLE_OXYGEN_AMPLITUDE * sinusoidalOscillationPoint
+      : x,
     y,
   };
   const bottomOxygenAtomCenterPoint = {
     x: shouldOscillate
       ? x +
         CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR +
-        BOTTOM_OXYGEN_AMPLITUDE * oscillationFormula
+        BOTTOM_OXYGEN_AMPLITUDE * sinusoidalOscillationPoint
       : x + CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
     y:
       y +
@@ -88,7 +90,7 @@ CanvasOzone.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   shouldOscillate: PropTypes.bool.isRequired,
-  oscillationFormula: PropTypes.func.isRequired,
+  sinusoidalOscillationPoint: PropTypes.number.isRequired,
 };
 
 export default CanvasOzone;
