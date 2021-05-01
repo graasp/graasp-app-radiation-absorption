@@ -26,13 +26,18 @@ const RadiationLine = ({ x, lineIndex }) => {
   const showReEmission = useSelector(({ lab }) => lab.showReEmission);
   const currentLineMolecule = moleculesOnCanvas[lineIndex].molecule;
 
+  // Initial variables are those for visible light
+  // Notice that visible light radiation starts at 0 (top of canvas) and ends at stageHeight (bottom of canvas)
   let period = VISIBLE_LIGHT_PERIOD;
+  let radiationLineStartingPoint = 0;
+  let radiationLineAbsorptionPoint = stageHeight;
+  // If spectrum is infrared, reverse radiation direction (start at bottom of screen and by default go up to the top of the screen)
   // Ozone, Methane, Water, CO2, and Nitrous Oxide are greenhouse gases, and hence absorb infrared radiation
-  // By default, the radiation 'absorption point' is 0 (i.e. the top of the canvas), i.e. the radiation line extends to the top of the canvas
-  // With a greenhouse molecule, the absorption point is the center of the molecule
-  let radiationLineAbsorptionPoint = 0;
+  // With a greenhouse molecule, the absorption point is thus the center of the molecule
   if (spectrum === SPECTRUMS.INFRARED) {
     period = INFRARED_RADIATION_PERIOD;
+    radiationLineStartingPoint = stageHeight;
+    radiationLineAbsorptionPoint = 0;
     if (GREENHOUSE_GASES.includes(currentLineMolecule)) {
       radiationLineAbsorptionPoint =
         stageHeight - MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS;
@@ -43,12 +48,12 @@ const RadiationLine = ({ x, lineIndex }) => {
     <Group>
       <Line
         x={x}
-        y={stageHeight}
+        y={radiationLineStartingPoint}
         stroke={RADIATION_LINE_STROKE_COLOR}
         strokeWidth={RADIATION_LINE_STROKE_WIDTH}
         points={generateSineCurve(
           intervalCount,
-          stageHeight,
+          radiationLineStartingPoint,
           radiationLineAbsorptionPoint,
           RADIATION_LINE_CURVE_AMPLITUDE,
           period,
