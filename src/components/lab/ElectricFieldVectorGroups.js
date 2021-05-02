@@ -39,6 +39,7 @@ const ElectricFieldVectorGroups = ({ x, groupIndex }) => {
           direction={direction}
           // eslint-disable-next-line react/no-array-index-key
           key={index}
+          absorptionPoint={absorptionPoint}
         />
       ))}
     </Group>
