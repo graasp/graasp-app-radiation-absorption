@@ -29,16 +29,25 @@ const getActions = async (
 ) => async (dispatch, getState) => {
   dispatch(flagGettingActions(true));
   try {
-    const { apiHost, spaceId: currentSpaceId } = getApiContext(getState);
+    const { apiHost, spaceId: currentSpaceId, standalone } = getApiContext(
+      getState,
+    );
+
+    // if standalone, you cannot connect to api
+    if (standalone) {
+      return false;
+    }
 
     // by default include current space id
-    const { spaceId = [] } = params;
-    if (!spaceId.length) {
-      spaceId.push(currentSpaceId);
+    const completeParams = { ...params };
+    if (!completeParams.spaceId || !completeParams.spaceId.length) {
+      completeParams.spaceId = [currentSpaceId];
     }
 
     // create url from params
-    const url = `//${apiHost + ACTIONS_ENDPOINT}?${Qs.stringify(params)}`;
+    const url = `//${apiHost + ACTIONS_ENDPOINT}?${Qs.stringify(
+      completeParams,
+    )}`;
 
     const response = await fetch(url, DEFAULT_GET_REQUEST);
 
@@ -48,13 +57,13 @@ const getActions = async (
     const actions = await response.json();
 
     // tell redux that we have the actions
-    dispatch({
+    return dispatch({
       type: GET_ACTIONS_SUCCEEDED,
       payload: actions,
     });
   } catch (err) {
     // tell redux that we encountered an error
-    dispatch({
+    return dispatch({
       type: GET_ACTIONS_FAILED,
       payload: err,
     });
