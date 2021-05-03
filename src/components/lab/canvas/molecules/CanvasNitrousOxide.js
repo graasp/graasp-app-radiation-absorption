@@ -19,6 +19,7 @@ const CanvasNitrousOxide = ({
   y,
   shouldOscillate,
   sinusoidalOscillationPoint,
+  oscillationDirection,
 }) => {
   // destructure the oscillation amplitudes of atoms in this molecule
   const {
@@ -32,7 +33,10 @@ const CanvasNitrousOxide = ({
   const nitrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[NITROGEN.size];
   const topNitrogenAtomCenterPoint = {
     x: shouldOscillate
-      ? x + TOP_NITROGEN_AMPLITUDE * sinusoidalOscillationPoint
+      ? x +
+        oscillationDirection *
+          TOP_NITROGEN_AMPLITUDE *
+          sinusoidalOscillationPoint
       : x,
     y:
       y -
@@ -42,13 +46,19 @@ const CanvasNitrousOxide = ({
   };
   const middleNitrogenAtomCenterPoint = {
     x: shouldOscillate
-      ? x + MIDDLE_NITROGEN_AMPLITUDE * sinusoidalOscillationPoint
+      ? x +
+        oscillationDirection *
+          MIDDLE_NITROGEN_AMPLITUDE *
+          sinusoidalOscillationPoint
       : x,
     y,
   };
   const bottomOxygenAtomCenterPoint = {
     x: shouldOscillate
-      ? x + BOTTOM_OXYGEN_AMPLITUDE * sinusoidalOscillationPoint
+      ? x +
+        oscillationDirection *
+          BOTTOM_OXYGEN_AMPLITUDE *
+          sinusoidalOscillationPoint
       : x,
     y:
       y +
@@ -94,6 +104,7 @@ CanvasNitrousOxide.propTypes = {
   y: PropTypes.number.isRequired,
   shouldOscillate: PropTypes.bool.isRequired,
   sinusoidalOscillationPoint: PropTypes.number.isRequired,
+  oscillationDirection: PropTypes.number.isRequired,
 };
 
 export default CanvasNitrousOxide;

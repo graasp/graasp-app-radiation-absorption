@@ -7,11 +7,9 @@ import {
   RADIATION_LINE_STROKE_WIDTH,
   GREENHOUSE_GASES,
   INFRARED_RADIATION_PERIOD,
-  MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS,
   RADIATION_LINE_CURVE_AMPLITUDE,
   SPECTRUMS,
   VISIBLE_LIGHT_PERIOD,
-  INTERVALS_TO_REACH_MOLECULE_CENTER,
 } from '../../config/constants';
 import generateSineCurve from '../../utils/generateSineCurve';
 import ReEmittedLines from './ReEmittedLines';
@@ -22,6 +20,12 @@ const RadiationLine = ({ x, lineIndex }) => {
   const spectrum = useSelector(({ lab }) => lab.spectrum);
   const { height: stageHeight } = useSelector(
     ({ layout }) => layout.lab.stageDimensions,
+  );
+  const moleculeCenterYFromBottomOfCanvas = useSelector(
+    ({ layout }) => layout.moleculeCenterYFromBottomOfCanvas,
+  );
+  const intervalsToReachMoleculeCenter = useSelector(
+    ({ layout }) => layout.intervalsToReachMoleculeCenter,
   );
   const showReEmission = useSelector(({ lab }) => lab.showReEmission);
   const currentLineMolecule = moleculesOnCanvas[lineIndex].molecule;
@@ -40,7 +44,7 @@ const RadiationLine = ({ x, lineIndex }) => {
     radiationLineAbsorptionPoint = 0;
     if (GREENHOUSE_GASES.includes(currentLineMolecule)) {
       radiationLineAbsorptionPoint =
-        stageHeight - MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS;
+        stageHeight - moleculeCenterYFromBottomOfCanvas;
     }
   }
 
@@ -62,7 +66,7 @@ const RadiationLine = ({ x, lineIndex }) => {
       {/* re-emission lines */}
       {showReEmission &&
         GREENHOUSE_GASES.includes(currentLineMolecule) &&
-        intervalCount >= INTERVALS_TO_REACH_MOLECULE_CENTER && (
+        intervalCount >= intervalsToReachMoleculeCenter && (
           <ReEmittedLines x={x} y={radiationLineAbsorptionPoint} />
         )}
     </Group>

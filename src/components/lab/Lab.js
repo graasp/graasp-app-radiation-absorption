@@ -4,13 +4,19 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Stage, Layer } from 'react-konva';
 import CanvasMoleculeContainer from './canvas/CanvasMoleculeContainer';
-import { setStageDimensions } from '../../actions';
+import {
+  setIntervalsToReachMoleculeCenter,
+  setMoleculeCenterYFromBottomOfCanvas,
+  setOscillationDirection,
+  setStageDimensions,
+} from '../../actions';
 import {
   BACKGROUND_COLOR,
   CANVAS_NUMBER_OF_MOLECULES,
   CANVAS_MOLECULE_AREA_DEFAULT_RADIUS,
-  MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS,
   SPECTRUMS,
+  Y_SHIFT_PER_INTERVAL,
+  INFRARED_RADIATION_CURVE_PERIOD,
 } from '../../config/constants';
 import RadiationLines from './RadiationLines';
 import ElectricFieldVectorGroups from './ElectricFieldVectorGroups';
@@ -47,6 +53,10 @@ class Lab extends Component {
     ).isRequired,
     spectrum: PropTypes.string.isRequired,
     showElectricFieldVectors: PropTypes.bool.isRequired,
+    moleculeCenterYFromBottomOfCanvas: PropTypes.number.isRequired,
+    dispatchSetMoleculeCenterYFromBottomOfCanvas: PropTypes.func.isRequired,
+    dispatchSetIntervalsToReachMoleculeCenter: PropTypes.func.isRequired,
+    dispatchSetOscillationDirection: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -59,6 +69,44 @@ class Lab extends Component {
       this.checkSize();
     });
     ro.observe(document.querySelector(`#container`));
+  }
+
+  componentDidUpdate() {
+    const {
+      stageDimensions,
+      dispatchSetMoleculeCenterYFromBottomOfCanvas,
+      dispatchSetIntervalsToReachMoleculeCenter,
+      dispatchSetOscillationDirection,
+    } = this.props;
+    // code to adjust 'molecule container' center points as screen height changes
+    // without such adjustments, on bigger screens the default molecule container positioning is too low
+    // note that, (1) molecule container center points are also the points where infrared radiation gets absorbed for certain molecules
+    // hence, two other variables need to be updated along with the center points (intervals to reach molecule center and oscillation direction)
+    // (2) molecule container center points must **always** be 0.5x, 1x, 1.5x (etc) multiples of the infrared radiation curve period
+    // this is so that the radiation curve meets the center point (and gets absorbed, triggering oscillation) with a molecule correctly positioned at rest
+    // (3) the cut-offs of >=1400, >=900, <900 were chosen 'manually' (by eye-balling and seeing what looks good)
+    if (stageDimensions.height >= 1400) {
+      const newCenterPoint = 2 * INFRARED_RADIATION_CURVE_PERIOD;
+      dispatchSetMoleculeCenterYFromBottomOfCanvas(newCenterPoint);
+      dispatchSetIntervalsToReachMoleculeCenter(
+        newCenterPoint / Y_SHIFT_PER_INTERVAL,
+      );
+      dispatchSetOscillationDirection(1);
+    } else if (stageDimensions.height >= 900) {
+      const newCenterPoint = 1.5 * INFRARED_RADIATION_CURVE_PERIOD;
+      dispatchSetMoleculeCenterYFromBottomOfCanvas(newCenterPoint);
+      dispatchSetIntervalsToReachMoleculeCenter(
+        newCenterPoint / Y_SHIFT_PER_INTERVAL,
+      );
+      dispatchSetOscillationDirection(-1);
+    } else if (stageDimensions.height < 900) {
+      const newCenterPoint = 1 * INFRARED_RADIATION_CURVE_PERIOD;
+      dispatchSetMoleculeCenterYFromBottomOfCanvas(newCenterPoint);
+      dispatchSetIntervalsToReachMoleculeCenter(
+        newCenterPoint / Y_SHIFT_PER_INTERVAL,
+      );
+      dispatchSetOscillationDirection(1);
+    }
   }
 
   checkSize = () => {
@@ -98,6 +146,7 @@ class Lab extends Component {
       moleculesOnCanvas,
       spectrum,
       showElectricFieldVectors,
+      moleculeCenterYFromBottomOfCanvas,
     } = this.props;
     const moleculeContainerCenterPoints = this.determineMoleculeContainersCenterPoints(
       stageDimensions.width,
@@ -140,7 +189,7 @@ class Lab extends Component {
                       x={centerPoint}
                       y={
                         stageDimensions.height -
-                        MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS
+                        moleculeCenterYFromBottomOfCanvas
                       }
                       key={centerPoint}
                       isActive={selectedMoleculeInSideMenu !== ''}
@@ -167,10 +216,14 @@ const mapStateToProps = ({ layout, lab }) => ({
   moleculesOnCanvas: lab.moleculesOnCanvas,
   spectrum: lab.spectrum,
   showElectricFieldVectors: lab.showElectricFieldVectors,
+  moleculeCenterYFromBottomOfCanvas: layout.moleculeCenterYFromBottomOfCanvas,
 });
 
 const mapDispatchToProps = {
   dispatchSetStageDimensions: setStageDimensions,
+  dispatchSetMoleculeCenterYFromBottomOfCanvas: setMoleculeCenterYFromBottomOfCanvas,
+  dispatchSetIntervalsToReachMoleculeCenter: setIntervalsToReachMoleculeCenter,
+  dispatchSetOscillationDirection: setOscillationDirection,
 };
 
 const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Lab);

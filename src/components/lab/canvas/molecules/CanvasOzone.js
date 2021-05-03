@@ -13,7 +13,13 @@ import {
 } from '../../../../config/constants';
 import CanvasBondContainer from './CanvasBondContainer';
 
-const CanvasOzone = ({ x, y, shouldOscillate, sinusoidalOscillationPoint }) => {
+const CanvasOzone = ({
+  x,
+  y,
+  shouldOscillate,
+  sinusoidalOscillationPoint,
+  oscillationDirection,
+}) => {
   // destructure the oscillation amplitudes of atoms in this molecule
   const {
     TOP_OXYGEN_AMPLITUDE,
@@ -27,7 +33,7 @@ const CanvasOzone = ({ x, y, shouldOscillate, sinusoidalOscillationPoint }) => {
     x: shouldOscillate
       ? x +
         CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR +
-        TOP_OXYGEN_AMPLITUDE * sinusoidalOscillationPoint
+        oscillationDirection * TOP_OXYGEN_AMPLITUDE * sinusoidalOscillationPoint
       : x + CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
     y:
       y -
@@ -37,7 +43,10 @@ const CanvasOzone = ({ x, y, shouldOscillate, sinusoidalOscillationPoint }) => {
   };
   const middleOxygenAtomCenterPoint = {
     x: shouldOscillate
-      ? x + MIDDLE_OXYGEN_AMPLITUDE * sinusoidalOscillationPoint
+      ? x +
+        oscillationDirection *
+          MIDDLE_OXYGEN_AMPLITUDE *
+          sinusoidalOscillationPoint
       : x,
     y,
   };
@@ -45,7 +54,9 @@ const CanvasOzone = ({ x, y, shouldOscillate, sinusoidalOscillationPoint }) => {
     x: shouldOscillate
       ? x +
         CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR +
-        BOTTOM_OXYGEN_AMPLITUDE * sinusoidalOscillationPoint
+        oscillationDirection *
+          BOTTOM_OXYGEN_AMPLITUDE *
+          sinusoidalOscillationPoint
       : x + CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
     y:
       y +
@@ -91,6 +102,7 @@ CanvasOzone.propTypes = {
   y: PropTypes.number.isRequired,
   shouldOscillate: PropTypes.bool.isRequired,
   sinusoidalOscillationPoint: PropTypes.number.isRequired,
+  oscillationDirection: PropTypes.number.isRequired,
 };
 
 export default CanvasOzone;

@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Group, Line } from 'react-konva';
 import {
-  INTERVALS_TO_REACH_MOLECULE_CENTER,
   RE_EMISSION_LINE_CURVE_AMPLITUDE,
   RE_EMISSION_LINE_STROKE_COLOR,
   RE_EMISSION_LINE_STROKE_WIDTH,
@@ -15,6 +14,9 @@ const ReEmittedLines = ({ x, y }) => {
   const { height: stageHeight } = useSelector(
     ({ layout }) => layout.lab.stageDimensions,
   );
+  const intervalsToReachMoleculeCenter = useSelector(
+    ({ layout }) => layout.intervalsToReachMoleculeCenter,
+  );
 
   return (
     <Group>
@@ -24,7 +26,7 @@ const ReEmittedLines = ({ x, y }) => {
         stroke={RE_EMISSION_LINE_STROKE_COLOR}
         strokeWidth={RE_EMISSION_LINE_STROKE_WIDTH}
         points={generateSineCurve(
-          intervalCount - INTERVALS_TO_REACH_MOLECULE_CENTER,
+          intervalCount - intervalsToReachMoleculeCenter,
           stageHeight,
           y,
           RE_EMISSION_LINE_CURVE_AMPLITUDE,
@@ -36,7 +38,7 @@ const ReEmittedLines = ({ x, y }) => {
         stroke={RE_EMISSION_LINE_STROKE_COLOR}
         strokeWidth={RE_EMISSION_LINE_STROKE_WIDTH}
         points={generateSineCurve(
-          intervalCount - INTERVALS_TO_REACH_MOLECULE_CENTER,
+          intervalCount - intervalsToReachMoleculeCenter,
           y,
           stageHeight,
           RE_EMISSION_LINE_CURVE_AMPLITUDE,

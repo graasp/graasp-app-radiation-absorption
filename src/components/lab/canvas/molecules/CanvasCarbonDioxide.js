@@ -19,6 +19,7 @@ const CanvasCarbonDioxide = ({
   y,
   shouldOscillate,
   sinusoidalOscillationPoint,
+  oscillationDirection,
 }) => {
   // destructure the oscillation amplitudes of atoms in this molecule
   const {
@@ -32,7 +33,8 @@ const CanvasCarbonDioxide = ({
   const carbonAtomRadius = CANVAS_ATOM_DIMENSIONS[CARBON.size];
   const topOxygenAtomCenterPoint = {
     x: shouldOscillate
-      ? x + TOP_OXYGEN_AMPLITUDE * sinusoidalOscillationPoint
+      ? x +
+        oscillationDirection * TOP_OXYGEN_AMPLITUDE * sinusoidalOscillationPoint
       : x,
     y:
       y -
@@ -41,12 +43,17 @@ const CanvasCarbonDioxide = ({
       oxygenAtomRadius,
   };
   const carbonAtomCenterPoint = {
-    x: shouldOscillate ? x + CARBON_AMPLITUDE * sinusoidalOscillationPoint : x,
+    x: shouldOscillate
+      ? x + oscillationDirection * CARBON_AMPLITUDE * sinusoidalOscillationPoint
+      : x,
     y,
   };
   const bottomOxygenAtomCenterPoint = {
     x: shouldOscillate
-      ? x + BOTTOM_OXYGEN_AMPLITUDE * sinusoidalOscillationPoint
+      ? x +
+        oscillationDirection *
+          BOTTOM_OXYGEN_AMPLITUDE *
+          sinusoidalOscillationPoint
       : x,
     y:
       y +
@@ -104,6 +111,7 @@ CanvasCarbonDioxide.propTypes = {
   y: PropTypes.number.isRequired,
   shouldOscillate: PropTypes.bool.isRequired,
   sinusoidalOscillationPoint: PropTypes.number.isRequired,
+  oscillationDirection: PropTypes.number.isRequired,
 };
 
 export default CanvasCarbonDioxide;
