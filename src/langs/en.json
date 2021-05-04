@@ -1,13 +1,30 @@
 {
   "translations": {
-    "This is the student view. Switch to the teacher view by clicking on the URL below.": "This is the student view. Switch to the teacher view by clicking on the URL below.",
-    "This is the teacher view. Switch to the student view by clicking on the URL below.": "This is the teacher view. Switch to the student view by clicking on the URL below.",
-    "Welcome to the Graasp App Starter Lab Kit": "Welcome to the Graasp App Starter Lab Kit",
     "Observe": "Observe",
     "Language": "Language",
     "Show Header": "Show Header",
     "Settings": "Settings",
     "Open Drawer": "Open Drawer",
-    "Description": "Description"
+    "Description": "Description",
+    "Argon": "Argon",
+    "Dioxygen": "Dioxygen",
+    "Dinitrogen": "Dinitrogen",
+    "Non-greenhouse Gases": "Non-greenhouse Gases",
+    "Greenhouse Gases": "Greenhouse Gases",
+    "Methane": "Methane",
+    "Ozone": "Ozone",
+    "Nitrous Oxide": "Nitrous Oxide",
+    "Carbon Dioxide": "Carbon Dioxide",
+    "Water": "Water",
+    "Visible Light": "Visible Light",
+    "Infrared": "Infrared",
+    "Reset": "Reset",
+    "Move Forward": "Move Forward",
+    "Move Back": "Move Back",
+    "Play": "Play",
+    "Re-emission": "Re-emission",
+    "Sign of charges": "Sign of charges",
+    "Electric field vectors": "Electric field vectors",
+    "Fill all empty": "Fill all empty"
   }
 }
