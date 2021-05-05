@@ -1,3 +1,5 @@
+import { SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW } from '../config/constants';
+
 // a 'vector group' consists of three arrows pointing at a peak/trough of the sine curve (radiation line)
 // every group's middle arrow is centered on a peak/trough
 // given a group number and the current intervalCount, this function determines:
@@ -46,7 +48,9 @@ const generateElectricFieldVectorGroupYPoints = (
   );
 
   const distanceBetweenFirstVectorGroupAndAbsorptionPoint =
-    firstVectorGroupYPosition - absorptionPoint;
+    firstVectorGroupYPosition +
+    SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW -
+    absorptionPoint;
 
   const intervalsForFirstVectorGroupToGetAbsorbed =
     distanceBetweenFirstVectorGroupAndAbsorptionPoint / yShiftPerInterval;

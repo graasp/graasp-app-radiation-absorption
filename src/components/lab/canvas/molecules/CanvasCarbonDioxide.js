@@ -14,7 +14,13 @@ import {
   CANVAS_CARBON_DIOXIDE_OSCILLATION_AMPLITUDES,
 } from '../../../../config/constants';
 
-const CanvasCarbonDioxide = ({ x, y, shouldOscillate, oscillationFormula }) => {
+const CanvasCarbonDioxide = ({
+  x,
+  y,
+  shouldOscillate,
+  sinusoidalOscillationPoint,
+  oscillationDirection,
+}) => {
   // destructure the oscillation amplitudes of atoms in this molecule
   const {
     TOP_OXYGEN_AMPLITUDE,
@@ -25,65 +31,74 @@ const CanvasCarbonDioxide = ({ x, y, shouldOscillate, oscillationFormula }) => {
   // variables for determining center points of atoms in this molecule
   const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
   const carbonAtomRadius = CANVAS_ATOM_DIMENSIONS[CARBON.size];
-  const topOxygenAtomCenterPoint = {
-    x: shouldOscillate ? x + TOP_OXYGEN_AMPLITUDE * oscillationFormula : x,
-    y:
-      y -
-      carbonAtomRadius -
-      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS -
-      oxygenAtomRadius,
-  };
-  const carbonAtomCenterPoint = {
-    x: shouldOscillate ? x + CARBON_AMPLITUDE * oscillationFormula : x,
-    y,
-  };
-  const bottomOxygenAtomCenterPoint = {
-    x: shouldOscillate ? x + BOTTOM_OXYGEN_AMPLITUDE * oscillationFormula : x,
-    y:
-      y +
-      carbonAtomRadius +
-      CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
-      oxygenAtomRadius,
-  };
+  const oscillationFactor = oscillationDirection * sinusoidalOscillationPoint;
+
+  // top oxygen atom
+  const topOxygenAtomCenterX = shouldOscillate
+    ? x + oscillationFactor * TOP_OXYGEN_AMPLITUDE
+    : x;
+  const topOxygenAtomCenterY =
+    y -
+    carbonAtomRadius -
+    CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS -
+    oxygenAtomRadius;
+
+  // carbon atom
+  const carbonAtomCenterX = shouldOscillate
+    ? x + oscillationFactor * CARBON_AMPLITUDE
+    : x;
+  const carbonAtomCenterY = y;
+
+  // bottom oxygen atom
+  const bottomOxygenAtomCenterX = shouldOscillate
+    ? x + oscillationFactor * BOTTOM_OXYGEN_AMPLITUDE
+    : x;
+  const bottomOxygenAtomCenterY =
+    y +
+    carbonAtomRadius +
+    CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
+    oxygenAtomRadius;
 
   return (
     <Group>
-      {/* CanvasBondContainers need to be at the top here so that they fall behind atoms in the canvas */}
+      {/* molecule bonds */}
+      {/* note that these CanvasBondContainer components need to be at the top here so that they fall behind atoms on the canvas */}
       <CanvasBondContainer
         from={{
-          x: topOxygenAtomCenterPoint.x,
-          y: topOxygenAtomCenterPoint.y,
+          x: topOxygenAtomCenterX,
+          y: topOxygenAtomCenterY,
         }}
         to={{
-          x: carbonAtomCenterPoint.x,
-          y: carbonAtomCenterPoint.y,
+          x: carbonAtomCenterX,
+          y: carbonAtomCenterY,
         }}
         numberOfBonds={2}
       />
       <CanvasBondContainer
         from={{
-          x: carbonAtomCenterPoint.x,
-          y: carbonAtomCenterPoint.y,
+          x: carbonAtomCenterX,
+          y: carbonAtomCenterY,
         }}
         to={{
-          x: bottomOxygenAtomCenterPoint.x,
-          y: bottomOxygenAtomCenterPoint.y,
+          x: bottomOxygenAtomCenterX,
+          y: bottomOxygenAtomCenterY,
         }}
         numberOfBonds={2}
       />
+      {/* molecule atoms */}
       <CanvasOxygen
-        x={topOxygenAtomCenterPoint.x}
-        y={topOxygenAtomCenterPoint.y}
+        x={topOxygenAtomCenterX}
+        y={topOxygenAtomCenterY}
         charge={NEGATIVE_CHARGE}
       />
       <CanvasCarbon
-        x={carbonAtomCenterPoint.x}
-        y={carbonAtomCenterPoint.y}
+        x={carbonAtomCenterX}
+        y={carbonAtomCenterY}
         charge={POSITIVE_CHARGE}
       />
       <CanvasOxygen
-        x={bottomOxygenAtomCenterPoint.x}
-        y={bottomOxygenAtomCenterPoint.y}
+        x={bottomOxygenAtomCenterX}
+        y={bottomOxygenAtomCenterY}
         charge={NEGATIVE_CHARGE}
       />
     </Group>
@@ -94,7 +109,8 @@ CanvasCarbonDioxide.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   shouldOscillate: PropTypes.bool.isRequired,
-  oscillationFormula: PropTypes.func.isRequired,
+  sinusoidalOscillationPoint: PropTypes.number.isRequired,
+  oscillationDirection: PropTypes.number.isRequired,
 };
 
 export default CanvasCarbonDioxide;

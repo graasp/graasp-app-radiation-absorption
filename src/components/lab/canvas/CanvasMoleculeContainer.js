@@ -10,7 +10,6 @@ import {
   DINITROGEN_MOLECULE_ID,
   DIOXYGEN_MOLECULE_ID,
   ARGON_MOLECULE_ID,
-  INTERVALS_TO_REACH_MOLECULE_CENTER,
   SPECTRUMS,
   Y_SHIFT_PER_INTERVAL,
   INFRARED_RADIATION_PERIOD,
@@ -34,14 +33,20 @@ const CanvasMoleculeContainer = ({
 }) => {
   const intervalCount = useSelector(({ lab }) => lab.intervalCount);
   const spectrum = useSelector(({ lab }) => lab.spectrum);
+  const intervalsToReachMoleculeCenter = useSelector(
+    ({ layout }) => layout.intervalsToReachMoleculeCenter,
+  );
+  const oscillationDirection = useSelector(
+    ({ layout }) => layout.oscillationDirection,
+  );
 
-  // we know that after INTERVALS_TO_REACH_MOLECULE_CENTER, the radiation lines have reached the center of the molecule
+  // we know that after intervalsToReachMoleculeCenter, the radiation lines have reached the center of the molecule
   // at this point, if the spectrum is INFRARED, the molecule should begin oscillating
-  // shouldOscillate and oscillationFormula are passed as props to molecules which oscillate (greenhouse gases)
+  // shouldOscillate and sinusoidalOscillationPoint are passed as props to molecules which oscillate (greenhouse gases)
   const shouldOscillate =
-    intervalCount > INTERVALS_TO_REACH_MOLECULE_CENTER &&
+    intervalCount > intervalsToReachMoleculeCenter &&
     spectrum === SPECTRUMS.INFRARED;
-  const oscillationFormula = Math.sin(
+  const sinusoidalOscillationPoint = Math.sin(
     intervalCount * Y_SHIFT_PER_INTERVAL * INFRARED_RADIATION_PERIOD,
   );
 
@@ -53,7 +58,8 @@ const CanvasMoleculeContainer = ({
           x={x}
           y={y}
           shouldOscillate={shouldOscillate}
-          oscillationFormula={oscillationFormula}
+          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
+          oscillationDirection={oscillationDirection}
         />
       );
       break;
@@ -63,7 +69,8 @@ const CanvasMoleculeContainer = ({
           x={x}
           y={y}
           shouldOscillate={shouldOscillate}
-          oscillationFormula={oscillationFormula}
+          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
+          oscillationDirection={oscillationDirection}
         />
       );
       break;
@@ -73,7 +80,8 @@ const CanvasMoleculeContainer = ({
           x={x}
           y={y}
           shouldOscillate={shouldOscillate}
-          oscillationFormula={oscillationFormula}
+          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
+          oscillationDirection={oscillationDirection}
         />
       );
       break;
@@ -83,7 +91,8 @@ const CanvasMoleculeContainer = ({
           x={x}
           y={y}
           shouldOscillate={shouldOscillate}
-          oscillationFormula={oscillationFormula}
+          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
+          oscillationDirection={oscillationDirection}
         />
       );
       break;
@@ -93,7 +102,8 @@ const CanvasMoleculeContainer = ({
           x={x}
           y={y}
           shouldOscillate={shouldOscillate}
-          oscillationFormula={oscillationFormula}
+          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
+          oscillationDirection={oscillationDirection}
         />
       );
       break;

@@ -22,7 +22,7 @@ export const OXYGEN = {
   chargeSymbolColor: 'black',
 };
 export const HYDROGEN = {
-  atomColor: 'gray',
+  atomColor: { DARKER: '#484848', STANDARD: 'gray', LIGHTER: '#A0A0A0' },
   size: 'small',
   chargeSymbolColor: 'black',
 };
@@ -159,10 +159,10 @@ export const CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES = {
 };
 export const CANVAS_METHANE_OSCILLATION_AMPLITUDES = {
   TOP_LEFT_HYDROGEN_AMPLITUDE: -10,
-  TOP_RIGHT_HYDROGEN_AMPLITUDE: 5,
-  BOTTOM_RIGHT_HYDROGEN_AMPLITUDE: 5,
+  TOP_RIGHT_HYDROGEN_AMPLITUDE: { X: -5, Y: -5 },
+  BOTTOM_RIGHT_HYDROGEN_AMPLITUDE: { X: -5, Y: 5 },
   BOTTOM_LEFT_HYDROGEN_AMPLITUDE: -10,
-  CARBON_AMPLITUDE: 0,
+  CARBON_AMPLITUDE: 3.33,
 };
 
 /* ------CONSTANTS FOR GENERATING SINE CURVES (RADIATION LINES)------ */
@@ -172,15 +172,17 @@ export const Y_INCREMENT_PER_POINT = Math.PI / 8;
 export const Y_SHIFT_PER_INTERVAL = Math.PI;
 export const RADIATION_LINE_CURVE_AMPLITUDE = 25;
 export const RE_EMISSION_LINE_CURVE_AMPLITUDE = 15;
+export const INFRARED_RADIATION_PERIOD = 1 / 64;
+export const VISIBLE_LIGHT_PERIOD = 1 / 32;
 // note that the 'natural' period of the sine curve is 2π
 // hence, with INFRARED_RADIATION_PERIOD = 1 / 64, curve period = 2π / (1 / 64) = 128π
 // (indeed, on the canvas, given a Y_SHIFT_PER_INTERVAL of π, one period will complete after 128 intervals, with a distance of 128π from the bottom of the screen)
-export const INFRARED_RADIATION_PERIOD = 1 / 64;
-export const VISIBLE_LIGHT_PERIOD = 1 / 32;
+export const INFRARED_RADIATION_CURVE_PERIOD =
+  (2 * Math.PI) / INFRARED_RADIATION_PERIOD;
 // 128π => chosen for aesthetic purposes (1 period from bottom of screen)
-export const MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS = 128 * Math.PI;
-export const INTERVALS_TO_REACH_MOLECULE_CENTER =
-  MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS / Y_SHIFT_PER_INTERVAL;
+export const INITIAL_MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS = INFRARED_RADIATION_CURVE_PERIOD;
+export const INITIAL_INTERVALS_TO_REACH_MOLECULE_CENTER =
+  INITIAL_MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS / Y_SHIFT_PER_INTERVAL;
 export const APPLICATION_INTERVAL = 20;
 // note here that INFRARED_RADIATION_CURVE_''INTERVAL'' is used in its mathematical sense of distance (and not its JavaScript sense of time)
 // every sine curve period has 4 intervals (0 to peak, peak to 0, 0 to -peak, -peak to 0)
@@ -199,5 +201,5 @@ export const LARGE_ARROW_LENGTH =
   RADIATION_LINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 2;
 export const SMALL_ARROW_LENGTH =
   RADIATION_LINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 10;
-export const SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW = 40;
+export const SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW = 20 * Math.PI;
 export const ARROW_STROKE_COLOR = 'darkblue';

@@ -3,17 +3,10 @@ import PropTypes from 'prop-types';
 import CanvasArgon from './atoms/CanvasArgon';
 
 const CanvasArgonMolecule = ({ x, y }) => {
-  const argonAtomInitialCenterPoint = {
-    x,
-    y,
-  };
+  const argonAtomCenterX = x;
+  const argonAtomCenterY = y;
 
-  return (
-    <CanvasArgon
-      x={argonAtomInitialCenterPoint.x}
-      y={argonAtomInitialCenterPoint.y}
-    />
-  );
+  return <CanvasArgon x={argonAtomCenterX} y={argonAtomCenterY} />;
 };
 
 CanvasArgonMolecule.propTypes = {

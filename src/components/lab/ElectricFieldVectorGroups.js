@@ -6,7 +6,6 @@ import ElectricFieldVectorGroup from './ElectricFieldVectorGroup';
 import {
   GREENHOUSE_GASES,
   INFRARED_RADIATION_CURVE_INTERVAL,
-  MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS,
   Y_SHIFT_PER_INTERVAL,
 } from '../../config/constants';
 import generateElectricFieldVectorGroupYPoints from '../../utils/generateElectricFieldVectorGroupYPoints';
@@ -15,13 +14,16 @@ const ElectricFieldVectorGroups = ({ x, groupIndex }) => {
   const { height: stageHeight } = useSelector(
     ({ layout }) => layout.lab.stageDimensions,
   );
+  const moleculeCenterYFromBottomOfCanvas = useSelector(
+    ({ layout }) => layout.moleculeCenterYFromBottomOfCanvas,
+  );
   const intervalCount = useSelector(({ lab }) => lab.intervalCount);
   const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
   const currentLineMolecule = moleculesOnCanvas[groupIndex].molecule;
 
   let absorptionPoint = 0;
   if (GREENHOUSE_GASES.includes(currentLineMolecule)) {
-    absorptionPoint = stageHeight - MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS;
+    absorptionPoint = stageHeight - moleculeCenterYFromBottomOfCanvas;
   }
 
   return (
@@ -39,6 +41,7 @@ const ElectricFieldVectorGroups = ({ x, groupIndex }) => {
           direction={direction}
           // eslint-disable-next-line react/no-array-index-key
           key={index}
+          absorptionPoint={absorptionPoint}
         />
       ))}
     </Group>
