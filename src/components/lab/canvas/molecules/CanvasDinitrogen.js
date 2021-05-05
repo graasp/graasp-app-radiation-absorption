@@ -11,31 +11,30 @@ import {
 
 const CanvasDinitrogen = ({ x, y }) => {
   const nitrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[NITROGEN.size];
-  const topNitrogenAtomInitialCenterPoint = {
-    x,
-    y:
-      y - nitrogenAtomRadius - CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
-  };
-  const bottomNitrogenAtomInitialCenterPoint = {
-    x,
-    y: y + nitrogenAtomRadius,
-  };
+
+  // top nitrogen atom
+  const topNitrogenAtomCenterX = x;
+  const topNitrogenAtomCenterY =
+    y - nitrogenAtomRadius - CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS;
+
+  // bottom nitrogen atom
+  const bottomNitrogenAtomCenterX = x;
+  const bottomNitrogenAtomCenterY = y + nitrogenAtomRadius;
 
   return (
     <Group>
-      {/* CanvasBondContainers need to be at the top here so that they fall behind atoms in the canvas */}
+      {/* molecule bonds */}
+      {/* note that these CanvasBondContainer components need to be at the top here so that they fall behind atoms on the canvas */}
       <CanvasBondContainer
-        from={topNitrogenAtomInitialCenterPoint}
-        to={bottomNitrogenAtomInitialCenterPoint}
+        from={{ x: topNitrogenAtomCenterX, y: topNitrogenAtomCenterY }}
+        to={{ x: bottomNitrogenAtomCenterX, y: bottomNitrogenAtomCenterY }}
         numberOfBonds={3}
       />
+      {/* molecule atoms */}
+      <CanvasNitrogen x={topNitrogenAtomCenterX} y={topNitrogenAtomCenterY} />
       <CanvasNitrogen
-        x={topNitrogenAtomInitialCenterPoint.x}
-        y={topNitrogenAtomInitialCenterPoint.y}
-      />
-      <CanvasNitrogen
-        x={bottomNitrogenAtomInitialCenterPoint.x}
-        y={bottomNitrogenAtomInitialCenterPoint.y}
+        x={bottomNitrogenAtomCenterX}
+        y={bottomNitrogenAtomCenterY}
       />
     </Group>
   );

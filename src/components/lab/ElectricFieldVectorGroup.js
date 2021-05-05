@@ -12,16 +12,23 @@ import {
 } from '../../config/constants';
 
 const ElectricFieldVectorGroup = ({ x, y, direction, absorptionPoint }) => {
+  // y positions of the three arrows in an electric field vector group
+  const topArrowY = y - SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW;
+  const middleArrowY = y;
+  const bottomArrowY = y + SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW;
+  // only show an arrow if its y position is greater than the absorption point
+  // i.e. once the arrow is above the absorption point, don't show it
+  // (noting that on the canvas the higher the y the lower on the screen a shape is)
+  const showTopArrow = topArrowY >= absorptionPoint;
+  const showMiddleArrow = middleArrowY >= absorptionPoint;
+  const showBottomArrow = bottomArrowY >= absorptionPoint;
+
   return (
     <Group>
-      {/* only show the arrow if its y position is greater than the absorption point */}
-      {/* i.e. once the arrow is above the absorption point, don't show it */}
-      {/* (similar for the two other arrows below) */}
-      {y - SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW >=
-        absorptionPoint && (
+      {showTopArrow && (
         <Arrow
           x={x}
-          y={y - SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW}
+          y={topArrowY}
           points={[0, 0, direction * SMALL_ARROW_LENGTH, 0]}
           pointerLength={ARROW_POINTER_LENGTH}
           pointerWidth={ARROW_POINTER_WIDTH}
@@ -29,10 +36,10 @@ const ElectricFieldVectorGroup = ({ x, y, direction, absorptionPoint }) => {
           strokeWidth={ARROW_STROKE_WIDTH}
         />
       )}
-      {y >= absorptionPoint && (
+      {showMiddleArrow && (
         <Arrow
           x={x}
-          y={y}
+          y={middleArrowY}
           points={[0, 0, direction * LARGE_ARROW_LENGTH, 0]}
           pointerLength={ARROW_POINTER_LENGTH}
           pointerWidth={ARROW_POINTER_WIDTH}
@@ -40,11 +47,10 @@ const ElectricFieldVectorGroup = ({ x, y, direction, absorptionPoint }) => {
           strokeWidth={ARROW_STROKE_WIDTH}
         />
       )}
-      {y + SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW >=
-        absorptionPoint && (
+      {showBottomArrow && (
         <Arrow
           x={x}
-          y={y + SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW}
+          y={bottomArrowY}
           points={[0, 0, direction * SMALL_ARROW_LENGTH, 0]}
           pointerLength={ARROW_POINTER_LENGTH}
           pointerWidth={ARROW_POINTER_WIDTH}

@@ -11,31 +11,28 @@ import {
 
 const CanvasDioxygen = ({ x, y }) => {
   const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
-  const topOxygenAtomInitialCenterPoint = {
-    x,
-    y: y - oxygenAtomRadius - CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
-  };
-  const bottomOxygenAtomInitialCenterPoint = {
-    x,
-    y: y + oxygenAtomRadius,
-  };
+
+  // top oxygen atom
+  const topOxygenAtomCenterX = x;
+  const topOxygenAtomCenterY =
+    y - oxygenAtomRadius - CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS;
+
+  // bottom oxygen atom
+  const bottomOxygenAtomCenterX = x;
+  const bottomOxygenAtomCenterY = y + oxygenAtomRadius;
 
   return (
     <Group>
-      {/* CanvasBondContainers need to be at the top here so that they fall behind atoms in the canvas */}
+      {/* molecule bonds */}
+      {/* note that these CanvasBondContainer components need to be at the top here so that they fall behind atoms on the canvas */}
       <CanvasBondContainer
-        from={topOxygenAtomInitialCenterPoint}
-        to={bottomOxygenAtomInitialCenterPoint}
+        from={{ x: topOxygenAtomCenterX, y: topOxygenAtomCenterY }}
+        to={{ x: bottomOxygenAtomCenterX, y: bottomOxygenAtomCenterY }}
         numberOfBonds={2}
       />
-      <CanvasOxygen
-        x={topOxygenAtomInitialCenterPoint.x}
-        y={topOxygenAtomInitialCenterPoint.y}
-      />
-      <CanvasOxygen
-        x={bottomOxygenAtomInitialCenterPoint.x}
-        y={bottomOxygenAtomInitialCenterPoint.y}
-      />
+      {/* molecule atoms */}
+      <CanvasOxygen x={topOxygenAtomCenterX} y={topOxygenAtomCenterY} />
+      <CanvasOxygen x={bottomOxygenAtomCenterX} y={bottomOxygenAtomCenterY} />
     </Group>
   );
 };
