@@ -8,6 +8,26 @@
     "Show Header": "Montrer l'en-tête",
     "Settings": "Paramètres",
     "Open Drawer": "Ouvrir le Menu",
-    "Description": "Description"
+    "Description": "Description",
+    "Argon": "Argon",
+    "Dioxygen": "Dioxygène",
+    "Dinitrogen": "Diazote",
+    "Non-greenhouse Gases": "Autres Gaz",
+    "Greenhouse Gases": "Gaz à Effet de Serre",
+    "Methane": "Méthane",
+    "Ozone": "Ozone",
+    "Nitrous Oxide": "Protoxyde d'Azote",
+    "Carbon Dioxide": "Dioxyde de Carbone",
+    "Water": "Eau",
+    "Visible Light": "Lumière Visible",
+    "Infrared": "Infrarouge",
+    "Reset": "Réinitialiser",
+    "Move Forward": "Avancer",
+    "Move Back": "Reculer",
+    "Play": "Simuler",
+    "Re-emission": "Emission de Rayonnement",
+    "Sign of charges": "Signes des charges",
+    "Electric field vectors": "Vecteurs des champs électriques",
+    "Fill all empty": "Remplir"
   }
 }
