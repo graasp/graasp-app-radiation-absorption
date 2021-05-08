@@ -188,6 +188,8 @@ export const APPLICATION_INTERVAL = 20;
 // every sine curve period has 4 intervals (0 to peak, peak to 0, 0 to -peak, -peak to 0)
 export const INFRARED_RADIATION_CURVE_INTERVAL =
   (2 * Math.PI) / INFRARED_RADIATION_PERIOD / 4;
+export const INTERVALS_TO_COMPLETE_INFRARED_RADIATION_PERIOD =
+  (2 * Math.PI) / INFRARED_RADIATION_PERIOD / Y_SHIFT_PER_INTERVAL;
 // and here the two senses of 'intervals' are combined...
 export const INTERVALS_TO_COMPLETE_INFRARED_RADIATION_INTERVAL =
   INFRARED_RADIATION_CURVE_INTERVAL / Y_SHIFT_PER_INTERVAL;

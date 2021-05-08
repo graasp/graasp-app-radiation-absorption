@@ -25,6 +25,7 @@ import NonGreenhouseGases from '../lab/NonGreenhouseGases';
 import SpectrumToggle from './SpectrumToggle';
 import AnimationControls from './AnimationControls';
 import CustomSwitch from './CustomSwitch';
+import ReEmissionSwitch from './ReEmissionSwitch';
 
 const styles = (theme) => ({
   drawerPaper: {
@@ -62,10 +63,8 @@ class SideMenu extends React.Component {
     dispatchToggleSideMenu: PropTypes.func.isRequired,
     showElectricFieldVectors: PropTypes.bool.isRequired,
     showAtomsCharges: PropTypes.bool.isRequired,
-    showReEmission: PropTypes.bool.isRequired,
     dispatchToggleShowElectricFieldVectors: PropTypes.func.isRequired,
     dispatchToggleShowAtomsCharges: PropTypes.func.isRequired,
-    dispatchToggleShowReEmission: PropTypes.func.isRequired,
     spectrum: PropTypes.string.isRequired,
   };
 
@@ -99,10 +98,8 @@ class SideMenu extends React.Component {
       showSideMenu,
       showElectricFieldVectors,
       showAtomsCharges,
-      showReEmission,
       dispatchToggleShowElectricFieldVectors,
       dispatchToggleShowAtomsCharges,
-      dispatchToggleShowReEmission,
       t,
       spectrum,
     } = this.props;
@@ -139,12 +136,8 @@ class SideMenu extends React.Component {
               switchDispatch={dispatchToggleShowAtomsCharges}
               disabled={false}
             />
-            <CustomSwitch
-              switchLabel={t('Re-emission')}
-              switchStatus={showReEmission}
-              switchDispatch={dispatchToggleShowReEmission}
-              disabled={spectrum === SPECTRUMS.VISIBLE_LIGHT}
-            />
+            {/* since ReEmissionSwitch contains significant custom code, separate component was created vs. reusing CustomSwitch */}
+            <ReEmissionSwitch />
           </div>
         </Drawer>
       </>

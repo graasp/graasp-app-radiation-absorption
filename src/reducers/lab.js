@@ -14,6 +14,7 @@ import {
   INCREMENT_INTERVAL_COUNT,
   DECREMENT_INTERVAL_COUNT,
   RESET_INTERVAL_COUNT,
+  BEGIN_RE_EMISSION_INTERVAL_COUNT,
 } from '../types';
 import { CANVAS_MOLECULE_AREA_STATE, SPECTRUMS } from '../config/constants';
 
@@ -26,6 +27,7 @@ const INITIAL_STATE = {
   showAtomsCharges: false,
   showReEmission: false,
   highlightAllSideMenuMolecules: false,
+  beginReEmissionIntervalCount: 0,
   moleculesOnCanvas: [
     {
       molecule: '',
@@ -147,6 +149,9 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         ...state,
         intervalCount: 0,
       };
+    case BEGIN_RE_EMISSION_INTERVAL_COUNT: {
+      return { ...state, beginReEmissionIntervalCount: payload };
+    }
     case RESET_ALL_SETTINGS:
       return { ...INITIAL_STATE };
     default:
