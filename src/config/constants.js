@@ -38,7 +38,7 @@ export const ARGON = {
 };
 export const SIDE_MENU_ATOM_DIMENSIONS = { small: 20, medium: 35, large: 50 };
 // note that in the canvas these sizes refer to circle radii (whereas in the side menu they are div heights/widths)
-export const CANVAS_ATOM_DIMENSIONS = { small: 15, medium: 25, large: 40 };
+export const CANVAS_ATOM_DIMENSIONS = { small: 15, medium: 26.5, large: 40 };
 // note use of full-width-plus and em-dash (required for easier centering within side menu divs)
 // also note that in the canvas the + and - are not text nodes but Konva lines (so don't have similar constants here)
 export const SIDE_MENU_POSITIVE_CHARGE_SYMBOL = '＋';
@@ -50,7 +50,11 @@ export const SIDE_MENU_SMALL_ATOM_CHARGE_FONT_SIZE = 10;
 export const SIDE_MENU_STANDARD_CHARGE_FONT_SIZE = 12;
 // constants used to adjust select atoms within a molecule to achieve required styling
 export const CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR = 20;
-export const CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR = 20;
+// angle formed by Hydrogen-Oxygen-Hydrogen should be 104°
+// we set/know/take here as given the y distance between oxygen atom and hydrogen atoms (see CanvasWater.js)
+// hence we choose an 'X_OFFSET' that satisfies the provided angle/y distance
+// i.e. such that Math.tan(104°/2)=OPPOSITE_SIDE/ADJACENT_SIDE=Y_DISTANCE/X_OFFSET
+export const CANVAS_WATER_HYDROGEN_ATOMS_X_OFFSET = 36.7;
 export const CANVAS_METHANE_TOP_LEFT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR = 30;
 export const CANVAS_METHANE_TOP_RIGHT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR = 35;
 export const CANVAS_METHANE_BOTTOM_RIGHT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR = 35;
@@ -144,11 +148,11 @@ export const CANVAS_CARBON_DIOXIDE_OSCILLATION_AMPLITUDES = {
 // oxygen atom has charge of 2- and atomic mass of 16; hence q/m = 1/8
 // hydrogen atom has charge of 1- and atomic mass of 8; hence q/m = 1
 // hence oscillation of hydrogen = 8x oscillation of oxygen
-// for visual purposes, the oscillation of the oxygen atom is doubled (otherwise it will be too small to be visible)
+// for visual purposes, the oscillation of the oxygen atom is 2.5xed (otherwise it will be too small to be visible)
 export const CANVAS_WATER_OSCILLATION_AMPLITUDES = {
-  TOP_HYDROGEN_AMPLITUDE: -20,
-  OXYGEN_AMPLITUDE: 5,
-  BOTTOM_HYDROGEN_AMPLITUDE: -20,
+  TOP_HYDROGEN_AMPLITUDE: 16,
+  OXYGEN_AMPLITUDE: -5,
+  BOTTOM_HYDROGEN_AMPLITUDE: 16,
 };
 // nitrogen and oxygen have nearly the same mass (14 and 16)
 // for simplicitly, since the central nitrogen has a charge of 2-, we make it oscillate with half the amplitude of the other atoms
@@ -170,7 +174,7 @@ export const CANVAS_METHANE_OSCILLATION_AMPLITUDES = {
 export const Y_INCREMENT_PER_POINT = Math.PI / 8;
 // Y_SHIFT_PER_INTERVAL => every timer interval, shift the sine curve upwards by this much
 export const Y_SHIFT_PER_INTERVAL = Math.PI;
-export const RADIATION_LINE_CURVE_AMPLITUDE = 25;
+export const RADIATION_LINE_CURVE_AMPLITUDE = 21.5;
 export const RE_EMISSION_LINE_CURVE_AMPLITUDE = 15;
 export const INFRARED_RADIATION_PERIOD = 1 / 64;
 export const VISIBLE_LIGHT_PERIOD = 1 / 32;

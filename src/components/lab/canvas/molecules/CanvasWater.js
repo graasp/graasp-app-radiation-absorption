@@ -7,7 +7,7 @@ import {
   CANVAS_ATOM_DIMENSIONS,
   OXYGEN,
   HYDROGEN,
-  CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
+  CANVAS_WATER_HYDROGEN_ATOMS_X_OFFSET,
   CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
   POSITIVE_CHARGE,
   NEGATIVE_CHARGE,
@@ -36,7 +36,7 @@ const CanvasWater = ({
 
   // top hydrogen atom
   const topHydrogenAtomInitialCenterX =
-    x + CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR;
+    x - CANVAS_WATER_HYDROGEN_ATOMS_X_OFFSET;
   const topHydrogenAtomCenterX = shouldOscillate
     ? topHydrogenAtomInitialCenterX + oscillationFactor * TOP_HYDROGEN_AMPLITUDE
     : topHydrogenAtomInitialCenterX;
@@ -54,7 +54,7 @@ const CanvasWater = ({
 
   // bottom hydrogen atom
   const bottomHydrogenAtomInitialCenterX =
-    x + CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR;
+    x - CANVAS_WATER_HYDROGEN_ATOMS_X_OFFSET;
   const bottomHydrogenAtomCenterX = shouldOscillate
     ? bottomHydrogenAtomInitialCenterX +
       oscillationFactor * BOTTOM_HYDROGEN_AMPLITUDE
