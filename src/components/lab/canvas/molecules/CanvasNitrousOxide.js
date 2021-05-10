@@ -5,13 +5,11 @@ import CanvasNitrogen from './atoms/CanvasNitrogen';
 import CanvasOxygen from './atoms/CanvasOxygen';
 import CanvasBondContainer from './CanvasBondContainer';
 import {
-  CANVAS_ATOM_DIMENSIONS,
-  OXYGEN,
-  NITROGEN,
-  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
   NEGATIVE_CHARGE,
   POSITIVE_CHARGE,
   CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES,
+  CANVAS_NITROUS_OXIDE_Y_OFFSET_FOR_NITROGEN,
+  CANVAS_NITROUS_OXIDE_Y_OFFSET_FOR_OXYGEN,
 } from '../../../../config/constants';
 
 const CanvasNitrousOxide = ({
@@ -28,20 +26,14 @@ const CanvasNitrousOxide = ({
     BOTTOM_OXYGEN_AMPLITUDE,
   } = CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES;
 
-  // variables for determining center points of atoms in this molecule
-  const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
-  const nitrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[NITROGEN.size];
   const oscillationFactor = oscillationDirection * sinusoidalOscillationPoint;
 
+  // variables for determining center points of atoms in this molecule
   // top nitrogen atom
   const topNitrogenAtomCenterX = shouldOscillate
     ? x + oscillationFactor * TOP_NITROGEN_AMPLITUDE
     : x;
-  const topNitrogenAtomCenterY =
-    y -
-    nitrogenAtomRadius -
-    CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS -
-    nitrogenAtomRadius;
+  const topNitrogenAtomCenterY = y - CANVAS_NITROUS_OXIDE_Y_OFFSET_FOR_NITROGEN;
 
   // middle nitrogen atom
   const middleNitrogenAtomCenterX = shouldOscillate
@@ -53,11 +45,7 @@ const CanvasNitrousOxide = ({
   const bottomOxygenAtomCenterX = shouldOscillate
     ? x + oscillationFactor * BOTTOM_OXYGEN_AMPLITUDE
     : x;
-  const bottomOxygenAtomCenterY =
-    y +
-    nitrogenAtomRadius +
-    CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
-    oxygenAtomRadius;
+  const bottomOxygenAtomCenterY = y + CANVAS_NITROUS_OXIDE_Y_OFFSET_FOR_OXYGEN;
 
   return (
     <Group>

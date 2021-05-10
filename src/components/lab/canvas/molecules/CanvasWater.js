@@ -4,14 +4,12 @@ import { Group } from 'react-konva';
 import CanvasOxygen from './atoms/CanvasOxygen';
 import CanvasHydrogen from './atoms/CanvasHydrogen';
 import {
-  CANVAS_ATOM_DIMENSIONS,
-  OXYGEN,
   HYDROGEN,
-  CANVAS_WATER_HYDROGEN_ATOMS_X_OFFSET,
-  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
   POSITIVE_CHARGE,
   NEGATIVE_CHARGE,
   CANVAS_WATER_OSCILLATION_AMPLITUDES,
+  CANVAS_WATER_X_OFFSET_FOR_HYDROGEN,
+  CANVAS_WATER_Y_OFFSET_FOR_HYDROGEN,
 } from '../../../../config/constants';
 import CanvasBondContainer from './CanvasBondContainer';
 
@@ -29,22 +27,15 @@ const CanvasWater = ({
     BOTTOM_HYDROGEN_AMPLITUDE,
   } = CANVAS_WATER_OSCILLATION_AMPLITUDES;
 
-  // variables for determining center points of atoms in this molecule
-  const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
-  const hydrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[HYDROGEN.size];
   const oscillationFactor = oscillationDirection * sinusoidalOscillationPoint;
 
+  // variables for determining center points of atoms in this molecule
   // top hydrogen atom
-  const topHydrogenAtomInitialCenterX =
-    x - CANVAS_WATER_HYDROGEN_ATOMS_X_OFFSET;
+  const topHydrogenAtomInitialCenterX = x - CANVAS_WATER_X_OFFSET_FOR_HYDROGEN;
   const topHydrogenAtomCenterX = shouldOscillate
     ? topHydrogenAtomInitialCenterX + oscillationFactor * TOP_HYDROGEN_AMPLITUDE
     : topHydrogenAtomInitialCenterX;
-  const topHydrogenAtomCenterY =
-    y -
-    oxygenAtomRadius -
-    CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS -
-    hydrogenAtomRadius;
+  const topHydrogenAtomCenterY = y - CANVAS_WATER_Y_OFFSET_FOR_HYDROGEN;
 
   // oxygen atom
   const oxygenAtomCenterX = shouldOscillate
@@ -54,16 +45,12 @@ const CanvasWater = ({
 
   // bottom hydrogen atom
   const bottomHydrogenAtomInitialCenterX =
-    x - CANVAS_WATER_HYDROGEN_ATOMS_X_OFFSET;
+    x - CANVAS_WATER_X_OFFSET_FOR_HYDROGEN;
   const bottomHydrogenAtomCenterX = shouldOscillate
     ? bottomHydrogenAtomInitialCenterX +
       oscillationFactor * BOTTOM_HYDROGEN_AMPLITUDE
     : bottomHydrogenAtomInitialCenterX;
-  const bottomHydrogenAtomCenterY =
-    y +
-    oxygenAtomRadius +
-    CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
-    hydrogenAtomRadius;
+  const bottomHydrogenAtomCenterY = y + CANVAS_WATER_Y_OFFSET_FOR_HYDROGEN;
 
   return (
     <Group>

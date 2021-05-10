@@ -38,7 +38,7 @@ export const ARGON = {
 };
 export const SIDE_MENU_ATOM_DIMENSIONS = { small: 20, medium: 35, large: 50 };
 // note that in the canvas these sizes refer to circle radii (whereas in the side menu they are div heights/widths)
-export const CANVAS_ATOM_DIMENSIONS = { small: 15, medium: 26.5, large: 40 };
+export const CANVAS_ATOM_DIMENSIONS = { small: 15, medium: 25, large: 40 };
 // note use of full-width-plus and em-dash (required for easier centering within side menu divs)
 // also note that in the canvas the + and - are not text nodes but Konva lines (so don't have similar constants here)
 export const SIDE_MENU_POSITIVE_CHARGE_SYMBOL = '＋';
@@ -48,25 +48,66 @@ export const CANVAS_ATOM_CHARGE_STROKE_WIDTH = 1;
 export const CANVAS_ATOM_CHARGE_LENGTH = 5;
 export const SIDE_MENU_SMALL_ATOM_CHARGE_FONT_SIZE = 10;
 export const SIDE_MENU_STANDARD_CHARGE_FONT_SIZE = 12;
-// constants used to adjust select atoms within a molecule to achieve required styling
-export const CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR = 20;
-// angle formed by Hydrogen-Oxygen-Hydrogen should be 104°
-// we set/know/take here as given the y distance between oxygen atom and hydrogen atoms (see CanvasWater.js)
+
+/* ------CONSTANTS FOR POSITIONING ATOMS WITHIN MOLECULES------ */
+/* ------(1) Y OFFSETS------ */
+// distance between vertical atoms is created in order for the bonds between atoms to show
+// (otherwise the two circles would be stacked on top of each other)
+export const CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS = 5;
+// e.g. in CANVAS_WATER_Y_OFFSET: top hydrogen atom's center y is 1 oxygen radius, 1 'vertical distance', 1 hydrogen radius from center atom's y
+export const CANVAS_WATER_Y_OFFSET_FOR_HYDROGEN =
+  CANVAS_ATOM_DIMENSIONS[OXYGEN.size] +
+  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
+  CANVAS_ATOM_DIMENSIONS[HYDROGEN.size];
+export const CANVAS_OZONE_Y_OFFSET_FOR_OXYGEN =
+  CANVAS_ATOM_DIMENSIONS[OXYGEN.size] +
+  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
+  CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
+export const CANVAS_CARBON_DIOXIDE_Y_OFFSET_FOR_OXYGEN =
+  CANVAS_ATOM_DIMENSIONS[CARBON.size] +
+  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
+  CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
+export const CANVAS_NITROUS_OXIDE_Y_OFFSET_FOR_NITROGEN =
+  CANVAS_ATOM_DIMENSIONS[NITROGEN.size] +
+  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
+  CANVAS_ATOM_DIMENSIONS[NITROGEN.size];
+export const CANVAS_NITROUS_OXIDE_Y_OFFSET_FOR_OXYGEN =
+  CANVAS_ATOM_DIMENSIONS[NITROGEN.size] +
+  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
+  CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
+export const CANVAS_METHANE_Y_OFFSET_FOR_RIGHT_HYDROGENS =
+  CANVAS_ATOM_DIMENSIONS[CARBON.size] + CANVAS_ATOM_DIMENSIONS[HYDROGEN.size];
+export const CANVAS_METHANE_Y_OFFSET_FOR_LEFT_HYDROGENS =
+  CANVAS_ATOM_DIMENSIONS[CARBON.size] +
+  0.25 * CANVAS_ATOM_DIMENSIONS[HYDROGEN.size];
+/* ------(2) X OFFSETS------ */
+// (A) angle formed by Hydrogen-Oxygen-Hydrogen in Water should be 104°
+// we know the y distance between oxygen atom and hydrogen atoms (CANVAS_WATER_Y_OFFSET)
 // hence we choose an 'X_OFFSET' that satisfies the provided angle/y distance
 // i.e. such that Math.tan(104°/2)=OPPOSITE_SIDE/ADJACENT_SIDE=Y_DISTANCE/X_OFFSET
-export const CANVAS_WATER_HYDROGEN_ATOMS_X_OFFSET = 36.7;
-export const CANVAS_METHANE_TOP_LEFT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR = 30;
-export const CANVAS_METHANE_TOP_RIGHT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR = 35;
-export const CANVAS_METHANE_BOTTOM_RIGHT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR = 35;
-export const CANVAS_METHANE_BOTTOM_LEFT_HYDROGEN_ATOM_X_ADJUSTMENT_FACTOR = 30;
+export const CANVAS_WATER_X_OFFSET_FOR_HYDROGEN =
+  CANVAS_WATER_Y_OFFSET_FOR_HYDROGEN / Math.tan((104 / 2) * (Math.PI / 180));
+// (B) angle formed by Oxygen-Oxygen-Oxygen in Ozone should be 117°
+// we know the y distance between middle oxygen atom and top/bottom oxygen atoms (CANVAS_OZONE_Y_OFFSET)
+// hence we choose an 'X_OFFSET' that   satisfies provided angle/y distance
+// i.e. such that Math.tan(117°/2)=OPPOSITE_SIDE/ADJACENT_SIDE=Y_DISTANCE/X_OFFSET
+export const CANVAS_OZONE_X_OFFSET_FOR_OXYGEN =
+  CANVAS_OZONE_Y_OFFSET_FOR_OXYGEN / Math.tan((117 / 2) * (Math.PI / 180));
+// (C) angle formed by Hydrogen-Carbon-Hydrogen on the right side in Methane should be 109°
+// we know the y distance between middle carbon atom and top/bottom right hydrogen atoms (CANVAS_METHANE_RIGHT_Y_OFFSET)
+// hence we choose an 'X_OFFSET' that satisfies provided angle/y distance
+// i.e. such that Math.tan(109°/2)=OPPOSITE_SIDE/ADJACENT_SIDE=Y_DISTANCE/X_OFFSET
+export const CANVAS_METHANE_X_OFFSET_FOR_RIGHT_HYDROGENS =
+  CANVAS_METHANE_Y_OFFSET_FOR_RIGHT_HYDROGENS /
+  Math.tan((109 / 2) * (Math.PI / 180));
+// left atoms x offset doesn't have to conform to a particular angle (it is drawn for visual effects, to suggest a 3D molecule)
+export const CANVAS_METHANE_X_OFFSET_FOR_LEFT_HYDROGENS = 35;
 
 /* ------CONSTANTS FOR CANVAS 'MOLECULE AREAS'------ */
 // the 'molecule area' is the circular area in which a molecule is displayed on the canvas
 export const CANVAS_NUMBER_OF_MOLECULES = 4;
-export const CANVAS_MOLECULE_AREA_DEFAULT_RADIUS = 90;
+export const CANVAS_MOLECULE_AREA_DEFAULT_RADIUS = 92.5;
 export const CANVAS_MOLECULE_AREA_DEFAULT_DASH = [];
-// distance between vertical atoms is created in order for the bonds between atoms to show
-export const CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS = 5;
 export const CANVAS_BOND_COLOR = 'black';
 export const DOUBLE_BOND_X_OFFSET = 3;
 export const TRIPLE_BOND_X_OFFSET = 5;
@@ -133,9 +174,9 @@ export const RE_EMISSION_LINE_STROKE_WIDTH = 1.5;
 
 // middle oxygen atom has charge of 2-, all atoms have the same mass, hence middle atom oscillates with half the amplitude of other atoms
 export const CANVAS_OZONE_OSCILLATION_AMPLITUDES = {
-  TOP_OXYGEN_AMPLITUDE: -30,
-  MIDDLE_OXYGEN_AMPLITUDE: 15,
-  BOTTOM_OXYGEN_AMPLITUDE: -30,
+  TOP_OXYGEN_AMPLITUDE: -10,
+  MIDDLE_OXYGEN_AMPLITUDE: 5,
+  BOTTOM_OXYGEN_AMPLITUDE: -10,
 };
 // carbon atom has charge of 2+ and atomic mass of 12; hence q/m = 1/6
 // oxygen atom has charge of 1- and atomic mass of 16; hence q/m = 1/16
@@ -148,11 +189,11 @@ export const CANVAS_CARBON_DIOXIDE_OSCILLATION_AMPLITUDES = {
 // oxygen atom has charge of 2- and atomic mass of 16; hence q/m = 1/8
 // hydrogen atom has charge of 1- and atomic mass of 8; hence q/m = 1
 // hence oscillation of hydrogen = 8x oscillation of oxygen
-// for visual purposes, the oscillation of the oxygen atom is 2.5xed (otherwise it will be too small to be visible)
+// for visual purposes, the oscillation of the oxygen atom is ~doubled (otherwise it will be too small to be visible)
 export const CANVAS_WATER_OSCILLATION_AMPLITUDES = {
-  TOP_HYDROGEN_AMPLITUDE: 16,
-  OXYGEN_AMPLITUDE: -5,
-  BOTTOM_HYDROGEN_AMPLITUDE: 16,
+  TOP_HYDROGEN_AMPLITUDE: 10,
+  OXYGEN_AMPLITUDE: -2,
+  BOTTOM_HYDROGEN_AMPLITUDE: 10,
 };
 // nitrogen and oxygen have nearly the same mass (14 and 16)
 // for simplicitly, since the central nitrogen has a charge of 2-, we make it oscillate with half the amplitude of the other atoms
@@ -162,11 +203,11 @@ export const CANVAS_NITROUS_OXIDE_OSCILLATION_AMPLITUDES = {
   BOTTOM_OXYGEN_AMPLITUDE: -30,
 };
 export const CANVAS_METHANE_OSCILLATION_AMPLITUDES = {
-  TOP_LEFT_HYDROGEN_AMPLITUDE: -10,
-  TOP_RIGHT_HYDROGEN_AMPLITUDE: { X: -5, Y: -5 },
-  BOTTOM_RIGHT_HYDROGEN_AMPLITUDE: { X: -5, Y: 5 },
-  BOTTOM_LEFT_HYDROGEN_AMPLITUDE: -10,
-  CARBON_AMPLITUDE: 3.33,
+  TOP_RIGHT_HYDROGEN_AMPLITUDE: 10,
+  TOP_LEFT_HYDROGEN_AMPLITUDE: { X: 5, Y: 5 },
+  BOTTOM_LEFT_HYDROGEN_AMPLITUDE: { X: 5, Y: -5 },
+  BOTTOM_RIGHT_HYDROGEN_AMPLITUDE: 10,
+  CARBON_AMPLITUDE: -3.33,
 };
 
 /* ------CONSTANTS FOR GENERATING SINE CURVES (RADIATION LINES)------ */
@@ -174,7 +215,7 @@ export const CANVAS_METHANE_OSCILLATION_AMPLITUDES = {
 export const Y_INCREMENT_PER_POINT = Math.PI / 8;
 // Y_SHIFT_PER_INTERVAL => every timer interval, shift the sine curve upwards by this much
 export const Y_SHIFT_PER_INTERVAL = Math.PI;
-export const RADIATION_LINE_CURVE_AMPLITUDE = 21.5;
+export const RADIATION_LINE_CURVE_AMPLITUDE = 22.5;
 export const RE_EMISSION_LINE_CURVE_AMPLITUDE = 15;
 export const INFRARED_RADIATION_PERIOD = 1 / 64;
 export const VISIBLE_LIGHT_PERIOD = 1 / 32;

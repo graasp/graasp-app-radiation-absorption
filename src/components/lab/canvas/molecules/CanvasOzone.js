@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 import { Group } from 'react-konva';
 import CanvasOxygen from './atoms/CanvasOxygen';
 import {
-  CANVAS_ATOM_DIMENSIONS,
-  OXYGEN,
-  CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
-  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
   NEGATIVE_CHARGE,
   POSITIVE_CHARGE,
   CANVAS_OZONE_OSCILLATION_AMPLITUDES,
+  CANVAS_OZONE_X_OFFSET_FOR_OXYGEN,
+  CANVAS_OZONE_Y_OFFSET_FOR_OXYGEN,
 } from '../../../../config/constants';
 import CanvasBondContainer from './CanvasBondContainer';
 
@@ -27,21 +25,15 @@ const CanvasOzone = ({
     BOTTOM_OXYGEN_AMPLITUDE,
   } = CANVAS_OZONE_OSCILLATION_AMPLITUDES;
 
-  // variables for determining center points of atoms in this molecule
-  const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
   const oscillationFactor = oscillationDirection * sinusoidalOscillationPoint;
 
+  // variables for determining center points of atoms in this molecule
   // top oxygen atom
-  const topOxygenAtomInitialCenterX =
-    x + CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR;
+  const topOxygenAtomInitialCenterX = x - CANVAS_OZONE_X_OFFSET_FOR_OXYGEN;
   const topOxygenAtomCenterX = shouldOscillate
     ? topOxygenAtomInitialCenterX + oscillationFactor * TOP_OXYGEN_AMPLITUDE
     : topOxygenAtomInitialCenterX;
-  const topOxygenAtomCenterY =
-    y -
-    oxygenAtomRadius -
-    CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS -
-    oxygenAtomRadius;
+  const topOxygenAtomCenterY = y - CANVAS_OZONE_Y_OFFSET_FOR_OXYGEN;
 
   // middle oxygen atom
   const middleOxygenAtomCenterX = shouldOscillate
@@ -50,17 +42,12 @@ const CanvasOzone = ({
   const middleOxygenAtomCenterY = y;
 
   // bottom oxygen atom
-  const bottomOxygenAtomInitialCenterX =
-    x + CANVAS_OZONE_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR;
+  const bottomOxygenAtomInitialCenterX = x - CANVAS_OZONE_X_OFFSET_FOR_OXYGEN;
   const bottomOxygenAtomCenterX = shouldOscillate
     ? bottomOxygenAtomInitialCenterX +
       oscillationFactor * BOTTOM_OXYGEN_AMPLITUDE
     : bottomOxygenAtomInitialCenterX;
-  const bottomOxygenAtomCenterY =
-    y +
-    oxygenAtomRadius +
-    CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
-    oxygenAtomRadius;
+  const bottomOxygenAtomCenterY = y + CANVAS_OZONE_Y_OFFSET_FOR_OXYGEN;
 
   return (
     <Group>
@@ -69,12 +56,12 @@ const CanvasOzone = ({
       <CanvasBondContainer
         from={{ x: topOxygenAtomCenterX, y: topOxygenAtomCenterY }}
         to={{ x: middleOxygenAtomCenterX, y: middleOxygenAtomCenterY }}
-        numberOfBonds={1}
+        numberOfBonds={2}
       />
       <CanvasBondContainer
         from={{ x: middleOxygenAtomCenterX, y: middleOxygenAtomCenterY }}
         to={{ x: bottomOxygenAtomCenterX, y: bottomOxygenAtomCenterY }}
-        numberOfBonds={2}
+        numberOfBonds={1}
       />
       {/* molecule atoms */}
       <CanvasOxygen

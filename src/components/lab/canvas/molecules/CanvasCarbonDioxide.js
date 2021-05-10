@@ -5,13 +5,10 @@ import CanvasCarbon from './atoms/CanvasCarbon';
 import CanvasOxygen from './atoms/CanvasOxygen';
 import CanvasBondContainer from './CanvasBondContainer';
 import {
-  CANVAS_ATOM_DIMENSIONS,
-  OXYGEN,
-  CARBON,
-  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
   NEGATIVE_CHARGE,
   POSITIVE_CHARGE,
   CANVAS_CARBON_DIOXIDE_OSCILLATION_AMPLITUDES,
+  CANVAS_CARBON_DIOXIDE_Y_OFFSET_FOR_OXYGEN,
 } from '../../../../config/constants';
 
 const CanvasCarbonDioxide = ({
@@ -28,20 +25,14 @@ const CanvasCarbonDioxide = ({
     BOTTOM_OXYGEN_AMPLITUDE,
   } = CANVAS_CARBON_DIOXIDE_OSCILLATION_AMPLITUDES;
 
-  // variables for determining center points of atoms in this molecule
-  const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
-  const carbonAtomRadius = CANVAS_ATOM_DIMENSIONS[CARBON.size];
   const oscillationFactor = oscillationDirection * sinusoidalOscillationPoint;
 
+  // variables for determining center points of atoms in this molecule
   // top oxygen atom
   const topOxygenAtomCenterX = shouldOscillate
     ? x + oscillationFactor * TOP_OXYGEN_AMPLITUDE
     : x;
-  const topOxygenAtomCenterY =
-    y -
-    carbonAtomRadius -
-    CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS -
-    oxygenAtomRadius;
+  const topOxygenAtomCenterY = y - CANVAS_CARBON_DIOXIDE_Y_OFFSET_FOR_OXYGEN;
 
   // carbon atom
   const carbonAtomCenterX = shouldOscillate
@@ -53,11 +44,7 @@ const CanvasCarbonDioxide = ({
   const bottomOxygenAtomCenterX = shouldOscillate
     ? x + oscillationFactor * BOTTOM_OXYGEN_AMPLITUDE
     : x;
-  const bottomOxygenAtomCenterY =
-    y +
-    carbonAtomRadius +
-    CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
-    oxygenAtomRadius;
+  const bottomOxygenAtomCenterY = y + CANVAS_CARBON_DIOXIDE_Y_OFFSET_FOR_OXYGEN;
 
   return (
     <Group>
