@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import CanvasAtom from './CanvasAtom';
 import { OXYGEN } from '../../../../../config/constants';
 
-const CanvasOxygen = ({ x, y, charge }) => {
+const CanvasOxygen = ({ coordinates, charge }) => {
+  const { x, y } = coordinates;
   return (
     <CanvasAtom
       atomColor={OXYGEN.atomColor}
@@ -17,8 +18,10 @@ const CanvasOxygen = ({ x, y, charge }) => {
 };
 
 CanvasOxygen.propTypes = {
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
+  coordinates: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+  }).isRequired,
   charge: PropTypes.string,
 };
 

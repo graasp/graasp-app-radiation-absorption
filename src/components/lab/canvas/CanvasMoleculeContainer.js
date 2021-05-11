@@ -42,79 +42,70 @@ const CanvasMoleculeContainer = ({
 
   // we know that after intervalsToReachMoleculeCenter, the radiation lines have reached the center of the molecule
   // at this point, if the spectrum is INFRARED, the molecule should begin oscillating
-  // shouldOscillate and sinusoidalOscillationPoint are passed as props to molecules which oscillate (greenhouse gases)
+  // shouldOscillate and oscillationPoint are passed as props to molecules which oscillate (greenhouse gases)
   const shouldOscillate =
     intervalCount > intervalsToReachMoleculeCenter &&
     spectrum === SPECTRUMS.INFRARED;
-  const sinusoidalOscillationPoint = Math.sin(
+  const oscillationPoint = Math.sin(
     intervalCount * Y_SHIFT_PER_INTERVAL * INFRARED_RADIATION_PERIOD,
   );
+  const oscillationFactor = oscillationDirection * oscillationPoint;
 
   let moleculeComponent = null;
   switch (moleculeToDisplay) {
     case WATER_MOLECULE_ID:
       moleculeComponent = (
         <CanvasWater
-          x={x}
-          y={y}
+          moleculeCenter={{ x, y }}
           shouldOscillate={shouldOscillate}
-          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
-          oscillationDirection={oscillationDirection}
+          oscillationFactor={oscillationFactor}
         />
       );
       break;
     case CARBON_DIOXIDE_MOLECULE_ID:
       moleculeComponent = (
         <CanvasCarbonDioxide
-          x={x}
-          y={y}
+          moleculeCenter={{ x, y }}
           shouldOscillate={shouldOscillate}
-          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
-          oscillationDirection={oscillationDirection}
+          oscillationFactor={oscillationFactor}
         />
       );
       break;
     case OZONE_MOLECULE_ID:
       moleculeComponent = (
         <CanvasOzone
-          x={x}
-          y={y}
+          moleculeCenter={{ x, y }}
           shouldOscillate={shouldOscillate}
-          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
-          oscillationDirection={oscillationDirection}
+          oscillationFactor={oscillationFactor}
         />
       );
       break;
     case NITROUS_OXIDE_MOLECULE_ID:
       moleculeComponent = (
         <CanvasNitrousOxide
-          x={x}
-          y={y}
+          moleculeCenter={{ x, y }}
           shouldOscillate={shouldOscillate}
-          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
-          oscillationDirection={oscillationDirection}
+          oscillationFactor={oscillationFactor}
         />
       );
       break;
     case METHANE_MOLECULE_ID:
       moleculeComponent = (
         <CanvasMethane
-          x={x}
-          y={y}
+          moleculeCenter={{ x, y }}
           shouldOscillate={shouldOscillate}
-          sinusoidalOscillationPoint={sinusoidalOscillationPoint}
-          oscillationDirection={oscillationDirection}
+          oscillationFactor={oscillationFactor}
         />
       );
       break;
     case DINITROGEN_MOLECULE_ID:
-      moleculeComponent = <CanvasDinitrogen x={x} y={y} />;
+      moleculeComponent = <CanvasDinitrogen moleculeCenter={{ x, y }} />;
       break;
     case DIOXYGEN_MOLECULE_ID:
-      moleculeComponent = <CanvasDioxygen x={x} y={y} />;
+      moleculeComponent = <CanvasDioxygen moleculeCenter={{ x, y }} />;
       break;
     case ARGON_MOLECULE_ID:
-      moleculeComponent = <CanvasArgonMolecule x={x} y={y} />;
+      moleculeComponent = <CanvasArgonMolecule moleculeCenter={{ x, y }} />;
       break;
     default:
       moleculeComponent = null;

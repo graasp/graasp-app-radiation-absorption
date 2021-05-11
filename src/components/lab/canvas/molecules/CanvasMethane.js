@@ -7,147 +7,98 @@ import {
   HYDROGEN,
   NEGATIVE_CHARGE,
   POSITIVE_CHARGE,
-  CANVAS_METHANE_OSCILLATION_AMPLITUDES,
-  CANVAS_METHANE_Y_OFFSET_FOR_LEFT_HYDROGENS,
-  CANVAS_METHANE_Y_OFFSET_FOR_RIGHT_HYDROGENS,
-  CANVAS_METHANE_X_OFFSET_FOR_LEFT_HYDROGENS,
-  CANVAS_METHANE_X_OFFSET_FOR_RIGHT_HYDROGENS,
+  CANVAS_METHANE,
 } from '../../../../config/constants';
 import CanvasBondContainer from './CanvasBondContainer';
+import { determineCoordinates } from '../../../../utils/utils';
 
 const CanvasMethane = ({
-  x,
-  y,
+  moleculeCenter,
   shouldOscillate,
-  sinusoidalOscillationPoint,
-  oscillationDirection,
+  oscillationFactor,
 }) => {
-  // destructure the oscillation amplitudes of atoms in this molecule
   const {
-    TOP_LEFT_HYDROGEN_AMPLITUDE,
-    TOP_RIGHT_HYDROGEN_AMPLITUDE,
-    BOTTOM_RIGHT_HYDROGEN_AMPLITUDE,
-    BOTTOM_LEFT_HYDROGEN_AMPLITUDE,
-    CARBON_AMPLITUDE,
-  } = CANVAS_METHANE_OSCILLATION_AMPLITUDES;
+    CARBON,
+    TOP_LEFT_HYDROGEN,
+    TOP_RIGHT_HYDROGEN,
+    BOTTOM_RIGHT_HYDROGEN,
+    BOTTOM_LEFT_HYDROGEN,
+  } = CANVAS_METHANE;
 
-  const oscillationFactor = oscillationDirection * sinusoidalOscillationPoint;
-
-  // variables for determining center points of atoms in this molecule
-  // carbon atom
-  const carbonAtomCenterX = shouldOscillate
-    ? x + oscillationFactor * CARBON_AMPLITUDE
-    : x;
-  const carbonAtomCenterY = y;
-
-  // top left hydrogen atom
-  const topLeftHydrogenAtomInitialCenterX =
-    x - CANVAS_METHANE_X_OFFSET_FOR_LEFT_HYDROGENS;
-  const topLeftHydrogenAtomInitialCenterY =
-    y - CANVAS_METHANE_Y_OFFSET_FOR_LEFT_HYDROGENS;
-  const topLeftHydrogenAtomCenterX = shouldOscillate
-    ? topLeftHydrogenAtomInitialCenterX +
-      oscillationFactor * TOP_LEFT_HYDROGEN_AMPLITUDE.X
-    : topLeftHydrogenAtomInitialCenterX;
-  const topLeftHydrogenAtomCenterY = shouldOscillate
-    ? topLeftHydrogenAtomInitialCenterY +
-      oscillationFactor * TOP_LEFT_HYDROGEN_AMPLITUDE.Y
-    : topLeftHydrogenAtomInitialCenterY;
-
-  // top right hydrogen atom
-  const topRightHydrogenAtomInitialCenterX =
-    x + CANVAS_METHANE_X_OFFSET_FOR_RIGHT_HYDROGENS;
-  const topRightHydrogenAtomCenterX = shouldOscillate
-    ? topRightHydrogenAtomInitialCenterX +
-      oscillationFactor * TOP_RIGHT_HYDROGEN_AMPLITUDE
-    : topRightHydrogenAtomInitialCenterX;
-  const topRightHydrogenAtomCenterY =
-    y - CANVAS_METHANE_Y_OFFSET_FOR_RIGHT_HYDROGENS;
-
-  // bottom right hydrogen atom
-  const bottomRightHydrogenAtomInitialCenterX =
-    x + CANVAS_METHANE_X_OFFSET_FOR_RIGHT_HYDROGENS;
-  const bottomRightHydrogenAtomCenterX = shouldOscillate
-    ? bottomRightHydrogenAtomInitialCenterX +
-      oscillationFactor * BOTTOM_RIGHT_HYDROGEN_AMPLITUDE
-    : bottomRightHydrogenAtomInitialCenterX;
-  const bottomRightHydrogenAtomCenterY =
-    y + CANVAS_METHANE_Y_OFFSET_FOR_RIGHT_HYDROGENS;
-
-  // bottom left hydrogen atom
-  const bottomLeftHydrogenAtomInitialCenterX =
-    x - CANVAS_METHANE_X_OFFSET_FOR_LEFT_HYDROGENS;
-  const bottomLeftHydrogenAtomInitialCenterY =
-    y + CANVAS_METHANE_Y_OFFSET_FOR_LEFT_HYDROGENS;
-  const bottomLeftHydrogenAtomCenterX = shouldOscillate
-    ? bottomLeftHydrogenAtomInitialCenterX +
-      oscillationFactor * BOTTOM_LEFT_HYDROGEN_AMPLITUDE.X
-    : bottomLeftHydrogenAtomInitialCenterX;
-  const bottomLeftHydrogenAtomCenterY = shouldOscillate
-    ? bottomLeftHydrogenAtomInitialCenterY +
-      oscillationFactor * BOTTOM_LEFT_HYDROGEN_AMPLITUDE.Y
-    : bottomLeftHydrogenAtomInitialCenterY;
+  const carbon = determineCoordinates(
+    moleculeCenter,
+    CARBON,
+    shouldOscillate,
+    oscillationFactor,
+  );
+  const topLeftHydrogen = determineCoordinates(
+    moleculeCenter,
+    TOP_LEFT_HYDROGEN,
+    shouldOscillate,
+    oscillationFactor,
+  );
+  const topRightHydrogen = determineCoordinates(
+    moleculeCenter,
+    TOP_RIGHT_HYDROGEN,
+    shouldOscillate,
+    oscillationFactor,
+  );
+  const bottomRightHydrogen = determineCoordinates(
+    moleculeCenter,
+    BOTTOM_RIGHT_HYDROGEN,
+    shouldOscillate,
+    oscillationFactor,
+  );
+  const bottomLeftHydrogen = determineCoordinates(
+    moleculeCenter,
+    BOTTOM_LEFT_HYDROGEN,
+    shouldOscillate,
+    oscillationFactor,
+  );
 
   return (
     <Group>
       {/* molecule bonds */}
       {/* note that these CanvasBondContainer components need to be at the top here so that they fall behind atoms on the canvas */}
       <CanvasBondContainer
-        from={{ x: topLeftHydrogenAtomCenterX, y: topLeftHydrogenAtomCenterY }}
-        to={{ x: carbonAtomCenterX, y: carbonAtomCenterY }}
+        from={topLeftHydrogen}
+        to={carbon}
         numberOfBonds={1}
       />
       <CanvasBondContainer
-        from={{
-          x: topRightHydrogenAtomCenterX,
-          y: topRightHydrogenAtomCenterY,
-        }}
-        to={{ x: carbonAtomCenterX, y: carbonAtomCenterY }}
+        from={topRightHydrogen}
+        to={carbon}
         numberOfBonds={1}
       />
       <CanvasBondContainer
-        from={{
-          x: bottomRightHydrogenAtomCenterX,
-          y: bottomRightHydrogenAtomCenterY,
-        }}
-        to={{ x: carbonAtomCenterX, y: carbonAtomCenterY }}
+        from={bottomRightHydrogen}
+        to={carbon}
         numberOfBonds={1}
       />
       <CanvasBondContainer
-        from={{
-          x: bottomLeftHydrogenAtomCenterX,
-          y: bottomLeftHydrogenAtomCenterY,
-        }}
-        to={{ x: carbonAtomCenterX, y: carbonAtomCenterY }}
+        from={bottomLeftHydrogen}
+        to={carbon}
         numberOfBonds={1}
       />
       {/* molecule atoms */}
-      <CanvasCarbon
-        x={carbonAtomCenterX}
-        y={carbonAtomCenterY}
-        charge={NEGATIVE_CHARGE}
-      />
+      <CanvasCarbon coordinates={carbon} charge={NEGATIVE_CHARGE} />
       <CanvasHydrogen
-        x={topLeftHydrogenAtomCenterX}
-        y={topLeftHydrogenAtomCenterY}
+        coordinates={topLeftHydrogen}
         charge={POSITIVE_CHARGE}
         atomColor={HYDROGEN.atomColor.DARKER}
       />
       <CanvasHydrogen
-        x={topRightHydrogenAtomCenterX}
-        y={topRightHydrogenAtomCenterY}
+        coordinates={topRightHydrogen}
         charge={POSITIVE_CHARGE}
         atomColor={HYDROGEN.atomColor.STANDARD}
       />
       <CanvasHydrogen
-        x={bottomRightHydrogenAtomCenterX}
-        y={bottomRightHydrogenAtomCenterY}
+        coordinates={bottomRightHydrogen}
         charge={POSITIVE_CHARGE}
         atomColor={HYDROGEN.atomColor.STANDARD}
       />
       <CanvasHydrogen
-        x={bottomLeftHydrogenAtomCenterX}
-        y={bottomLeftHydrogenAtomCenterY}
+        coordinates={bottomLeftHydrogen}
         charge={POSITIVE_CHARGE}
         atomColor={HYDROGEN.atomColor.LIGHTER}
       />
@@ -156,11 +107,12 @@ const CanvasMethane = ({
 };
 
 CanvasMethane.propTypes = {
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
+  moleculeCenter: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+  }).isRequired,
   shouldOscillate: PropTypes.bool.isRequired,
-  sinusoidalOscillationPoint: PropTypes.number.isRequired,
-  oscillationDirection: PropTypes.number.isRequired,
+  oscillationFactor: PropTypes.number.isRequired,
 };
 
 export default CanvasMethane;

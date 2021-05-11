@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import CanvasAtom from './CanvasAtom';
 import { ARGON } from '../../../../../config/constants';
 
-const CanvasArgon = ({ x, y }) => {
+const CanvasArgon = ({ coordinates }) => {
+  const { x, y } = coordinates;
   return (
     <CanvasAtom
       atomColor={ARGON.atomColor}
@@ -16,8 +17,10 @@ const CanvasArgon = ({ x, y }) => {
 };
 
 CanvasArgon.propTypes = {
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
+  coordinates: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+  }).isRequired,
 };
 
 export default CanvasArgon;
