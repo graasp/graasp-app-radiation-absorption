@@ -156,7 +156,8 @@ class Lab extends Component {
 
     return (
       <div
-        className={classes.container}
+        // className 'canvas' for Guided Tour purposes (see tour-steps.js)
+        className={`${classes.container} canvas`}
         id="container"
         ref={(node) => {
           this.container = node;

@@ -26,6 +26,7 @@ import SpectrumToggle from './SpectrumToggle';
 import AnimationControls from './AnimationControls';
 import CustomSwitch from './CustomSwitch';
 import ReEmissionSwitch from './ReEmissionSwitch';
+import Tour from './Tour';
 
 const styles = (theme) => ({
   drawerPaper: {
@@ -36,7 +37,12 @@ const styles = (theme) => ({
     alignItems: 'center',
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
+    justifyContent: 'space-between',
+  },
+  drawerLeftContainer: {
+    display: 'flex',
     justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   contentWrapper: {
     margin: theme.spacing(1, 2, 2),
@@ -54,6 +60,7 @@ class SideMenu extends React.Component {
       drawerPaper: PropTypes.string.isRequired,
       contentWrapper: PropTypes.string.isRequired,
       sideMenuDivider: PropTypes.string.isRequired,
+      drawerLeftContainer: PropTypes.string.isRequired,
     }).isRequired,
     theme: PropTypes.shape({
       direction: PropTypes.string.isRequired,
@@ -78,14 +85,19 @@ class SideMenu extends React.Component {
     return (
       <>
         <div className={classes.drawerHeader}>
-          <IconButton onClick={this.handleToggleSideMenu(false)}>
-            {theme.direction === DEFAULT_THEME_DIRECTION ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-          <Typography variant="h5">{t('Observe')}</Typography>
+          <div className={classes.drawerLeftContainer}>
+            <IconButton onClick={this.handleToggleSideMenu(false)}>
+              {theme.direction === DEFAULT_THEME_DIRECTION ? (
+                <ChevronLeftIcon />
+              ) : (
+                <ChevronRightIcon />
+              )}
+            </IconButton>
+            <Typography variant="h5">{t('Observe')}</Typography>
+          </div>
+          <div>
+            <Tour />
+          </div>
         </div>
         <Divider />
       </>
@@ -117,12 +129,18 @@ class SideMenu extends React.Component {
         >
           {this.renderDrawerHeader()}
           <div className={classes.contentWrapper}>
-            <AnimationControls />
+            {/* div for 'Guided Tour' purposes (see tour-steps.js) */}
+            <div className="animation-controls">
+              <AnimationControls />
+            </div>
             <SpectrumToggle />
             <Divider className={classes.sideMenuDivider} />
-            <GreenhouseGases />
-            <Divider className={classes.sideMenuDivider} />
-            <NonGreenhouseGases />
+            {/* div for 'Guided Tour' purposes (see tour-steps.js) */}
+            <div className="side-menu-molecules">
+              <GreenhouseGases />
+              <Divider className={classes.sideMenuDivider} />
+              <NonGreenhouseGases />
+            </div>
             <Divider className={classes.sideMenuDivider} />
             <CustomSwitch
               switchLabel={t('Electric field vectors')}

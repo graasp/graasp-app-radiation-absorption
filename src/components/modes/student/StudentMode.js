@@ -10,7 +10,7 @@ class StudentMode extends Component {
   static propTypes = {
     appInstanceId: PropTypes.string,
     view: PropTypes.string,
-    activity: PropTypes.bool,
+    ready: PropTypes.bool,
     dispatchGetAppInstanceResources: PropTypes.func.isRequired,
     dispatchGetActions: PropTypes.func.isRequired,
     userId: PropTypes.string,
@@ -19,7 +19,7 @@ class StudentMode extends Component {
   static defaultProps = {
     view: DEFAULT_VIEW,
     appInstanceId: null,
-    activity: false,
+    ready: false,
     userId: null,
   };
 
@@ -49,8 +49,8 @@ class StudentMode extends Component {
   }
 
   render() {
-    const { view, activity } = this.props;
-    if (activity) {
+    const { view, ready } = this.props;
+    if (!ready) {
       return <Loader />;
     }
     switch (view) {
@@ -66,7 +66,7 @@ const mapStateToProps = ({ context, appInstanceResources }) => {
   return {
     userId,
     appInstanceId,
-    activity: Boolean(appInstanceResources.activity.length),
+    ready: appInstanceResources.ready,
   };
 };
 
