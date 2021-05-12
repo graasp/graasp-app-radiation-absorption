@@ -14,8 +14,8 @@ const ReEmittedLines = ({ x, y }) => {
   const { height: stageHeight } = useSelector(
     ({ layout }) => layout.lab.stageDimensions,
   );
-  const intervalsToReachMoleculeCenter = useSelector(
-    ({ layout }) => layout.intervalsToReachMoleculeCenter,
+  const beginReEmissionIntervalCount = useSelector(
+    ({ lab }) => lab.beginReEmissionIntervalCount,
   );
 
   return (
@@ -26,7 +26,7 @@ const ReEmittedLines = ({ x, y }) => {
         stroke={RE_EMISSION_LINE_STROKE_COLOR}
         strokeWidth={RE_EMISSION_LINE_STROKE_WIDTH}
         points={generateSineCurve(
-          intervalCount - intervalsToReachMoleculeCenter,
+          intervalCount - beginReEmissionIntervalCount,
           stageHeight,
           y,
           RE_EMISSION_LINE_CURVE_AMPLITUDE,
@@ -38,7 +38,7 @@ const ReEmittedLines = ({ x, y }) => {
         stroke={RE_EMISSION_LINE_STROKE_COLOR}
         strokeWidth={RE_EMISSION_LINE_STROKE_WIDTH}
         points={generateSineCurve(
-          intervalCount - intervalsToReachMoleculeCenter,
+          intervalCount - beginReEmissionIntervalCount,
           y,
           stageHeight,
           RE_EMISSION_LINE_CURVE_AMPLITUDE,

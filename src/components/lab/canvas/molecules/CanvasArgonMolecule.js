@@ -2,16 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CanvasArgon from './atoms/CanvasArgon';
 
-const CanvasArgonMolecule = ({ x, y }) => {
-  const argonAtomCenterX = x;
-  const argonAtomCenterY = y;
+const CanvasArgonMolecule = ({ moleculeCenter }) => {
+  const { x: argonAtomCenterX, y: argonAtomCenterY } = moleculeCenter;
 
-  return <CanvasArgon x={argonAtomCenterX} y={argonAtomCenterY} />;
+  return (
+    <CanvasArgon coordinates={{ x: argonAtomCenterX, y: argonAtomCenterY }} />
+  );
 };
 
 CanvasArgonMolecule.propTypes = {
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
+  moleculeCenter: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+  }).isRequired,
 };
 
 export default CanvasArgonMolecule;

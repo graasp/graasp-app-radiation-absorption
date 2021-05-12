@@ -12,7 +12,7 @@ import {
 import SideMenuBondContainer from '../SideMenuBondContainer';
 
 const useStyles = makeStyles(() => ({
-  leftHydrogenAtoms: { marginRight: -8.5, zIndex: 1 },
+  leftHydrogenAtoms: { marginTop: 5, marginRight: -4 },
   bondContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   },
   leftBondSeparator: { height: '10px' },
   rightBondSeparator: { height: '8px' },
-  rightHydrogenAtoms: { marginTop: 3.5, marginLeft: -8.5, zIndex: 1 },
+  rightHydrogenAtoms: { zIndex: 1, marginLeft: -3.5 },
 }));
 
 const SideMenuMethane = () => {
@@ -33,17 +33,14 @@ const SideMenuMethane = () => {
       <div className={classes.leftHydrogenAtoms}>
         <SideMenuHydrogen
           customPositioningStyles={{
-            marginBottom: '15px',
-            marginTop: '-1.5px',
-            marginLeft: '-2px',
+            marginBottom: '5px',
           }}
           charge={POSITIVE_CHARGE}
-          atomColor={HYDROGEN.atomColor.STANDARD}
+          atomColor={HYDROGEN.atomColor.DARKER}
         />
         <SideMenuHydrogen
-          customPositioningStyles={{ marginLeft: '-2px' }}
           charge={POSITIVE_CHARGE}
-          atomColor={HYDROGEN.atomColor.STANDARD}
+          atomColor={HYDROGEN.atomColor.LIGHTER}
         />
       </div>
       <div className={classes.bondContainer}>
@@ -66,14 +63,14 @@ const SideMenuMethane = () => {
       </div>
       <div className={classes.rightHydrogenAtoms}>
         <SideMenuHydrogen
-          customPositioningStyles={{ marginBottom: '5px', marginLeft: '1px' }}
+          customPositioningStyles={{ marginBottom: '12px', marginLeft: '-2px' }}
           charge={POSITIVE_CHARGE}
-          atomColor={HYDROGEN.atomColor.DARKER}
+          atomColor={HYDROGEN.atomColor.STANDARD}
         />
         <SideMenuHydrogen
-          customPositioningStyles={{ marginLeft: '1px' }}
+          customPositioningStyles={{ marginLeft: '-2px' }}
           charge={POSITIVE_CHARGE}
-          atomColor={HYDROGEN.atomColor.LIGHTER}
+          atomColor={HYDROGEN.atomColor.STANDARD}
         />
       </div>
     </SideMenuMoleculeContainer>

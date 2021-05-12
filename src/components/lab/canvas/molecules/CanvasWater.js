@@ -4,96 +4,59 @@ import { Group } from 'react-konva';
 import CanvasOxygen from './atoms/CanvasOxygen';
 import CanvasHydrogen from './atoms/CanvasHydrogen';
 import {
-  CANVAS_ATOM_DIMENSIONS,
-  OXYGEN,
   HYDROGEN,
-  CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR,
-  CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS,
   POSITIVE_CHARGE,
   NEGATIVE_CHARGE,
-  CANVAS_WATER_OSCILLATION_AMPLITUDES,
+  CANVAS_WATER,
 } from '../../../../config/constants';
 import CanvasBondContainer from './CanvasBondContainer';
+import { determineCoordinates } from '../../../../utils/utils';
 
 const CanvasWater = ({
-  x,
-  y,
+  moleculeCenter,
   shouldOscillate,
-  sinusoidalOscillationPoint,
-  oscillationDirection,
+  oscillationFactor,
 }) => {
-  // destructure the oscillation amplitudes of atoms in this molecule
-  const {
-    TOP_HYDROGEN_AMPLITUDE,
-    OXYGEN_AMPLITUDE,
-    BOTTOM_HYDROGEN_AMPLITUDE,
-  } = CANVAS_WATER_OSCILLATION_AMPLITUDES;
+  const { TOP_HYDROGEN, OXYGEN, BOTTOM_HYDROGEN } = CANVAS_WATER;
 
-  // variables for determining center points of atoms in this molecule
-  const oxygenAtomRadius = CANVAS_ATOM_DIMENSIONS[OXYGEN.size];
-  const hydrogenAtomRadius = CANVAS_ATOM_DIMENSIONS[HYDROGEN.size];
-  const oscillationFactor = oscillationDirection * sinusoidalOscillationPoint;
-
-  // top hydrogen atom
-  const topHydrogenAtomInitialCenterX =
-    x + CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR;
-  const topHydrogenAtomCenterX = shouldOscillate
-    ? topHydrogenAtomInitialCenterX + oscillationFactor * TOP_HYDROGEN_AMPLITUDE
-    : topHydrogenAtomInitialCenterX;
-  const topHydrogenAtomCenterY =
-    y -
-    oxygenAtomRadius -
-    CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS -
-    hydrogenAtomRadius;
-
-  // oxygen atom
-  const oxygenAtomCenterX = shouldOscillate
-    ? x + oscillationFactor * OXYGEN_AMPLITUDE
-    : x;
-  const oxygenAtomCenterY = y;
-
-  // bottom hydrogen atom
-  const bottomHydrogenAtomInitialCenterX =
-    x + CANVAS_WATER_ANGLED_ATOMS_X_ADJUSTMENT_FACTOR;
-  const bottomHydrogenAtomCenterX = shouldOscillate
-    ? bottomHydrogenAtomInitialCenterX +
-      oscillationFactor * BOTTOM_HYDROGEN_AMPLITUDE
-    : bottomHydrogenAtomInitialCenterX;
-  const bottomHydrogenAtomCenterY =
-    y +
-    oxygenAtomRadius +
-    CANVAS_MOLECULES_DISTANCE_BETWEEN_VERTICAL_ATOMS +
-    hydrogenAtomRadius;
+  const topHydrogen = determineCoordinates(
+    moleculeCenter,
+    TOP_HYDROGEN,
+    shouldOscillate,
+    oscillationFactor,
+  );
+  const oxygen = determineCoordinates(
+    moleculeCenter,
+    OXYGEN,
+    shouldOscillate,
+    oscillationFactor,
+  );
+  const bottomHydrogen = determineCoordinates(
+    moleculeCenter,
+    BOTTOM_HYDROGEN,
+    shouldOscillate,
+    oscillationFactor,
+  );
 
   return (
     <Group>
       {/* molecule bonds */}
       {/* note that these CanvasBondContainer components need to be at the top here so that they fall behind atoms on the canvas */}
+      <CanvasBondContainer from={topHydrogen} to={oxygen} numberOfBonds={1} />
       <CanvasBondContainer
-        from={{ x: topHydrogenAtomCenterX, y: topHydrogenAtomCenterY }}
-        to={{ x: oxygenAtomCenterX, y: oxygenAtomCenterY }}
-        numberOfBonds={1}
-      />
-      <CanvasBondContainer
-        from={{ x: oxygenAtomCenterX, y: oxygenAtomCenterY }}
-        to={{ x: bottomHydrogenAtomCenterX, y: bottomHydrogenAtomCenterY }}
+        from={oxygen}
+        to={bottomHydrogen}
         numberOfBonds={1}
       />
       {/* molecule atoms */}
       <CanvasHydrogen
-        x={topHydrogenAtomCenterX}
-        y={topHydrogenAtomCenterY}
+        coordinates={topHydrogen}
         charge={POSITIVE_CHARGE}
         atomColor={HYDROGEN.atomColor.STANDARD}
       />
-      <CanvasOxygen
-        x={oxygenAtomCenterX}
-        y={oxygenAtomCenterY}
-        charge={NEGATIVE_CHARGE}
-      />
+      <CanvasOxygen coordinates={oxygen} charge={NEGATIVE_CHARGE} />
       <CanvasHydrogen
-        x={bottomHydrogenAtomCenterX}
-        y={bottomHydrogenAtomCenterY}
+        coordinates={bottomHydrogen}
         charge={POSITIVE_CHARGE}
         atomColor={HYDROGEN.atomColor.STANDARD}
       />
@@ -102,11 +65,12 @@ const CanvasWater = ({
 };
 
 CanvasWater.propTypes = {
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
+  moleculeCenter: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+  }).isRequired,
   shouldOscillate: PropTypes.bool.isRequired,
-  sinusoidalOscillationPoint: PropTypes.number.isRequired,
-  oscillationDirection: PropTypes.number.isRequired,
+  oscillationFactor: PropTypes.number.isRequired,
 };
 
 export default CanvasWater;

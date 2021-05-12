@@ -57,6 +57,11 @@ const getAppInstanceResources = async ({
 
     // if standalone, you cannot connect to api
     if (standalone) {
+      // dispatch this action so that 'ready' flag is true
+      // (see appInstanceResoures.js and StudentMode.js)
+      dispatch({
+        type: GET_APP_INSTANCE_RESOURCES_SUCCEEDED,
+      });
       return false;
     }
 

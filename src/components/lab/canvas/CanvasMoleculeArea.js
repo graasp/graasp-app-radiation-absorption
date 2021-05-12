@@ -85,7 +85,7 @@ const CanvasMoleculeArea = ({
       // if a molecule has been selected in the side menu, then all canvas areas are converted to either:
       // (1) active (if they were empty), (2) awaiting delete (if they were full)
       // in such a case, when the area is clicked, simply update it with the selected molecule
-      // then reset all active/awaiting delete areas and de-select the previously selected molecule from the side menu
+      // then reset all active/awaiting delete areas
       dispatch(
         displayMolecule({
           moleculeId: selectedMoleculeInSideMenu,
@@ -93,7 +93,17 @@ const CanvasMoleculeArea = ({
         }),
         moleculesOnCanvas.forEach(resetActiveAndAwaitingDeleteAreas),
       );
-      dispatch(selectMoleculeInSideMenu(null));
+      // when a molecule is selected in the side menu and added to the canvas, it remains selected
+      // this allows for quickly filling the canvas
+      // however, once the canvas is full, the side menu molecule should be de-selected
+      // this happens when (1) there were 3 molecules on the canvas (i.e. ...length - 1) and a 4th was added,
+      // (2) there were already 4 molecules on the canvas and a molecule was replaced
+      const numberOfMoleculesOnCanvas = moleculesOnCanvas.filter(
+        ({ molecule }) => molecule,
+      ).length;
+      if (numberOfMoleculesOnCanvas >= moleculesOnCanvas.length - 1) {
+        dispatch(selectMoleculeInSideMenu(null));
+      }
       // in case a molecule is replaced with another while there are radiation lines/vectors on the canvas -->
       // reset animation interval and toggle off electric field vectors and re-emission
       if (intervalCount > 0) {

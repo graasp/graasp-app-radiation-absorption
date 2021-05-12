@@ -14,6 +14,7 @@ import {
   INCREMENT_INTERVAL_COUNT,
   RESET_INTERVAL_COUNT,
   DECREMENT_INTERVAL_COUNT,
+  BEGIN_RE_EMISSION_INTERVAL_COUNT,
 } from '../types';
 
 const selectMoleculeInSideMenu = (molecule) => (dispatch) =>
@@ -79,6 +80,9 @@ const resetIntervalCount = () => (dispatch) =>
 const resetAllSettings = () => (dispatch) =>
   dispatch({ type: RESET_ALL_SETTINGS });
 
+const setBeginReEmissionIntervalCount = (payload) => (dispatch) =>
+  dispatch({ type: BEGIN_RE_EMISSION_INTERVAL_COUNT, payload });
+
 export {
   selectMoleculeInSideMenu,
   toggleSpectrum,
@@ -95,4 +99,5 @@ export {
   decrementIntervalCount,
   resetIntervalCount,
   resetAllSettings,
+  setBeginReEmissionIntervalCount,
 };
