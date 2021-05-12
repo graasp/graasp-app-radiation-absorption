@@ -39,7 +39,6 @@ const SideMenuMethane = () => {
           atomColor={HYDROGEN.atomColor.DARKER}
         />
         <SideMenuHydrogen
-          // customPositioningStyles={{ marginLeft: '-3px' }}
           charge={POSITIVE_CHARGE}
           atomColor={HYDROGEN.atomColor.LIGHTER}
         />

@@ -140,7 +140,7 @@ export const CANVAS_WATER = {
       amplitude: 10,
     },
     y: {
-      offset: CANVAS_WATER_HYDROGEN_Y_OFFSET,
+      offset: -CANVAS_WATER_HYDROGEN_Y_OFFSET,
       oscillates: false,
       amplitude: 0,
     },
@@ -156,7 +156,7 @@ export const CANVAS_WATER = {
       amplitude: 10,
     },
     y: {
-      offset: -CANVAS_WATER_HYDROGEN_Y_OFFSET,
+      offset: CANVAS_WATER_HYDROGEN_Y_OFFSET,
       oscillates: false,
       amplitude: 0,
     },
@@ -172,9 +172,9 @@ export const CANVAS_CARBON_DIOXIDE = {
     x: { offset: 0, oscillates: true, amplitude: -15 },
     y: {
       offset: -CANVAS_CARBON_DIOXIDE_OXYGEN_Y_OFFSET,
+      oscillates: false,
+      amplitude: 0,
     },
-    oscillates: false,
-    amplitude: 0,
   },
   CARBON: {
     x: { offset: 0, oscillates: true, amplitude: 40.5 },
@@ -200,7 +200,7 @@ export const CANVAS_OZONE = {
       amplitude: -10,
     },
     y: {
-      offset: CANVAS_OZONE_OXYGEN_Y_OFFSET,
+      offset: -CANVAS_OZONE_OXYGEN_Y_OFFSET,
       oscillates: false,
       amplitude: 0,
     },
@@ -224,7 +224,7 @@ export const CANVAS_OZONE = {
       amplitude: -10,
     },
     y: {
-      offset: -CANVAS_OZONE_OXYGEN_Y_OFFSET,
+      offset: CANVAS_OZONE_OXYGEN_Y_OFFSET,
       oscillates: false,
       amplitude: 0,
     },
@@ -284,7 +284,7 @@ export const CANVAS_METHANE = {
       amplitude: 10,
     },
     y: {
-      offset: CANVAS_METHANE_RIGHT_HYDROGENS_Y_OFFSET,
+      offset: -CANVAS_METHANE_RIGHT_HYDROGENS_Y_OFFSET,
       oscillates: false,
       amplitude: 0,
     },
@@ -296,7 +296,7 @@ export const CANVAS_METHANE = {
       amplitude: 10,
     },
     y: {
-      offset: -CANVAS_METHANE_RIGHT_HYDROGENS_Y_OFFSET,
+      offset: CANVAS_METHANE_RIGHT_HYDROGENS_Y_OFFSET,
       oscillates: false,
       amplitude: 0,
     },

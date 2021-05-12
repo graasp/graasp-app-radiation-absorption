@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 // re-emission lines begin emanating from greenhouse gas molecules when ReEmissionSwitch is toggled on...
 // ...but *not exactly* when it is toggled on
 // why? since greenhouse molecules are oscillating, the switch might be toggled on when they are out of position
-// in such a case, the re-emission lines will drop out of sync with the molecule, a visual unappealing effect
+// in such a case, the re-emission lines will drop out of sync with the molecule, a visually unappealing effect
 // hence, when ReEmissionSwitch is toggled on, we wait until molecules are back at the next 'correct' position for re-emission, then emit lines
 // in the meantime, since this wait can last 2-3 seconds, we show a small loading spinner near the toggle
 const ReEmissionSwitch = () => {

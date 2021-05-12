@@ -101,10 +101,7 @@ const CanvasMoleculeArea = ({
       const numberOfMoleculesOnCanvas = moleculesOnCanvas.filter(
         ({ molecule }) => molecule,
       ).length;
-      if (
-        numberOfMoleculesOnCanvas === moleculesOnCanvas.length - 1 ||
-        numberOfMoleculesOnCanvas === moleculesOnCanvas.length
-      ) {
+      if (numberOfMoleculesOnCanvas >= moleculesOnCanvas.length - 1) {
         dispatch(selectMoleculeInSideMenu(null));
       }
       // in case a molecule is replaced with another while there are radiation lines/vectors on the canvas -->

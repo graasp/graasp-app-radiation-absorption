@@ -22,7 +22,7 @@ const NonGreenhouseGases = () => {
   );
 
   return (
-    <GasesContainer gasContainerLabel={t('Non-greenhouse Gases')}>
+    <GasesContainer gasContainerLabel={t('Non-Greenhouse Gases')}>
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuDinitrogen />}
         moleculeLabel={t('Dinitrogen')}
