@@ -38,7 +38,7 @@ export const ARGON = {
 };
 export const SIDE_MENU_ATOM_DIMENSIONS = { small: 20, medium: 35, large: 50 };
 // note that in the canvas these sizes refer to circle radii (whereas in the side menu they are div heights/widths)
-export const CANVAS_ATOM_DIMENSIONS = { small: 15, medium: 25, large: 40 };
+export const CANVAS_ATOM_DIMENSIONS = { small: 15, medium: 25.5, large: 40 };
 // note use of full-width-plus and em-dash (required for easier centering within side menu divs)
 // also note that in the canvas the + and - are not text nodes but Konva lines (so don't have similar constants here)
 export const SIDE_MENU_POSITIVE_CHARGE_SYMBOL = '＋';
@@ -407,7 +407,7 @@ export const RE_EMISSION_LINE_STROKE_WIDTH = 1.5;
 export const Y_INCREMENT_PER_POINT = Math.PI / 8;
 // Y_SHIFT_PER_INTERVAL => every timer interval, shift the sine curve upwards by this much
 export const Y_SHIFT_PER_INTERVAL = Math.PI;
-export const RADIATION_LINE_CURVE_AMPLITUDE = 22.5;
+export const RADIATION_LINE_CURVE_AMPLITUDE = 21.5;
 export const RE_EMISSION_LINE_CURVE_AMPLITUDE = 15;
 export const INFRARED_RADIATION_PERIOD = 1 / 64;
 export const VISIBLE_LIGHT_PERIOD = 1 / 32;
