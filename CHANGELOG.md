@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/graasp/graasp-app-radiation-absorption/compare/v0.1.1...v0.1.2) (2021-05-14)
+
+### Features
+
+- add easy fill by keeping side menu selection active ([88784c3](https://github.com/graasp/graasp-app-radiation-absorption/commit/88784c3e3d01c4f9bb7814b8442386edea9b4642)), closes [#37](https://github.com/graasp/graasp-app-radiation-absorption/issues/37)
+- add french translations ([eeb2264](https://github.com/graasp/graasp-app-radiation-absorption/commit/eeb2264209d59792469448a1f88d8b55d2c11c2e))
+- add guided tour ([9415014](https://github.com/graasp/graasp-app-radiation-absorption/commit/9415014ef85ab6f03a6d1e53781700aa225fa457)), closes [#46](https://github.com/graasp/graasp-app-radiation-absorption/issues/46)
+- add re-emission from bottom of molecule ([0afdcea](https://github.com/graasp/graasp-app-radiation-absorption/commit/0afdcea29dc04f238c478ab2759a4d85d36c64e3)), closes [#40](https://github.com/graasp/graasp-app-radiation-absorption/issues/40)
+- adjust hydrogen atoms' color in methane molecule ([7be3ada](https://github.com/graasp/graasp-app-radiation-absorption/commit/7be3ada77b65c0972a1f49b72cbf54d692fb77fe)), closes [#42](https://github.com/graasp/graasp-app-radiation-absorption/issues/42)
+- adjust methane molecule oscillation ([b6e56bb](https://github.com/graasp/graasp-app-radiation-absorption/commit/b6e56bbb5dd62d48d96d6b5b6446159403154549)), closes [#41](https://github.com/graasp/graasp-app-radiation-absorption/issues/41)
+- adjust molecule container positions based on screen height ([2a79045](https://github.com/graasp/graasp-app-radiation-absorption/commit/2a7904598c6e1dac61922175a8a52e16c03d30d0)), closes [#39](https://github.com/graasp/graasp-app-radiation-absorption/issues/39)
+- adjust ozone, adjust methane, rename vars for clarity ([2044cde](https://github.com/graasp/graasp-app-radiation-absorption/commit/2044cde6ded74bd98ba86a6c3714765902a19786)), closes [#55](https://github.com/graasp/graasp-app-radiation-absorption/issues/55) [#56](https://github.com/graasp/graasp-app-radiation-absorption/issues/56)
+- adjust water molecule ([f666c2f](https://github.com/graasp/graasp-app-radiation-absorption/commit/f666c2fedd62d25ce124a3d79fd5a5983f943590)), closes [#54](https://github.com/graasp/graasp-app-radiation-absorption/issues/54)
+- display re-emission lines from when toggle is switched on ([fbaf773](https://github.com/graasp/graasp-app-radiation-absorption/commit/fbaf7734a733127dfd0853fb515717a5093e1547)), closes [#53](https://github.com/graasp/graasp-app-radiation-absorption/issues/53)
+- increase distance between arrows in electric field vectors ([44438b6](https://github.com/graasp/graasp-app-radiation-absorption/commit/44438b63d07252e56bc0fe8a1d74244255904347)), closes [#44](https://github.com/graasp/graasp-app-radiation-absorption/issues/44) [#45](https://github.com/graasp/graasp-app-radiation-absorption/issues/45)
+- make visible light radiation begin from top of screen ([2e42e41](https://github.com/graasp/graasp-app-radiation-absorption/commit/2e42e4177883bdab173f8ededa65e93bbb834dcc)), closes [#43](https://github.com/graasp/graasp-app-radiation-absorption/issues/43)
+
+### Bug Fixes
+
+- adjust amplitude + molecule size for methane absorption ([eb3034d](https://github.com/graasp/graasp-app-radiation-absorption/commit/eb3034d860d88851f7abd5206ac29bfa27a50440)), closes [#61](https://github.com/graasp/graasp-app-radiation-absorption/issues/61)
+- fix faulty api call to actions endpoint ([1a1d693](https://github.com/graasp/graasp-app-radiation-absorption/commit/1a1d693de0b936b74d6dd39834718a33904f1c96)), closes [#38](https://github.com/graasp/graasp-app-radiation-absorption/issues/38) [#47](https://github.com/graasp/graasp-app-radiation-absorption/issues/47)
+
+### Documentation
+
+- update license ([5185801](https://github.com/graasp/graasp-app-radiation-absorption/commit/5185801799bae8ae0a825f4368b7f68fde6e8552)), closes [#52](https://github.com/graasp/graasp-app-radiation-absorption/issues/52)
+
 ### 0.1.1 (2021-04-28)
 
 ### Features
