@@ -393,7 +393,6 @@ export const SPECTRUMS = {
   INFRARED: 'infrared',
   VISIBLE_LIGHT: 'visible-light',
 };
-export const FRENCH_LANGUAGE_STRING = 'fr';
 
 /* ------CONSTANTS TO STYLE RADIATION LINES------ */
 export const RADIATION_LINE_STROKE_COLOR = 'black';

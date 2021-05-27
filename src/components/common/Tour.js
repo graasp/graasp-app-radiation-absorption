@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import JoyRide, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
-import { TOUR_STEPS_EN, TOUR_STEPS_FR } from '../../config/tour-steps';
+import TOUR_STEPS from '../../config/tour-steps';
 import { postAppInstanceResource } from '../../actions';
 import { TOUR_TAKEN } from '../../config/appInstanceResourceTypes';
-import { FRENCH_LANGUAGE_STRING } from '../../config/constants';
 
 const Tour = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { standalone, lang } = useSelector(({ context }) => context);
+  const { standalone } = useSelector(({ context }) => context);
   const { content: appInstanceResourcesContent } = useSelector(
     ({ appInstanceResources }) => appInstanceResources,
   );
@@ -19,7 +20,7 @@ const Tour = () => {
     continuous: true,
     loading: false,
     stepIndex: 0,
-    steps: lang === FRENCH_LANGUAGE_STRING ? TOUR_STEPS_FR : TOUR_STEPS_EN,
+    steps: TOUR_STEPS,
   };
   const [tourState, setTourState] = useState(INITIAL_TOUR_STATE);
   const { run, continuous, loading, stepIndex, steps } = tourState;
@@ -108,11 +109,10 @@ const Tour = () => {
           },
         }}
         locale={{
-          next: lang === FRENCH_LANGUAGE_STRING ? 'Suivant' : 'Next',
-          back: lang === FRENCH_LANGUAGE_STRING ? 'Précédent' : 'Back',
-          skip: lang === FRENCH_LANGUAGE_STRING ? 'Passer' : 'Skip',
-          last:
-            lang === FRENCH_LANGUAGE_STRING ? 'Terminer la visite' : 'End tour',
+          next: t('Next'),
+          back: t('Back'),
+          skip: t('Skip'),
+          last: t('End tour'),
         }}
       />
     </>
