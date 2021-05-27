@@ -36,7 +36,7 @@ export const ARGON = {
   size: 'large',
   chargeSymbolColor: 'black',
 };
-export const SIDE_MENU_ATOM_DIMENSIONS = { small: 20, medium: 35, large: 50 };
+export const SIDE_MENU_ATOM_DIMENSIONS = { small: 15, medium: 27.5, large: 40 };
 // note that in the canvas these sizes refer to circle radii (whereas in the side menu they are div heights/widths)
 export const CANVAS_ATOM_DIMENSIONS = { small: 15, medium: 25.5, large: 40 };
 // note use of full-width-plus and em-dash (required for easier centering within side menu divs)
