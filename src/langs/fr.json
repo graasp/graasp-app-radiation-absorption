@@ -35,6 +35,13 @@
     "End tour": "Terminer la visite",
     "Select a molecule from the side menu": "Sélectionner une molécule dans le menu latéral",
     "Add the selected molecule to an empty area": "Ajouter la molécule sélectionnée dans un emplacement vide",
-    "Once all areas contain a molecule, click the play button to start the simulation": "Une fois que tous les emplacements sont remplis, appuyez sur le bouton Simuler pour démarrer la simulation"
+    "Once all areas contain a molecule, click the play button to start the simulation": "Une fois que tous les emplacements sont remplis, appuyez sur le bouton Simuler pour démarrer la simulation",
+    "(CO": "(CO",
+    ")": ")",
+    "(N": "(N",
+    "O)": "O)",
+    "(O": "(O",
+    "(CH": "(CH",
+    "(H": "(H"
   }
 }

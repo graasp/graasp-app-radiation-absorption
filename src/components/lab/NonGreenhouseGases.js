@@ -11,6 +11,8 @@ import {
   DIOXYGEN_MOLECULE_ID,
   ARGON_MOLECULE_ID,
 } from '../../config/constants';
+import DinitrogenFormula from './canvas/formulas/DinitrogenFormula';
+import DioxygenFormula from './canvas/formulas/DioxygenFormula';
 
 const NonGreenhouseGases = () => {
   const { t } = useTranslation();
@@ -26,6 +28,7 @@ const NonGreenhouseGases = () => {
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuDinitrogen />}
         moleculeLabel={t('Dinitrogen')}
+        moleculeFormula={<DinitrogenFormula />}
         isSelected={
           selectedMoleculeInSideMenu === DINITROGEN_MOLECULE_ID ||
           highlightAllSideMenuMolecules
@@ -34,6 +37,7 @@ const NonGreenhouseGases = () => {
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuDioxygen />}
         moleculeLabel={t('Dioxygen')}
+        moleculeFormula={<DioxygenFormula />}
         isSelected={
           selectedMoleculeInSideMenu === DIOXYGEN_MOLECULE_ID ||
           highlightAllSideMenuMolecules

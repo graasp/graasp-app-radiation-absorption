@@ -15,6 +15,11 @@ import {
   NITROUS_OXIDE_MOLECULE_ID,
   METHANE_MOLECULE_ID,
 } from '../../config/constants';
+import CarbonDioxideFormula from './canvas/formulas/CarbonDioxideFormula';
+import WaterFormula from './canvas/formulas/WaterFormula';
+import OzoneFormula from './canvas/formulas/OzoneFormula';
+import NitrousOxideFormula from './canvas/formulas/NitrousOxideFormula';
+import MethaneFormula from './canvas/formulas/MethaneFormula';
 
 const GreenhouseGases = () => {
   const { t } = useTranslation();
@@ -30,6 +35,7 @@ const GreenhouseGases = () => {
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuWater />}
         moleculeLabel={t('Water')}
+        moleculeFormula={<WaterFormula />}
         isSelected={
           selectedMoleculeInSideMenu === WATER_MOLECULE_ID ||
           highlightAllSideMenuMolecules
@@ -38,6 +44,7 @@ const GreenhouseGases = () => {
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuCarbonDioxide />}
         moleculeLabel={t('Carbon Dioxide')}
+        moleculeFormula={<CarbonDioxideFormula />}
         isSelected={
           selectedMoleculeInSideMenu === CARBON_DIOXIDE_MOLECULE_ID ||
           highlightAllSideMenuMolecules
@@ -46,6 +53,7 @@ const GreenhouseGases = () => {
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuOzone />}
         moleculeLabel={t('Ozone')}
+        moleculeFormula={<OzoneFormula />}
         isSelected={
           selectedMoleculeInSideMenu === OZONE_MOLECULE_ID ||
           highlightAllSideMenuMolecules
@@ -54,6 +62,7 @@ const GreenhouseGases = () => {
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuNitrousOxide />}
         moleculeLabel={t('Nitrous Oxide')}
+        moleculeFormula={<NitrousOxideFormula />}
         isSelected={
           selectedMoleculeInSideMenu === NITROUS_OXIDE_MOLECULE_ID ||
           highlightAllSideMenuMolecules
@@ -62,6 +71,7 @@ const GreenhouseGases = () => {
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuMethane />}
         moleculeLabel={t('Methane')}
+        moleculeFormula={<MethaneFormula />}
         isSelected={
           selectedMoleculeInSideMenu === METHANE_MOLECULE_ID ||
           highlightAllSideMenuMolecules
