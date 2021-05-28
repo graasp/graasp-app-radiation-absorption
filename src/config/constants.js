@@ -397,8 +397,10 @@ export const SPECTRUMS = {
 /* ------CONSTANTS TO STYLE RADIATION LINES------ */
 export const RADIATION_LINE_STROKE_COLOR = 'black';
 export const RADIATION_LINE_STROKE_WIDTH = 1.5;
-export const RE_EMISSION_LINE_STROKE_COLOR = 'darkgrey';
+// RE_EMISSION_LINE_COLOR is a slightly lighter shade of black
+export const RE_EMISSION_LINE_STROKE_COLOR = '#282828';
 export const RE_EMISSION_LINE_STROKE_WIDTH = 1.5;
+export const RE_EMISSION_LINE_DASH = [10, 5];
 
 /* ------CONSTANTS FOR GENERATING SINE CURVES (RADIATION LINES)------ */
 // Y_INCREMENT_PER_POINT => e.g. generate an x point at y=0, y=π/8, y=π/8 * 2, y=π/8 * 3, ...

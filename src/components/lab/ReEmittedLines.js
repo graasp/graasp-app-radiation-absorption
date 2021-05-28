@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Group, Line } from 'react-konva';
 import {
   RE_EMISSION_LINE_CURVE_AMPLITUDE,
+  RE_EMISSION_LINE_DASH,
   RE_EMISSION_LINE_STROKE_COLOR,
   RE_EMISSION_LINE_STROKE_WIDTH,
 } from '../../config/constants';
@@ -31,6 +32,7 @@ const ReEmittedLines = ({ x, y }) => {
           y,
           RE_EMISSION_LINE_CURVE_AMPLITUDE,
         )}
+        dash={RE_EMISSION_LINE_DASH}
       />
       <Line
         x={x}
@@ -43,6 +45,7 @@ const ReEmittedLines = ({ x, y }) => {
           stageHeight,
           RE_EMISSION_LINE_CURVE_AMPLITUDE,
         )}
+        dash={RE_EMISSION_LINE_DASH}
       />
     </Group>
   );
