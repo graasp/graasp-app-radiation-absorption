@@ -36,7 +36,7 @@ export const ARGON = {
   size: 'large',
   chargeSymbolColor: 'black',
 };
-export const SIDE_MENU_ATOM_DIMENSIONS = { small: 20, medium: 35, large: 50 };
+export const SIDE_MENU_ATOM_DIMENSIONS = { small: 15, medium: 27.5, large: 40 };
 // note that in the canvas these sizes refer to circle radii (whereas in the side menu they are div heights/widths)
 export const CANVAS_ATOM_DIMENSIONS = { small: 15, medium: 25.5, large: 40 };
 // note use of full-width-plus and em-dash (required for easier centering within side menu divs)
@@ -131,13 +131,12 @@ const CANVAS_METHANE_X_OFFSET_FOR_LEFT_HYDROGENS = 35;
 // oxygen atom has charge of 2- and atomic mass of 16; hence q/m = 1/8
 // hydrogen atom has charge of 1- and atomic mass of 8; hence q/m = 1
 // hence oscillation of hydrogen = 8x oscillation of oxygen
-// for visual purposes, the oscillation of the oxygen atom is ~doubled (otherwise it will be too small to be visible)
 export const CANVAS_WATER = {
   TOP_HYDROGEN: {
     x: {
       offset: -CANVAS_WATER_HYDROGEN_X_OFFSET,
       oscillates: true,
-      amplitude: 10,
+      amplitude: 12,
     },
     y: {
       offset: -CANVAS_WATER_HYDROGEN_Y_OFFSET,
@@ -146,14 +145,14 @@ export const CANVAS_WATER = {
     },
   },
   OXYGEN: {
-    x: { offset: 0, oscillates: true, amplitude: -2 },
+    x: { offset: 0, oscillates: true, amplitude: -1.5 },
     y: { offset: 0, oscillates: false, amplitude: 0 },
   },
   BOTTOM_HYDROGEN: {
     x: {
       offset: -CANVAS_WATER_HYDROGEN_X_OFFSET,
       oscillates: true,
-      amplitude: 10,
+      amplitude: 12,
     },
     y: {
       offset: CANVAS_WATER_HYDROGEN_Y_OFFSET,
@@ -191,13 +190,13 @@ export const CANVAS_CARBON_DIOXIDE = {
 };
 // OZONE
 // note on oscillation amplitudes for this molecule:
-// middle oxygen atom has charge of 2-, all atoms have the same mass, hence middle atom oscillates with half the amplitude of other atoms
+// middle oxygen atom has charge of 2-, all atoms have the same mass, hence middle atom oscillates with twice the amplitude of other atoms
 export const CANVAS_OZONE = {
   TOP_OXYGEN: {
     x: {
       offset: -CANVAS_OZONE_OXYGEN_X_OFFSET,
       oscillates: true,
-      amplitude: -10,
+      amplitude: -6,
     },
     y: {
       offset: -CANVAS_OZONE_OXYGEN_Y_OFFSET,
@@ -209,7 +208,7 @@ export const CANVAS_OZONE = {
     x: {
       offset: 0,
       oscillates: true,
-      amplitude: 5,
+      amplitude: 12,
     },
     y: {
       offset: 0,
@@ -221,7 +220,7 @@ export const CANVAS_OZONE = {
     x: {
       offset: -CANVAS_OZONE_OXYGEN_X_OFFSET,
       oscillates: true,
-      amplitude: -10,
+      amplitude: -6,
     },
     y: {
       offset: CANVAS_OZONE_OXYGEN_Y_OFFSET,
@@ -233,10 +232,10 @@ export const CANVAS_OZONE = {
 // NITROUS OXIDE
 // note on oscillation amplitudes for this molecule:
 // nitrogen and oxygen have nearly the same mass (14 and 16)
-// for simplicitly, since the central nitrogen has a charge of 2-, we make it oscillate with half the amplitude of the other atoms
+// for simplicity, since the central nitrogen has a charge of 2-, we make it oscillate with twice the amplitude of the other atoms
 export const CANVAS_NITROUS_OXIDE = {
   TOP_NITROGEN: {
-    x: { offset: 0, oscillates: true, amplitude: -30 },
+    x: { offset: 0, oscillates: true, amplitude: -10 },
     y: {
       offset: -CANVAS_NITROUS_OXIDE_NITROGEN_Y_OFFSET,
       oscillates: false,
@@ -244,11 +243,11 @@ export const CANVAS_NITROUS_OXIDE = {
     },
   },
   MIDDLE_NITROGEN: {
-    x: { offset: 0, oscillates: true, amplitude: 15 },
+    x: { offset: 0, oscillates: true, amplitude: 20 },
     y: { offset: 0, oscillates: false, amplitude: 0 },
   },
   BOTTOM_OXYGEN: {
-    x: { offset: 0, oscillates: true, amplitude: -30 },
+    x: { offset: 0, oscillates: true, amplitude: -10 },
     y: {
       offset: CANVAS_NITROUS_OXIDE_OXYGEN_Y_OFFSET,
       oscillates: false,
@@ -394,13 +393,14 @@ export const SPECTRUMS = {
   INFRARED: 'infrared',
   VISIBLE_LIGHT: 'visible-light',
 };
-export const FRENCH_LANGUAGE_STRING = 'fr';
 
 /* ------CONSTANTS TO STYLE RADIATION LINES------ */
 export const RADIATION_LINE_STROKE_COLOR = 'black';
 export const RADIATION_LINE_STROKE_WIDTH = 1.5;
-export const RE_EMISSION_LINE_STROKE_COLOR = 'darkgrey';
+// RE_EMISSION_LINE_COLOR is a slightly lighter shade of black
+export const RE_EMISSION_LINE_STROKE_COLOR = '#282828';
 export const RE_EMISSION_LINE_STROKE_WIDTH = 1.5;
+export const RE_EMISSION_LINE_DASH = [10, 5];
 
 /* ------CONSTANTS FOR GENERATING SINE CURVES (RADIATION LINES)------ */
 // Y_INCREMENT_PER_POINT => e.g. generate an x point at y=0, y=π/8, y=π/8 * 2, y=π/8 * 3, ...

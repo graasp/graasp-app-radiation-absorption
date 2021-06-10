@@ -45,7 +45,7 @@ const styles = (theme) => ({
     alignItems: 'center',
   },
   contentWrapper: {
-    margin: theme.spacing(1, 2, 2),
+    margin: theme.spacing(0.5, 2),
   },
   sideMenuDivider: {
     marginTop: theme.spacing(1),

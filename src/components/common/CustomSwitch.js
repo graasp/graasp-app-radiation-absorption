@@ -7,10 +7,10 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
-    margin: theme.spacing(1, 0),
+    margin: theme.spacing(0.5, 0),
     display: 'flex',
     justifyContent: 'space-between',
-    width: '55%',
+    width: '100%',
   },
   label: {
     display: 'block',
