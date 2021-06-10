@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/graasp/graasp-app-radiation-absorption/compare/v0.1.2...v0.1.3) (2021-06-10)
+
+### Features
+
+- add dash to re-emitted radiation lines ([ded468c](https://github.com/graasp/graasp-app-radiation-absorption/commit/ded468c9ae8045fd614799084482cecc26342894)), closes [#63](https://github.com/graasp/graasp-app-radiation-absorption/issues/63)
+- add molecule formulas next to molecule names ([373a8b9](https://github.com/graasp/graasp-app-radiation-absorption/commit/373a8b94eca227728ecbe0eb672e9ae93c534151)), closes [#67](https://github.com/graasp/graasp-app-radiation-absorption/issues/67)
+- adjust oscillation amplitudes ([e259107](https://github.com/graasp/graasp-app-radiation-absorption/commit/e25910727896e11656d22cb57a54c347db48496d)), closes [#64](https://github.com/graasp/graasp-app-radiation-absorption/issues/64)
+
 ### [0.1.2](https://github.com/graasp/graasp-app-radiation-absorption/compare/v0.1.1...v0.1.2) (2021-05-14)
 
 ### Features
