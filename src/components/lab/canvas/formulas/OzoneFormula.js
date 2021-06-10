@@ -4,18 +4,15 @@ import MoleculeFormula from './MoleculeFormula';
 
 const OzoneFormula = () => {
   const { t } = useTranslation();
-  return (
-    <MoleculeFormula
-      formula={
-        // eslint-disable-next-line react/jsx-wrap-multilines
-        <>
-          {t('(O')}
-          <sub>3</sub>
-          {t(')')}
-        </>
-      }
-    />
+  const formula = (
+    <>
+      {t('(O')}
+      <sub>3</sub>
+      {t(')')}
+    </>
   );
+
+  return <MoleculeFormula formula={formula} />;
 };
 
 export default OzoneFormula;

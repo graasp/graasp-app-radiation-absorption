@@ -4,18 +4,15 @@ import MoleculeFormula from './MoleculeFormula';
 
 const NitrousOxideFormula = () => {
   const { t } = useTranslation();
-  return (
-    <MoleculeFormula
-      formula={
-        // eslint-disable-next-line react/jsx-wrap-multilines
-        <>
-          {t('(N')}
-          <sub>2</sub>
-          {t('O)')}
-        </>
-      }
-    />
+  const formula = (
+    <>
+      {t('(N')}
+      <sub>2</sub>
+      {t('O)')}
+    </>
   );
+
+  return <MoleculeFormula formula={formula} />;
 };
 
 export default NitrousOxideFormula;
