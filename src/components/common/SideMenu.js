@@ -27,6 +27,12 @@ import AnimationControls from './AnimationControls';
 import CustomSwitch from './CustomSwitch';
 import ReEmissionSwitch from './ReEmissionSwitch';
 import Tour from './Tour';
+import {
+  TOGGLED_CHARGE_SIGNS_OFF,
+  TOGGLED_CHARGE_SIGNS_ON,
+  TOGGLED_ELECTRIC_FIELD_VECTORS_OFF,
+  TOGGLED_ELECTRIC_FIELD_VECTORS_ON,
+} from '../../config/verbs';
 
 const styles = (theme) => ({
   drawerPaper: {
@@ -147,12 +153,16 @@ class SideMenu extends React.Component {
               switchStatus={showElectricFieldVectors}
               switchDispatch={dispatchToggleShowElectricFieldVectors}
               disabled={spectrum === SPECTRUMS.VISIBLE_LIGHT}
+              toggleOffAction={TOGGLED_ELECTRIC_FIELD_VECTORS_OFF}
+              toggleOnAction={TOGGLED_ELECTRIC_FIELD_VECTORS_ON}
             />
             <CustomSwitch
               switchLabel={t('Sign of charges')}
               switchStatus={showAtomsCharges}
               switchDispatch={dispatchToggleShowAtomsCharges}
               disabled={false}
+              toggleOffAction={TOGGLED_CHARGE_SIGNS_OFF}
+              toggleOnAction={TOGGLED_CHARGE_SIGNS_ON}
             />
             {/* since ReEmissionSwitch contains significant custom code, separate component was created vs. reusing CustomSwitch */}
             <ReEmissionSwitch />

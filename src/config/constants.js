@@ -442,3 +442,7 @@ export const SMALL_ARROW_LENGTH =
   RADIATION_LINE_CURVE_AMPLITUDE - ARROW_POINTER_WIDTH - 10;
 export const SMALL_ARROW_Y_PLACEMENT_RELATIVE_TO_LARGE_ARROW = 20 * Math.PI;
 export const ARROW_STROKE_COLOR = 'darkblue';
+
+/* ------OTHER CONSTANTS------ */
+export const PAUSED_STRING = 'paused';
+export const PLAYING_STRING = 'playing';
