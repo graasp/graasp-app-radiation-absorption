@@ -37,7 +37,7 @@ const CustomSwitch = ({
     switchDispatch(!switchStatus);
     dispatch(
       postAction({
-        verb: switchStatus === true ? toggleOffAction : toggleOnAction,
+        verb: switchStatus ? toggleOffAction : toggleOnAction,
         data: { applicationState },
       }),
     );
