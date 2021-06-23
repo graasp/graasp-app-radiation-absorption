@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/graasp/graasp-app-radiation-absorption/compare/v0.1.4...v0.1.5) (2021-06-23)
+
+### Features
+
+- add user actions ([e421fe7](https://github.com/graasp/graasp-app-radiation-absorption/commit/e421fe75f4bb8fa8cd8499a25ace82dd9b3456a7)), closes [#51](https://github.com/graasp/graasp-app-radiation-absorption/issues/51)
+
 ### [0.1.4](https://github.com/graasp/graasp-app-radiation-absorption/compare/v0.1.3...v0.1.4) (2021-06-11)
 
 ### [0.1.3](https://github.com/graasp/graasp-app-radiation-absorption/compare/v0.1.2...v0.1.3) (2021-06-10)
