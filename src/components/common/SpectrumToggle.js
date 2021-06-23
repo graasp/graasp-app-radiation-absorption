@@ -4,13 +4,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
-import { SPECTRUMS } from '../../config/constants';
 import {
+  PAUSED_STRING,
+  PLAYING_STRING,
+  SPECTRUMS,
+} from '../../config/constants';
+import {
+  postAction,
   resetIntervalCount,
   toggleShowElectricFieldVectors,
   toggleShowReEmission,
   toggleSpectrum,
 } from '../../actions';
+import { TOGGLED_SPECTRUM } from '../../config/verbs';
 
 const useStyles = makeStyles(() => ({
   switchWithTwoLabelsContainer: {
@@ -21,14 +27,22 @@ const useStyles = makeStyles(() => ({
 
 const SpectrumToggle = () => {
   const { t } = useTranslation();
-  const spectrum = useSelector(({ lab }) => lab.spectrum);
+  const { spectrum, isPaused } = useSelector(({ lab }) => lab);
   const dispatch = useDispatch();
+  const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
 
   const handleToggle = () => {
     if (spectrum === SPECTRUMS.VISIBLE_LIGHT) {
       dispatch(
         resetIntervalCount(),
         dispatch(toggleSpectrum(SPECTRUMS.INFRARED)),
+      );
+      // dispatch Graasp action
+      dispatch(
+        postAction({
+          verb: TOGGLED_SPECTRUM,
+          data: { newSpectrum: SPECTRUMS.INFRARED, applicationState },
+        }),
       );
     } else if (spectrum === SPECTRUMS.INFRARED) {
       dispatch(
@@ -37,6 +51,13 @@ const SpectrumToggle = () => {
       );
       dispatch(toggleShowElectricFieldVectors(false));
       dispatch(toggleShowReEmission(false));
+      // dispatch Graasp action
+      dispatch(
+        postAction({
+          verb: TOGGLED_SPECTRUM,
+          data: { newSpectrum: SPECTRUMS.VISIBLE_LIGHT, applicationState },
+        }),
+      );
     }
   };
 

@@ -7,14 +7,21 @@ import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {
+  postAction,
   setBeginReEmissionIntervalCount,
   toggleShowReEmission,
 } from '../../actions';
 import {
   GREENHOUSE_GASES,
   INTERVALS_TO_COMPLETE_INFRARED_RADIATION_PERIOD,
+  PAUSED_STRING,
+  PLAYING_STRING,
   SPECTRUMS,
 } from '../../config/constants';
+import {
+  TOGGLED_RE_EMISSION_OFF,
+  TOGGLED_RE_EMISSION_ON,
+} from '../../config/verbs';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -56,9 +63,18 @@ const ReEmissionSwitch = () => {
   const intervalsToReachMoleculeCenter = useSelector(
     ({ layout }) => layout.intervalsToReachMoleculeCenter,
   );
+  const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
 
   const onSwitchToggle = () => {
-    // first, toggle showReEmission on/off
+    // first, dispatch Graasp action
+    dispatch(
+      postAction({
+        verb: showReEmission ? TOGGLED_RE_EMISSION_OFF : TOGGLED_RE_EMISSION_ON,
+        data: { applicationState },
+      }),
+    );
+
+    // toggle showReEmission on/off
     dispatch(toggleShowReEmission(!showReEmission));
 
     // if the switch is toggled on *before* original radiation lines have reached the molecule center...

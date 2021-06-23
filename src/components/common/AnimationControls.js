@@ -19,11 +19,19 @@ import {
   incrementIntervalCount,
   toggleHighlightAllSideMenuMolecules,
   decrementIntervalCount,
+  postAction,
 } from '../../actions';
 import {
   APPLICATION_INTERVAL,
   CANVAS_MOLECULE_AREA_STATE,
 } from '../../config/constants';
+import {
+  CLICKED_FORWARD,
+  CLICKED_PAUSE,
+  CLICKED_PLAY,
+  CLICKED_RESET,
+  CLICKED_REWIND,
+} from '../../config/verbs';
 
 const useStyles = makeStyles(() => ({
   buttonContainer: {
@@ -44,10 +52,25 @@ const AnimationControls = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const moleculesOnCanvas = useSelector(({ lab }) => lab.moleculesOnCanvas);
-  const isPaused = useSelector(({ lab }) => lab.isPaused);
-  const intervalCount = useSelector(({ lab }) => lab.intervalCount);
+  const {
+    moleculesOnCanvas,
+    spectrum,
+    showAtomsCharges,
+    showReEmission,
+    showElectricFieldVectors,
+    isPaused,
+    intervalCount,
+  } = useSelector(({ lab }) => lab);
   const applicationInterval = useRef();
+
+  // appSettings dispatched with Graasp actions to show user's selected configuration
+  const appSettings = {
+    moleculesOnCanvas,
+    spectrum,
+    showAtomsCharges,
+    showReEmission,
+    showElectricFieldVectors,
+  };
 
   const canvasIncomplete = moleculesOnCanvas.some(
     ({ molecule }) => molecule === '',
@@ -86,22 +109,33 @@ const AnimationControls = () => {
     dispatch(setIsPaused(false));
     dispatch(selectMoleculeInSideMenu(null));
     dispatch(toggleHighlightAllSideMenuMolecules(false));
+
+    // dispatch Graasp action
+    dispatch(postAction({ verb: CLICKED_PLAY, data: { ...appSettings } }));
   };
 
   const onClickPause = () => {
     dispatch(setIsPaused(true));
+    // Graasp action
+    dispatch(postAction({ verb: CLICKED_PAUSE }));
   };
 
   const onClickReset = () => {
     dispatch(resetAllSettings());
+    // Graasp action
+    dispatch(postAction({ verb: CLICKED_RESET }));
   };
 
   const onClickRewind = () => {
     dispatch(decrementIntervalCount());
+    // Graasp action
+    dispatch(postAction({ verb: CLICKED_REWIND, data: { ...appSettings } }));
   };
 
   const onClickForward = () => {
     dispatch(incrementIntervalCount());
+    // Graasp action
+    dispatch(postAction({ verb: CLICKED_FORWARD, data: { ...appSettings } }));
   };
 
   return (
