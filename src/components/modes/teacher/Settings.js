@@ -8,8 +8,7 @@ import Switch from '@material-ui/core/Switch';
 import { connect } from 'react-redux';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { withTranslation } from 'react-i18next';
-import { toggleSettings, patchAppInstance } from '../../../actions';
-import Loader from '../../common/Loader';
+import { toggleSettings } from '../../../actions';
 import LanguageSelect from './LanguageSelect';
 
 const modalTopPercent = 50;
@@ -38,13 +37,11 @@ class Settings extends Component {
       paper: PropTypes.string,
     }).isRequired,
     open: PropTypes.bool.isRequired,
-    activity: PropTypes.bool.isRequired,
     settings: PropTypes.shape({
       headerVisible: PropTypes.bool,
     }),
     t: PropTypes.func.isRequired,
     dispatchToggleSettings: PropTypes.func.isRequired,
-    dispatchPatchAppInstance: PropTypes.func.isRequired,
     i18n: PropTypes.shape({
       defaultNS: PropTypes.string,
     }).isRequired,
@@ -57,14 +54,13 @@ class Settings extends Component {
   };
 
   saveSettings = (settingsToChange) => {
-    const { settings, dispatchPatchAppInstance } = this.props;
+    const { settings } = this.props;
     const newSettings = {
       ...settings,
       ...settingsToChange,
     };
-    dispatchPatchAppInstance({
-      data: newSettings,
-    });
+    // eslint-disable-next-line no-console
+    console.log('newSettings: ', newSettings);
   };
 
   handleChangeHeaderVisibility = () => {
@@ -83,12 +79,8 @@ class Settings extends Component {
   };
 
   renderModalContent() {
-    const { t, settings, activity } = this.props;
+    const { t, settings } = this.props;
     const { headerVisible } = settings;
-
-    if (activity) {
-      return <Loader />;
-    }
 
     const switchControl = (
       <Switch
@@ -127,17 +119,14 @@ class Settings extends Component {
   }
 }
 
-const mapStateToProps = ({ layout, appInstance }) => {
+const mapStateToProps = ({ layout }) => {
   return {
     open: layout.settings.open,
-    settings: appInstance.content.settings,
-    activity: Boolean(appInstance.activity.length),
   };
 };
 
 const mapDispatchToProps = {
   dispatchToggleSettings: toggleSettings,
-  dispatchPatchAppInstance: patchAppInstance,
 };
 
 const ConnectedComponent = connect(

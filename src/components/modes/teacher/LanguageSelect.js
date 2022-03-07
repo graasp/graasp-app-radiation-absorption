@@ -7,7 +7,6 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import Loader from '../../common/Loader';
 import { langs } from '../../../config/i18n';
 import { changeLanguage } from '../../../actions';
 import { FORM_CONTROL_MIN_WIDTH } from '../../../config/constants';
@@ -31,7 +30,6 @@ class LanguageSelect extends Component {
       formControl: PropTypes.string.isRequired,
     }).isRequired,
     lang: PropTypes.oneOf(Object.keys(langs)).isRequired,
-    activity: PropTypes.bool.isRequired,
   };
 
   handleChangeLanguage = (lang) => {
@@ -49,11 +47,7 @@ class LanguageSelect extends Component {
     ));
 
   render() {
-    const { t, classes, lang, activity } = this.props;
-
-    if (activity) {
-      return <Loader />;
-    }
+    const { t, classes, lang } = this.props;
 
     return (
       <FormControl className={classes.formControl}>
@@ -73,9 +67,8 @@ class LanguageSelect extends Component {
   }
 }
 
-const mapStateToProps = ({ appInstance }) => ({
-  lang: appInstance.content.settings?.lang || DEFAULT_LANG,
-  activity: Boolean(appInstance.activity.length),
+const mapStateToProps = () => ({
+  lang: DEFAULT_LANG,
 });
 
 const mapDispatchToProps = {
