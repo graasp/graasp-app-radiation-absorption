@@ -31,6 +31,7 @@ const SpectrumToggle = () => {
         resetIntervalCount(),
         dispatch(toggleSpectrum(SPECTRUMS.INFRARED)),
       );
+      // todo: adapt for new graasp api
       // dispatch Graasp action
       // dispatch(
       //   postAction({
@@ -45,6 +46,7 @@ const SpectrumToggle = () => {
       );
       dispatch(toggleShowElectricFieldVectors(false));
       dispatch(toggleShowReEmission(false));
+      // todo: adapt for new graasp api
       // dispatch Graasp action
       // dispatch(
       //   postAction({

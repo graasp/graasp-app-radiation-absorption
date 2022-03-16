@@ -59,6 +59,7 @@ const ReEmissionSwitch = () => {
   // const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
 
   const onSwitchToggle = () => {
+    // todo: adapt for new graasp api
     // first, dispatch Graasp action
     // dispatch(
     //   postAction({

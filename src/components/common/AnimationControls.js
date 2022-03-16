@@ -55,6 +55,7 @@ const AnimationControls = () => {
   } = useSelector(({ lab }) => lab);
   const applicationInterval = useRef();
 
+  // todo: adapt for new graasp api
   // appSettings dispatched with Graasp actions to show user's selected configuration
   const appSettings = {
     moleculesOnCanvas,
@@ -104,30 +105,35 @@ const AnimationControls = () => {
     dispatch(selectMoleculeInSideMenu(null));
     dispatch(toggleHighlightAllSideMenuMolecules(false));
 
+    // todo: adapt for new graasp api
     // dispatch Graasp action
     // dispatch(postAction({ verb: CLICKED_PLAY, data: { ...appSettings } }));
   };
 
   const onClickPause = () => {
     dispatch(setIsPaused(true));
+    // todo: adapt for new graasp api
     // Graasp action
     // dispatch(postAction({ verb: CLICKED_PAUSE }));
   };
 
   const onClickReset = () => {
     dispatch(resetAllSettings());
+    // todo: adapt for new graasp api
     // Graasp action
     // dispatch(postAction({ verb: CLICKED_RESET }));
   };
 
   const onClickRewind = () => {
     dispatch(decrementIntervalCount());
+    // todo: adapt for new graasp api
     // Graasp action
     // dispatch(postAction({ verb: CLICKED_REWIND, data: { ...appSettings } }));
   };
 
   const onClickForward = () => {
     dispatch(incrementIntervalCount());
+    // todo: adapt for new graasp api
     // Graasp action
     // dispatch(postAction({ verb: CLICKED_FORWARD, data: { ...appSettings } }));
   };

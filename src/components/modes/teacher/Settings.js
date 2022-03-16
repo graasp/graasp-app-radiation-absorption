@@ -59,6 +59,7 @@ class Settings extends Component {
       ...settings,
       ...settingsToChange,
     };
+    // todo: adapt for new graasp api
     // eslint-disable-next-line no-console
     console.log('newSettings: ', newSettings);
   };

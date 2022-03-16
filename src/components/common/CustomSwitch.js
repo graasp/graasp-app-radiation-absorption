@@ -28,6 +28,7 @@ const CustomSwitch = ({
 
   const onSwitchToggle = () => {
     switchDispatch(!switchStatus);
+    // todo: adapt for new graasp api
     // dispatch(
     //   postAction({
     //     verb: switchStatus ? toggleOffAction : toggleOnAction,

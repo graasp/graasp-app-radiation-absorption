@@ -61,6 +61,7 @@ const Tour = () => {
       setTourState((prevState) => ({ ...prevState, run: false }));
       // depending on whether app is viewed/not viewed in standalone mode, record TOUR_TAKEN once tour is seen
       if (!standalone) {
+        // todo: adapt for new graasp api
         // dispatch(postAppInstanceResource({ type: TOUR_TAKEN }));
       } else {
         localStorage.setItem(TOUR_TAKEN, true);
