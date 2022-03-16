@@ -19,19 +19,11 @@ import {
   incrementIntervalCount,
   toggleHighlightAllSideMenuMolecules,
   decrementIntervalCount,
-  postAction,
 } from '../../actions';
 import {
   APPLICATION_INTERVAL,
   CANVAS_MOLECULE_AREA_STATE,
 } from '../../config/constants';
-import {
-  CLICKED_FORWARD,
-  CLICKED_PAUSE,
-  CLICKED_PLAY,
-  CLICKED_RESET,
-  CLICKED_REWIND,
-} from '../../config/verbs';
 
 const useStyles = makeStyles(() => ({
   buttonContainer: {
@@ -63,6 +55,7 @@ const AnimationControls = () => {
   } = useSelector(({ lab }) => lab);
   const applicationInterval = useRef();
 
+  // todo: adapt for new graasp api
   // appSettings dispatched with Graasp actions to show user's selected configuration
   const appSettings = {
     moleculesOnCanvas,
@@ -71,6 +64,8 @@ const AnimationControls = () => {
     showReEmission,
     showElectricFieldVectors,
   };
+  // eslint-disable-next-line no-console
+  console.log(appSettings);
 
   const canvasIncomplete = moleculesOnCanvas.some(
     ({ molecule }) => molecule === '',
@@ -110,32 +105,37 @@ const AnimationControls = () => {
     dispatch(selectMoleculeInSideMenu(null));
     dispatch(toggleHighlightAllSideMenuMolecules(false));
 
+    // todo: adapt for new graasp api
     // dispatch Graasp action
-    dispatch(postAction({ verb: CLICKED_PLAY, data: { ...appSettings } }));
+    // dispatch(postAction({ verb: CLICKED_PLAY, data: { ...appSettings } }));
   };
 
   const onClickPause = () => {
     dispatch(setIsPaused(true));
+    // todo: adapt for new graasp api
     // Graasp action
-    dispatch(postAction({ verb: CLICKED_PAUSE }));
+    // dispatch(postAction({ verb: CLICKED_PAUSE }));
   };
 
   const onClickReset = () => {
     dispatch(resetAllSettings());
+    // todo: adapt for new graasp api
     // Graasp action
-    dispatch(postAction({ verb: CLICKED_RESET }));
+    // dispatch(postAction({ verb: CLICKED_RESET }));
   };
 
   const onClickRewind = () => {
     dispatch(decrementIntervalCount());
+    // todo: adapt for new graasp api
     // Graasp action
-    dispatch(postAction({ verb: CLICKED_REWIND, data: { ...appSettings } }));
+    // dispatch(postAction({ verb: CLICKED_REWIND, data: { ...appSettings } }));
   };
 
   const onClickForward = () => {
     dispatch(incrementIntervalCount());
+    // todo: adapt for new graasp api
     // Graasp action
-    dispatch(postAction({ verb: CLICKED_FORWARD, data: { ...appSettings } }));
+    // dispatch(postAction({ verb: CLICKED_FORWARD, data: { ...appSettings } }));
   };
 
   return (

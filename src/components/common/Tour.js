@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import JoyRide, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
 import TOUR_STEPS from '../../config/tour-steps';
-import { postAppInstanceResource } from '../../actions';
 import { TOUR_TAKEN } from '../../config/appInstanceResourceTypes';
 
 const Tour = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const { standalone } = useSelector(({ context }) => context);
-  const { content: appInstanceResourcesContent } = useSelector(
-    ({ appInstanceResources }) => appInstanceResources,
-  );
+  const appInstanceResourcesContent = [];
   const INITIAL_TOUR_STATE = {
     run: false,
     continuous: true,
@@ -65,7 +61,8 @@ const Tour = () => {
       setTourState((prevState) => ({ ...prevState, run: false }));
       // depending on whether app is viewed/not viewed in standalone mode, record TOUR_TAKEN once tour is seen
       if (!standalone) {
-        dispatch(postAppInstanceResource({ type: TOUR_TAKEN }));
+        // todo: adapt for new graasp api
+        // dispatch(postAppInstanceResource({ type: TOUR_TAKEN }));
       } else {
         localStorage.setItem(TOUR_TAKEN, true);
       }

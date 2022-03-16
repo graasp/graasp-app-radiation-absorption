@@ -12,7 +12,6 @@ import {
 } from '../config/settings';
 import { DEFAULT_VIEW } from '../config/views';
 import isInFrame from '../utils/isInFrame';
-import { patchAppInstance } from './appInstance';
 
 // flags
 const flagGettingContext = flag(FLAG_GETTING_CONTEXT);
@@ -101,8 +100,11 @@ const changeLanguage = (lang) => (dispatch, getState) => {
     ...currentSettings,
     lang,
   };
+  // todo: adapt for new graasp api
+  // eslint-disable-next-line no-console
+  console.log(newSettings);
   // first save the settings in the app instance
-  dispatch(patchAppInstance({ data: newSettings }));
+  // dispatch(patchAppInstance({ data: newSettings }));
 
   // now update the context
   dispatch({

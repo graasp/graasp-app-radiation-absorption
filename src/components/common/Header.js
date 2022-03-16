@@ -12,7 +12,6 @@ import { withTranslation } from 'react-i18next';
 import { ReactComponent as Logo } from '../../resources/logo.svg';
 import { toggleSideMenu } from '../../actions';
 import { DRAWER_WIDTH, LOGO_SIZE } from '../../config/constants';
-import { addQueryParamsToUrl } from '../../utils/url';
 
 const styles = (theme) => ({
   grow: {
@@ -62,50 +61,11 @@ class Header extends Component {
     }).isRequired,
     dispatchToggleSideMenu: PropTypes.func.isRequired,
     showSideMenu: PropTypes.bool.isRequired,
-    appInstanceId: PropTypes.string,
-    spaceId: PropTypes.string,
-  };
-
-  static defaultProps = {
-    appInstanceId: null,
-    spaceId: null,
   };
 
   handleToggleSideMenu = (open) => () => {
     const { dispatchToggleSideMenu } = this.props;
     dispatchToggleSideMenu(open);
-  };
-
-  renderAppInstanceLink = () => {
-    const { appInstanceId, t, classes } = this.props;
-    if (!appInstanceId) {
-      return (
-        <a
-          href={addQueryParamsToUrl({
-            appInstanceId: '6156e70ab253020033364411',
-          })}
-          className={classes.link}
-        >
-          {t('Use Sample App Instance')}
-        </a>
-      );
-    }
-    return <div />;
-  };
-
-  renderSpaceLink = () => {
-    const { spaceId, t, classes } = this.props;
-    if (!spaceId) {
-      return (
-        <a
-          href={addQueryParamsToUrl({ spaceId: '5b56e70ab253020033364411' })}
-          className={classes.link}
-        >
-          {t('Use Sample Space')}
-        </a>
-      );
-    }
-    return <div />;
   };
 
   render() {
@@ -123,9 +83,6 @@ class Header extends Component {
             {t('Radiation Absorption')}
           </Typography>
 
-          {this.renderAppInstanceLink()}
-          {this.renderSpaceLink()}
-
           {!showSideMenu && (
             <IconButton
               color="inherit"
@@ -142,10 +99,8 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = ({ layout, context }) => ({
+const mapStateToProps = ({ layout }) => ({
   showSideMenu: layout.showSideMenu,
-  appInstanceId: context.appInstanceId,
-  spaceId: context.spaceId,
 });
 
 const mapDispatchToProps = {

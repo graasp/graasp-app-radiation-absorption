@@ -10,8 +10,6 @@ describe('<App />', () => {
     },
     t: jest.fn(),
     dispatchGetContext: jest.fn(),
-    dispatchGetAppInstance: jest.fn(),
-    dispatchGetAppInstanceResources: jest.fn(),
     standalone: true,
     ready: true,
   };
