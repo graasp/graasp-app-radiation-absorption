@@ -1,55 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
 import JoyRide, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
-import TOUR_STEPS from '../../config/tour-steps';
 import { TOUR_TAKEN } from '../../config/appInstanceResourceTypes';
 
-const Tour = () => {
+const styles = {
+  tooltipContainer: {
+    textAlign: 'left',
+  },
+  options: {
+    zIndex: 2000,
+  },
+  buttonBack: {
+    marginRight: 10,
+    color: '#5050d2',
+    fontSize: '0.9em',
+  },
+  buttonNext: {
+    backgroundColor: '#5050d2',
+    fontSize: '0.9em',
+  },
+};
+
+const Tour = ({ tourState, setTourState }) => {
   const { t } = useTranslation();
-  const { standalone } = useSelector(({ context }) => context);
-  const appInstanceResourcesContent = [];
-  const INITIAL_TOUR_STATE = {
-    run: false,
-    continuous: true,
-    loading: false,
-    stepIndex: 0,
-    steps: TOUR_STEPS,
-  };
-  const [tourState, setTourState] = useState(INITIAL_TOUR_STATE);
   const { run, continuous, loading, stepIndex, steps } = tourState;
 
   useEffect(() => {
-    // if (1) app is not viewed in 'standalone' mode (e.g. viewed in Graasp ILS)
-    // and (2) there is no appInstanceResource with TOUR_TAKEN
-    // then start guided tour
-    if (!standalone) {
-      if (
-        !appInstanceResourcesContent.find(
-          (resource) => resource.type === TOUR_TAKEN,
-        )
-      ) {
-        setTourState((prevState) => ({ ...prevState, run: true }));
-      }
-    }
-    // if (1) app is viewed in 'standalone' mode (e.g. via direct link)
-    // and (2) there is no localStorage item with TOUR_TAKEN=true
-    // then start guided tour
-    else if (!localStorage.getItem(TOUR_TAKEN)) {
+    if (!localStorage.getItem(TOUR_TAKEN)) {
       setTourState((prevState) => ({ ...prevState, run: true }));
     }
   }, []);
-
-  const startTour = () => {
-    setTourState((prevState) => ({
-      ...prevState,
-      stepIndex: 0,
-      run: true,
-      loading: false,
-    }));
-  };
 
   const handleTourNavigation = (joyrideData) => {
     const { action, index, type, status } = joyrideData;
@@ -59,13 +40,7 @@ const Tour = () => {
       status === STATUS.FINISHED
     ) {
       setTourState((prevState) => ({ ...prevState, run: false }));
-      // depending on whether app is viewed/not viewed in standalone mode, record TOUR_TAKEN once tour is seen
-      if (!standalone) {
-        // todo: adapt for new graasp api
-        // dispatch(postAppInstanceResource({ type: TOUR_TAKEN }));
-      } else {
-        localStorage.setItem(TOUR_TAKEN, true);
-      }
+      localStorage.setItem(TOUR_TAKEN, true);
     } else if (type === EVENTS.STEP_AFTER || type === EVENTS.TARGET_NOT_FOUND) {
       setTourState((prevState) => ({
         ...prevState,
@@ -75,45 +50,28 @@ const Tour = () => {
   };
 
   return (
-    <>
-      <IconButton onClick={startTour}>
-        <InfoIcon color="primary" fontSize="small" />
-      </IconButton>
-
-      <JoyRide
-        run={run}
-        continuous={continuous}
-        loading={loading}
-        stepIndex={stepIndex}
-        steps={steps}
-        callback={handleTourNavigation}
-        showSkipButton
-        styles={{
-          tooltipContainer: {
-            textAlign: 'left',
-          },
-          options: {
-            zIndex: 2000,
-          },
-          buttonBack: {
-            marginRight: 10,
-            color: '#5050d2',
-            fontSize: '0.9em',
-          },
-          buttonNext: {
-            backgroundColor: '#5050d2',
-            fontSize: '0.9em',
-          },
-        }}
-        locale={{
-          next: t('Next'),
-          back: t('Back'),
-          skip: t('Skip'),
-          last: t('End tour'),
-        }}
-      />
-    </>
+    <JoyRide
+      run={run}
+      continuous={continuous}
+      loading={loading}
+      stepIndex={stepIndex}
+      steps={steps}
+      callback={handleTourNavigation}
+      showSkipButton
+      styles={styles}
+      locale={{
+        next: t('Next'),
+        back: t('Back'),
+        skip: t('Skip'),
+        last: t('End tour'),
+      }}
+    />
   );
+};
+
+Tour.propTypes = {
+  tourState: PropTypes.shape().isRequired,
+  setTourState: PropTypes.func.isRequired,
 };
 
 export default Tour;

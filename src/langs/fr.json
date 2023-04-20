@@ -3,7 +3,6 @@
     "This is the student view. Switch to the teacher view by clicking on the URL below.": "Ceci est la vue des étudiants. Passez à la vue enseignant en cliquant sur l’URL ci-dessous.",
     "This is the teacher view. Switch to the student view by clicking on the URL below.": "Ceci est la vue de l'enseignant. Passez à la vue des étudiants en cliquant sur l’URL ci-dessous.",
     "Welcome to the Graasp App Starter Lab Kit": "Bienvenue dans le kit de démarrage de l'application Graasp",
-    "Observe": "Observe",
     "Language": "Langue",
     "Show Header": "Montrer l'en-tête",
     "Settings": "Paramètres",
@@ -33,6 +32,7 @@
     "Back": "Précédent",
     "Skip": "Passer",
     "End tour": "Terminer la visite",
+    "Start tour": "Commencer la visite",
     "Select a molecule from the side menu": "Sélectionner une molécule dans le menu latéral",
     "Add the selected molecule to an empty area": "Ajouter la molécule sélectionnée dans un emplacement vide",
     "Once all areas contain a molecule, click the play button to start the simulation": "Une fois que tous les emplacements sont remplis, appuyez sur le bouton Simuler pour démarrer la simulation",
@@ -42,6 +42,8 @@
     "O)": "O)",
     "(O": "(O",
     "(CH": "(CH",
-    "(H": "(H"
+    "(H": "(H",
+    "Open side menu": "",
+    "Close side menu": ""
   }
 }

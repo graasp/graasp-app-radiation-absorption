@@ -59,12 +59,12 @@ const SideMenuMoleculeAndLabelContainer = ({
 SideMenuMoleculeAndLabelContainer.propTypes = {
   molecule: PropTypes.element.isRequired,
   moleculeLabel: PropTypes.string.isRequired,
-  moleculeFormula: PropTypes.string,
+  moleculeFormula: PropTypes.element,
   isSelected: PropTypes.bool.isRequired,
 };
 
 SideMenuMoleculeAndLabelContainer.defaultProps = {
-  moleculeFormula: '',
+  moleculeFormula: null,
 };
 
 export default SideMenuMoleculeAndLabelContainer;
