@@ -19,6 +19,7 @@ export class App extends Component {
     mode: PropTypes.string,
     view: PropTypes.string,
     loading: PropTypes.bool,
+    dispatchGetContext: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -27,6 +28,11 @@ export class App extends Component {
     view: DEFAULT_VIEW,
     loading: true,
   };
+
+  constructor(props) {
+    super();
+    props.dispatchGetContext();
+  }
 
   componentDidMount() {
     const { lang } = this.props;
