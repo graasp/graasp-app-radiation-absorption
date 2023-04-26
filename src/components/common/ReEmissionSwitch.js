@@ -56,19 +56,8 @@ const ReEmissionSwitch = () => {
   const intervalsToReachMoleculeCenter = useSelector(
     ({ layout }) => layout.intervalsToReachMoleculeCenter,
   );
-  // const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
 
   const onSwitchToggle = () => {
-    // todo: adapt for new graasp api
-    // first, dispatch Graasp action
-    // dispatch(
-    //   postAction({
-    //     verb: showReEmission ? TOGGLED_RE_EMISSION_OFF : TOGGLED_RE_EMISSION_ON,
-    //     data: { applicationState },
-    //   }),
-    // );
-
-    // toggle showReEmission on/off
     dispatch(toggleShowReEmission(!showReEmission));
 
     // if the switch is toggled on *before* original radiation lines have reached the molecule center...

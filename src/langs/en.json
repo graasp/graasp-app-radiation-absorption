@@ -1,6 +1,5 @@
 {
   "translations": {
-    "Observe": "Observe",
     "Language": "Language",
     "Show Header": "Show Header",
     "Settings": "Settings",
@@ -30,6 +29,7 @@
     "Back": "Back",
     "Skip": "Skip",
     "End tour": "End tour",
+    "Start tour": "Start tour",
     "Select a molecule from the side menu": "Select a molecule from the side menu",
     "Add the selected molecule to an empty area": "Add the selected molecule to an empty area",
     "Once all areas contain a molecule, click the play button to start the simulation": "Once all areas contain a molecule, click the play button to start the simulation",
@@ -39,6 +39,8 @@
     "O)": "O)",
     "(O": "(O",
     "(CH": "(CH",
-    "(H": "(H"
+    "(H": "(H",
+    "Open side menu": "Open side menu",
+    "Close side menu": "Close side menu"
   }
 }

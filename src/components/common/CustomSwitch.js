@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -19,22 +20,15 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomSwitch = ({
   switchStatus,
-  switchDispatch,
+  switchAction,
   switchLabel,
   disabled,
 }) => {
   const classes = useStyles();
-  // const applicationState = isPaused ? PAUSED_STRING : PLAYING_STRING;
+  const dispatch = useDispatch();
 
   const onSwitchToggle = () => {
-    switchDispatch(!switchStatus);
-    // todo: adapt for new graasp api
-    // dispatch(
-    //   postAction({
-    //     verb: switchStatus ? toggleOffAction : toggleOnAction,
-    //     data: { applicationState },
-    //   }),
-    // );
+    dispatch(switchAction(!switchStatus));
   };
 
   const Control = (
@@ -65,7 +59,7 @@ const CustomSwitch = ({
 
 CustomSwitch.propTypes = {
   switchStatus: PropTypes.bool.isRequired,
-  switchDispatch: PropTypes.func.isRequired,
+  switchAction: PropTypes.func.isRequired,
   switchLabel: PropTypes.string.isRequired,
   disabled: PropTypes.bool.isRequired,
 };
