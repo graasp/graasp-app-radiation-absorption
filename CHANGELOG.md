@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/graasp/graasp-app-radiation-absorption/compare/v0.1.5...v0.2.0) (2023-04-27)
+
+
+### Features
+
+* remove Observe header ([0f05321](https://github.com/graasp/graasp-app-radiation-absorption/commit/0f0532112e5c25a4f0e31994396ff4b35c3a89b1)), closes [#73](https://github.com/graasp/graasp-app-radiation-absorption/issues/73)
+
+
+### Bug Fixes
+
+* add missing French translations ([e6316cd](https://github.com/graasp/graasp-app-radiation-absorption/commit/e6316cdc3d569b55ca5bf80097e188654ac14f37))
+* fix translation bug ([dbc5621](https://github.com/graasp/graasp-app-radiation-absorption/commit/dbc562118e1cdaa5361c8d3b1f42e60ee55d13c5)), closes [#76](https://github.com/graasp/graasp-app-radiation-absorption/issues/76)
+
 ### [0.1.5](https://github.com/graasp/graasp-app-radiation-absorption/compare/v0.1.4...v0.1.5) (2021-06-23)
 
 ### Features
