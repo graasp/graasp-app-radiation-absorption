@@ -395,7 +395,8 @@ export const SPECTRUMS = {
 };
 
 /* ------CONSTANTS TO STYLE RADIATION LINES------ */
-export const RADIATION_LINE_STROKE_COLOR = 'black';
+export const INFRARED_RADIATION_COLOR = 'red';
+export const VISIBLE_LIGHT_COLOR = 'yellow';
 export const RADIATION_LINE_STROKE_WIDTH = 1.5;
 // RE_EMISSION_LINE_COLOR is a slightly lighter shade of black
 export const RE_EMISSION_LINE_STROKE_COLOR = '#282828';

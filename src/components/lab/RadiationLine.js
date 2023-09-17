@@ -3,13 +3,14 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Group, Line } from 'react-konva';
 import {
-  RADIATION_LINE_STROKE_COLOR,
+  INFRARED_RADIATION_COLOR,
   RADIATION_LINE_STROKE_WIDTH,
   GREENHOUSE_GASES,
   INFRARED_RADIATION_PERIOD,
   RADIATION_LINE_CURVE_AMPLITUDE,
   SPECTRUMS,
   VISIBLE_LIGHT_PERIOD,
+  VISIBLE_LIGHT_COLOR,
 } from '../../config/constants';
 import generateSineCurve from '../../utils/generateSineCurve';
 import ReEmittedLines from './ReEmittedLines';
@@ -53,7 +54,11 @@ const RadiationLine = ({ x, lineIndex }) => {
       <Line
         x={x}
         y={radiationLineStartingPoint}
-        stroke={RADIATION_LINE_STROKE_COLOR}
+        stroke={
+          spectrum === SPECTRUMS.INFRARED
+            ? INFRARED_RADIATION_COLOR
+            : VISIBLE_LIGHT_COLOR
+        }
         strokeWidth={RADIATION_LINE_STROKE_WIDTH}
         points={generateSineCurve(
           intervalCount,
