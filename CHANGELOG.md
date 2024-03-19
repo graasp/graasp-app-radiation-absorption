@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.1](https://github.com/graasp/graasp-app-radiation-absorption/compare/v0.4.0...v0.4.1) (2024-03-19)
+
+
+### chore
+
+* release 0.4.1 ([6f3bb0b](https://github.com/graasp/graasp-app-radiation-absorption/commit/6f3bb0bea8df1643c391e92bbd602dbc3f732f85))
+
+
+### Bug Fixes
+
+* fix deploy workflow ([b045f9e](https://github.com/graasp/graasp-app-radiation-absorption/commit/b045f9e65c25b355a71914e813b4e1c0fe1aae18))
+
 ## [0.4.0](https://github.com/graasp/graasp-app-radiation-absorption/compare/v0.3.0...v0.4.0) (2024-03-19)
 
 
