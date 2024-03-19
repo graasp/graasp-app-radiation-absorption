@@ -99,7 +99,12 @@ const CanvasMoleculeArea = ({
 
   const { radius, fill, dash } = styleMoleculeArea(moleculeStatus);
   return (
-    <Group onMouseEnter={onEnter} onMouseLeave={onLeave} onClick={onClick}>
+    <Group
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+      onClick={onClick}
+      onTap={onClick}
+    >
       <Circle
         x={x}
         y={y}

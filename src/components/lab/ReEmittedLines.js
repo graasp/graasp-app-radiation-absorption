@@ -17,10 +17,8 @@ const ReEmittedLines = ({ x, y }) => {
   const { height } = useSelector(({ layout }) => layout.lab.stageDimensions);
 
   return (
-    <Group>
+    <Group x={x} y={y}>
       <Line
-        x={x}
-        y={y}
         stroke={RE_EMISSION_LINE_STROKE_COLOR}
         strokeWidth={RE_EMISSION_LINE_STROKE_WIDTH}
         points={generateSineCurve(
@@ -32,8 +30,6 @@ const ReEmittedLines = ({ x, y }) => {
         dash={RE_EMISSION_LINE_DASH}
       />
       <Line
-        x={x}
-        y={y}
         stroke={RE_EMISSION_LINE_STROKE_COLOR}
         strokeWidth={RE_EMISSION_LINE_STROKE_WIDTH}
         points={generateSineCurve(

@@ -49,7 +49,7 @@ export const MOLECULE_AREA_STATE = {
 export const INFRARED_RADIATION_COLOR = 'red';
 export const VISIBLE_LIGHT_COLOR = 'yellow';
 export const RADIATION_LINE_STROKE_WIDTH = 1.5;
-export const RE_EMISSION_LINE_STROKE_COLOR = '#282828';
+export const RE_EMISSION_LINE_STROKE_COLOR = '#ff6666';
 export const RE_EMISSION_LINE_STROKE_WIDTH = 1.5;
 export const RE_EMISSION_LINE_DASH = [10, 5];
 

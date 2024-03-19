@@ -47,7 +47,12 @@ const ClearButton = ({ x, y, containerIndex }) => {
   };
 
   return (
-    <Group onClick={handleClear} x={x} y={y - moleculeAreaRadius}>
+    <Group
+      onClick={handleClear}
+      onTap={handleClear}
+      x={x}
+      y={y - moleculeAreaRadius}
+    >
       <Circle fill={CLEAR_BUTTON_FILL} radius={clearButtonRadius} />
       <ClearButtonLine points={[0, 0, lineLength, lineLength]} />
       <ClearButtonLine points={[0, 0, -lineLength, lineLength]} />
