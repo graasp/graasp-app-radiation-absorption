@@ -1,7 +1,7 @@
 import {
   INITIAL_INTERVALS_TO_REACH_MOLECULE_CENTER,
   INITIAL_MOLECULE_CENTER_Y_FROM_BOTTOM_OF_CANVAS,
-} from '../config/constants';
+} from '../constants/constants';
 import {
   TOGGLE_SETTINGS,
   TOGGLE_LOADING_SCREEN,

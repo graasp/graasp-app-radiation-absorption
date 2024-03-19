@@ -3,28 +3,24 @@ import SideMenuMoleculeContainer from './SideMenuMoleculeContainer';
 import SideMenuOxygen from './atoms/SideMenuOxygen';
 import SideMenuHydrogen from './atoms/SideMenuHydrogen';
 import SideMenuBondContainer from '../SideMenuBondContainer';
-import {
-  HYDROGEN,
-  NEGATIVE_CHARGE,
-  POSITIVE_CHARGE,
-  WATER_MOLECULE_ID,
-} from '../../../../config/constants';
+import { NEGATIVE, POSITIVE, WATER_ID } from '../../../../constants/strings';
+import { HYDROGEN } from '../../../../constants/canvas-molecules/common';
 
 const SideMenuWater = () => {
   return (
-    <SideMenuMoleculeContainer moleculeId={WATER_MOLECULE_ID}>
+    <SideMenuMoleculeContainer moleculeId={WATER_ID}>
       <SideMenuHydrogen
-        charge={POSITIVE_CHARGE}
-        customPositioningStyles={{ marginRight: '-4px' }}
-        atomColor={HYDROGEN.atomColor.STANDARD}
+        charge={POSITIVE}
+        customStyles={{ marginRight: '-4px' }}
+        color={HYDROGEN.color.STANDARD}
       />
       <SideMenuBondContainer numberOfBonds={1} rotation={30} />
-      <SideMenuOxygen charge={NEGATIVE_CHARGE} />
+      <SideMenuOxygen charge={NEGATIVE} />
       <SideMenuBondContainer numberOfBonds={1} rotation={-30} />
       <SideMenuHydrogen
-        charge={POSITIVE_CHARGE}
-        customPositioningStyles={{ marginLeft: '-4px' }}
-        atomColor={HYDROGEN.atomColor.STANDARD}
+        charge={POSITIVE}
+        customStyles={{ marginLeft: '-4px' }}
+        color={HYDROGEN.color.STANDARD}
       />
     </SideMenuMoleculeContainer>
   );

@@ -5,7 +5,7 @@ import {
   CANVAS_BOND_COLOR,
   DOUBLE_BOND_X_OFFSET,
   TRIPLE_BOND_X_OFFSET,
-} from '../../../../config/constants';
+} from '../../../../constants/constants';
 
 const CanvasBondContainer = ({ from, to, numberOfBonds }) => {
   const bondXOrigin = from.x;

@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { toggleSettings } from '../../../actions';
 import Settings from './Settings';
 import Main from '../../common/Main';
-import { MAXIMUM_Z_INDEX } from '../../../config/constants';
+import { MAXIMUM_Z_INDEX } from '../../../constants/constants';
 import Lab from '../../lab/Lab';
 
 const styles = (theme) => ({

@@ -1,25 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SideMenuAtom from './SideMenuAtom';
-import { ARGON } from '../../../../../config/constants';
+import { ARGON } from '../../../../../constants/canvas-molecules/common';
 
-const SideMenuArgon = ({ customPositioningStyles }) => {
+const SideMenuArgon = ({ customStyles }) => {
   return (
     <SideMenuAtom
-      atomColor={ARGON.atomColor}
-      atomSize={ARGON.size}
-      chargeSymbolColor={ARGON.chargeSymbolColor}
-      customPositioningStyles={customPositioningStyles}
+      color={ARGON.color}
+      size={ARGON.size}
+      chargeColor={ARGON.chargeColor}
+      customStyles={customStyles}
     />
   );
 };
 
 SideMenuArgon.propTypes = {
-  customPositioningStyles: PropTypes.shape(),
+  customStyles: PropTypes.shape(),
 };
 
 SideMenuArgon.defaultProps = {
-  customPositioningStyles: {},
+  customStyles: {},
 };
 
 export default SideMenuArgon;

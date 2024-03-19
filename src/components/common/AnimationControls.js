@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { incrementIntervalCount } from '../../actions';
-import { APPLICATION_INTERVAL } from '../../config/constants';
+import { APPLICATION_INTERVAL } from '../../constants/constants';
 import PlayButton from './animation-controls/PlayButton';
 import PauseButton from './animation-controls/PauseButton';
 import RewindButton from './animation-controls/RewindButton';

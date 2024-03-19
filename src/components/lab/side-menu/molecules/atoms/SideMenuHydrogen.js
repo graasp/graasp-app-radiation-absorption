@@ -1,28 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SideMenuAtom from './SideMenuAtom';
-import { HYDROGEN } from '../../../../../config/constants';
+import { HYDROGEN } from '../../../../../constants/canvas-molecules/common';
 
-const SideMenuHydrogen = ({ customPositioningStyles, charge, atomColor }) => {
+const SideMenuHydrogen = ({ customStyles, charge, color }) => {
   return (
     <SideMenuAtom
-      atomColor={atomColor}
-      atomSize={HYDROGEN.size}
-      chargeSymbolColor={HYDROGEN.chargeSymbolColor}
-      customPositioningStyles={customPositioningStyles}
+      color={color}
+      size={HYDROGEN.size}
+      chargeColor={HYDROGEN.chargeColor}
+      customStyles={customStyles}
       charge={charge}
     />
   );
 };
 
 SideMenuHydrogen.propTypes = {
-  customPositioningStyles: PropTypes.shape(),
+  customStyles: PropTypes.shape(),
   charge: PropTypes.string,
-  atomColor: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 SideMenuHydrogen.defaultProps = {
-  customPositioningStyles: {},
+  customStyles: {},
   charge: '',
 };
 

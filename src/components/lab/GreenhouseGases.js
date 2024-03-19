@@ -9,12 +9,12 @@ import SideMenuMethane from './side-menu/molecules/SideMenuMethane';
 import SideMenuWater from './side-menu/molecules/SideMenuWater';
 import SideMenuMoleculeAndLabelContainer from './side-menu/molecules/SideMenuMoleculeAndLabelContainer';
 import {
-  WATER_MOLECULE_ID,
-  CARBON_DIOXIDE_MOLECULE_ID,
-  OZONE_MOLECULE_ID,
-  NITROUS_OXIDE_MOLECULE_ID,
-  METHANE_MOLECULE_ID,
-} from '../../config/constants';
+  WATER_ID,
+  CARBON_DIOXIDE_ID,
+  OZONE_ID,
+  NITROUS_OXIDE_ID,
+  METHANE_ID,
+} from '../../constants/strings';
 import CarbonDioxideFormula from './canvas/formulas/CarbonDioxideFormula';
 import WaterFormula from './canvas/formulas/WaterFormula';
 import OzoneFormula from './canvas/formulas/OzoneFormula';
@@ -23,11 +23,8 @@ import MethaneFormula from './canvas/formulas/MethaneFormula';
 
 const GreenhouseGases = () => {
   const { t } = useTranslation();
-  const selectedMoleculeInSideMenu = useSelector(
-    ({ lab }) => lab.selectedMoleculeInSideMenu,
-  );
-  const highlightAllSideMenuMolecules = useSelector(
-    ({ lab }) => lab.highlightAllSideMenuMolecules,
+  const { selectedMolecule, highlightAllMolecules } = useSelector(
+    ({ lab }) => lab,
   );
 
   return (
@@ -36,46 +33,35 @@ const GreenhouseGases = () => {
         molecule={<SideMenuWater />}
         moleculeLabel={t('Water')}
         moleculeFormula={<WaterFormula />}
-        isSelected={
-          selectedMoleculeInSideMenu === WATER_MOLECULE_ID ||
-          highlightAllSideMenuMolecules
-        }
+        isSelected={selectedMolecule === WATER_ID || highlightAllMolecules}
       />
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuCarbonDioxide />}
         moleculeLabel={t('Carbon Dioxide')}
         moleculeFormula={<CarbonDioxideFormula />}
         isSelected={
-          selectedMoleculeInSideMenu === CARBON_DIOXIDE_MOLECULE_ID ||
-          highlightAllSideMenuMolecules
+          selectedMolecule === CARBON_DIOXIDE_ID || highlightAllMolecules
         }
       />
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuOzone />}
         moleculeLabel={t('Ozone')}
         moleculeFormula={<OzoneFormula />}
-        isSelected={
-          selectedMoleculeInSideMenu === OZONE_MOLECULE_ID ||
-          highlightAllSideMenuMolecules
-        }
+        isSelected={selectedMolecule === OZONE_ID || highlightAllMolecules}
       />
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuNitrousOxide />}
         moleculeLabel={t('Nitrous Oxide')}
         moleculeFormula={<NitrousOxideFormula />}
         isSelected={
-          selectedMoleculeInSideMenu === NITROUS_OXIDE_MOLECULE_ID ||
-          highlightAllSideMenuMolecules
+          selectedMolecule === NITROUS_OXIDE_ID || highlightAllMolecules
         }
       />
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuMethane />}
         moleculeLabel={t('Methane')}
         moleculeFormula={<MethaneFormula />}
-        isSelected={
-          selectedMoleculeInSideMenu === METHANE_MOLECULE_ID ||
-          highlightAllSideMenuMolecules
-        }
+        isSelected={selectedMolecule === METHANE_ID || highlightAllMolecules}
       />
     </GasesContainer>
   );

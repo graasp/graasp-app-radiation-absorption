@@ -1,22 +1,21 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Group } from 'react-konva';
 import CanvasCarbon from './atoms/CanvasCarbon';
 import CanvasHydrogen from './atoms/CanvasHydrogen';
-import {
-  HYDROGEN,
-  NEGATIVE_CHARGE,
-  POSITIVE_CHARGE,
-  CANVAS_METHANE,
-} from '../../../../config/constants';
+import { NEGATIVE, POSITIVE } from '../../../../constants/strings';
 import CanvasBondContainer from './CanvasBondContainer';
 import { determineCoordinates } from '../../../../utils/utils';
+import { CANVAS_METHANE } from '../../../../constants/canvas-molecules';
+import { HYDROGEN } from '../../../../constants/canvas-molecules/common';
 
 const CanvasMethane = ({
   moleculeCenter,
   shouldOscillate,
   oscillationFactor,
 }) => {
+  const { height } = useSelector(({ layout }) => layout.lab.stageDimensions);
   const {
     CARBON,
     TOP_LEFT_HYDROGEN,
@@ -28,38 +27,41 @@ const CanvasMethane = ({
   const carbon = determineCoordinates(
     moleculeCenter,
     CARBON,
+    height,
     shouldOscillate,
     oscillationFactor,
   );
   const topLeftHydrogen = determineCoordinates(
     moleculeCenter,
     TOP_LEFT_HYDROGEN,
+    height,
     shouldOscillate,
     oscillationFactor,
   );
   const topRightHydrogen = determineCoordinates(
     moleculeCenter,
     TOP_RIGHT_HYDROGEN,
+    height,
     shouldOscillate,
     oscillationFactor,
   );
   const bottomRightHydrogen = determineCoordinates(
     moleculeCenter,
     BOTTOM_RIGHT_HYDROGEN,
+    height,
     shouldOscillate,
     oscillationFactor,
   );
   const bottomLeftHydrogen = determineCoordinates(
     moleculeCenter,
     BOTTOM_LEFT_HYDROGEN,
+    height,
     shouldOscillate,
     oscillationFactor,
   );
 
   return (
     <Group>
-      {/* molecule bonds */}
-      {/* note that these CanvasBondContainer components need to be at the top here so that they fall behind atoms on the canvas */}
       <CanvasBondContainer
         from={topLeftHydrogen}
         to={carbon}
@@ -80,27 +82,26 @@ const CanvasMethane = ({
         to={carbon}
         numberOfBonds={1}
       />
-      {/* molecule atoms */}
-      <CanvasCarbon coordinates={carbon} charge={NEGATIVE_CHARGE} />
+      <CanvasCarbon coordinates={carbon} charge={NEGATIVE} />
       <CanvasHydrogen
         coordinates={topLeftHydrogen}
-        charge={POSITIVE_CHARGE}
-        atomColor={HYDROGEN.atomColor.DARKER}
+        charge={POSITIVE}
+        color={HYDROGEN.color.DARKER}
       />
       <CanvasHydrogen
         coordinates={topRightHydrogen}
-        charge={POSITIVE_CHARGE}
-        atomColor={HYDROGEN.atomColor.STANDARD}
+        charge={POSITIVE}
+        color={HYDROGEN.color.STANDARD}
       />
       <CanvasHydrogen
         coordinates={bottomRightHydrogen}
-        charge={POSITIVE_CHARGE}
-        atomColor={HYDROGEN.atomColor.STANDARD}
+        charge={POSITIVE}
+        color={HYDROGEN.color.STANDARD}
       />
       <CanvasHydrogen
         coordinates={bottomLeftHydrogen}
-        charge={POSITIVE_CHARGE}
-        atomColor={HYDROGEN.atomColor.LIGHTER}
+        charge={POSITIVE}
+        color={HYDROGEN.color.LIGHTER}
       />
     </Group>
   );

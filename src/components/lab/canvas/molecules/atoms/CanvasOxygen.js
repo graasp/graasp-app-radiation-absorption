@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CanvasAtom from './CanvasAtom';
-import { OXYGEN } from '../../../../../config/constants';
+import { OXYGEN } from '../../../../../constants/canvas-molecules/common';
 
 const CanvasOxygen = ({ coordinates, charge }) => {
   const { x, y } = coordinates;
   return (
     <CanvasAtom
-      atomColor={OXYGEN.atomColor}
-      atomSize={OXYGEN.size}
-      chargeSymbolColor={OXYGEN.chargeSymbolColor}
+      color={OXYGEN.color}
+      size={OXYGEN.size}
+      chargeColor={OXYGEN.chargeColor}
       x={x}
       y={y}
       charge={charge}

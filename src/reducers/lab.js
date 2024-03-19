@@ -1,50 +1,41 @@
 import {
-  SELECT_MOLECULE_SIDE_MENU,
+  SELECT_MOLECULE,
   DISPLAY_MOLECULE,
   TOGGLE_SPECTRUM,
   SET_IS_PAUSED,
-  SET_MOLECULE_AREA_STATUS,
+  SET_MOLECULE_AREA,
   CLEAR_MOLECULE_AREA,
   RESET_ALL_MOLECULE_AREAS,
   TOGGLE_SHOW_ELECTRIC_FIELD_VECTOR,
-  TOGGLE_SHOW_ATOMS_CHARGES,
+  TOGGLE_SHOW_CHARGES,
   TOGGLE_SHOW_RE_EMISSION,
-  HIGHLIGHT_ALL_SIDE_MENU_MOLECULES,
+  TOGGLE_HIGHLIGHT_ALL,
   RESET_ALL_SETTINGS,
   INCREMENT_INTERVAL_COUNT,
   DECREMENT_INTERVAL_COUNT,
   RESET_INTERVAL_COUNT,
   BEGIN_RE_EMISSION_INTERVAL_COUNT,
 } from '../types';
-import { CANVAS_MOLECULE_AREA_STATE, SPECTRUMS } from '../config/constants';
+import { MOLECULE_AREA_STATE } from '../constants/constants';
+import { SPECTRUMS } from '../constants/strings';
+
+const { EMPTY, FULL } = MOLECULE_AREA_STATE;
 
 const INITIAL_STATE = {
   isPaused: true,
   intervalCount: 0,
-  selectedMoleculeInSideMenu: null,
+  selectedMolecule: null,
   spectrum: SPECTRUMS.INFRARED,
   showElectricFieldVectors: false,
-  showAtomsCharges: false,
+  showCharges: false,
   showReEmission: false,
-  highlightAllSideMenuMolecules: false,
+  highlightAllMolecules: false,
   beginReEmissionIntervalCount: 0,
   moleculesOnCanvas: [
-    {
-      molecule: '',
-      moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
-    },
-    {
-      molecule: '',
-      moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
-    },
-    {
-      molecule: '',
-      moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
-    },
-    {
-      molecule: '',
-      moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
-    },
+    { molecule: '', moleculeAreaStatus: EMPTY },
+    { molecule: '', moleculeAreaStatus: EMPTY },
+    { molecule: '', moleculeAreaStatus: EMPTY },
+    { molecule: '', moleculeAreaStatus: EMPTY },
   ],
 };
 
@@ -52,69 +43,54 @@ export default (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
     case SET_IS_PAUSED:
       return { ...state, isPaused: payload };
-    case SELECT_MOLECULE_SIDE_MENU:
-      return {
-        ...state,
-        selectedMoleculeInSideMenu: payload,
-      };
+    case SELECT_MOLECULE:
+      return { ...state, selectedMolecule: payload };
     case TOGGLE_SPECTRUM:
-      return {
-        ...state,
-        spectrum: payload,
-      };
+      return { ...state, spectrum: payload };
     case TOGGLE_SHOW_ELECTRIC_FIELD_VECTOR:
-      return {
-        ...state,
-        showElectricFieldVectors: payload,
-      };
-    case TOGGLE_SHOW_ATOMS_CHARGES:
-      return {
-        ...state,
-        showAtomsCharges: payload,
-      };
+      return { ...state, showElectricFieldVectors: payload };
+    case TOGGLE_SHOW_CHARGES:
+      return { ...state, showCharges: payload };
     case TOGGLE_SHOW_RE_EMISSION:
-      return {
-        ...state,
-        showReEmission: payload,
-      };
-    case HIGHLIGHT_ALL_SIDE_MENU_MOLECULES:
-      return { ...state, highlightAllSideMenuMolecules: payload };
-    case SET_MOLECULE_AREA_STATUS:
+      return { ...state, showReEmission: payload };
+    case TOGGLE_HIGHLIGHT_ALL:
+      return { ...state, highlightAllMolecules: payload };
+    case SET_MOLECULE_AREA:
       return {
         ...state,
         moleculesOnCanvas: [
-          ...state.moleculesOnCanvas.slice(0, payload.areaIndex),
+          ...state.moleculesOnCanvas.slice(0, payload.index),
           {
-            ...state.moleculesOnCanvas[payload.areaIndex],
-            moleculeAreaStatus: payload.newStatus,
+            ...state.moleculesOnCanvas[payload.index],
+            moleculeAreaStatus: payload.status,
           },
-          ...state.moleculesOnCanvas.slice(payload.areaIndex + 1),
+          ...state.moleculesOnCanvas.slice(payload.index + 1),
         ],
       };
     case DISPLAY_MOLECULE:
       return {
         ...state,
         moleculesOnCanvas: [
-          ...state.moleculesOnCanvas.slice(0, payload.areaIndex),
+          ...state.moleculesOnCanvas.slice(0, payload.index),
           {
-            ...state.moleculesOnCanvas[payload.areaIndex],
+            ...state.moleculesOnCanvas[payload.index],
             molecule: payload.moleculeId,
-            moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
+            moleculeAreaStatus: FULL,
           },
-          ...state.moleculesOnCanvas.slice(payload.areaIndex + 1),
+          ...state.moleculesOnCanvas.slice(payload.index + 1),
         ],
       };
     case CLEAR_MOLECULE_AREA:
       return {
         ...state,
         moleculesOnCanvas: [
-          ...state.moleculesOnCanvas.slice(0, payload.areaIndex),
+          ...state.moleculesOnCanvas.slice(0, payload.index),
           {
-            ...state.moleculesOnCanvas[payload.areaIndex],
+            ...state.moleculesOnCanvas[payload.index],
             molecule: '',
-            moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
+            moleculeAreaStatus: EMPTY,
           },
-          ...state.moleculesOnCanvas.slice(payload.areaIndex + 1),
+          ...state.moleculesOnCanvas.slice(payload.index + 1),
         ],
       };
 
@@ -122,22 +98,10 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         moleculesOnCanvas: [
-          {
-            molecule: '',
-            moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
-          },
-          {
-            molecule: '',
-            moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
-          },
-          {
-            molecule: '',
-            moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
-          },
-          {
-            molecule: '',
-            moleculeAreaStatus: CANVAS_MOLECULE_AREA_STATE.EMPTY,
-          },
+          { molecule: '', moleculeAreaStatus: EMPTY },
+          { molecule: '', moleculeAreaStatus: EMPTY },
+          { molecule: '', moleculeAreaStatus: EMPTY },
+          { molecule: '', moleculeAreaStatus: EMPTY },
         ],
       };
     case INCREMENT_INTERVAL_COUNT:
@@ -145,10 +109,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case DECREMENT_INTERVAL_COUNT:
       return { ...state, intervalCount: state.intervalCount - 1 };
     case RESET_INTERVAL_COUNT:
-      return {
-        ...state,
-        intervalCount: 0,
-      };
+      return { ...state, intervalCount: 0 };
     case BEGIN_RE_EMISSION_INTERVAL_COUNT: {
       return { ...state, beginReEmissionIntervalCount: payload };
     }

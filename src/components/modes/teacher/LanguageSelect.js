@@ -9,7 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { langs } from '../../../config/i18n';
 import { changeLanguage } from '../../../actions';
-import { FORM_CONTROL_MIN_WIDTH } from '../../../config/constants';
+import { FORM_CONTROL_MIN_WIDTH } from '../../../constants/constants';
 import { DEFAULT_LANG } from '../../../config/settings';
 
 const styles = () => ({

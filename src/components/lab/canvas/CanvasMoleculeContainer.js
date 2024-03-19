@@ -2,18 +2,20 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  WATER_MOLECULE_ID,
-  CARBON_DIOXIDE_MOLECULE_ID,
-  OZONE_MOLECULE_ID,
-  NITROUS_OXIDE_MOLECULE_ID,
-  METHANE_MOLECULE_ID,
-  DINITROGEN_MOLECULE_ID,
-  DIOXYGEN_MOLECULE_ID,
-  ARGON_MOLECULE_ID,
+  WATER_ID,
+  CARBON_DIOXIDE_ID,
+  OZONE_ID,
+  NITROUS_OXIDE_ID,
+  METHANE_ID,
+  DINITROGEN_ID,
+  DIOXYGEN_ID,
+  ARGON_ID,
   SPECTRUMS,
+} from '../../../constants/strings';
+import {
   Y_SHIFT_PER_INTERVAL,
   INFRARED_RADIATION_PERIOD,
-} from '../../../config/constants';
+} from '../../../constants/constants';
 import CanvasMoleculeArea from './CanvasMoleculeArea';
 import CanvasWater from './molecules/CanvasWater';
 import CanvasCarbonDioxide from './molecules/CanvasCarbonDioxide';
@@ -31,13 +33,9 @@ const CanvasMoleculeContainer = ({
   moleculeAreaStatus,
   containerIndex,
 }) => {
-  const intervalCount = useSelector(({ lab }) => lab.intervalCount);
-  const spectrum = useSelector(({ lab }) => lab.spectrum);
-  const intervalsToReachMoleculeCenter = useSelector(
-    ({ layout }) => layout.intervalsToReachMoleculeCenter,
-  );
-  const oscillationDirection = useSelector(
-    ({ layout }) => layout.oscillationDirection,
+  const { intervalCount, spectrum } = useSelector(({ lab }) => lab);
+  const { intervalsToReachMoleculeCenter, oscillationDirection } = useSelector(
+    ({ layout }) => layout,
   );
 
   // we know that after intervalsToReachMoleculeCenter, the radiation lines have reached the center of the molecule
@@ -53,7 +51,7 @@ const CanvasMoleculeContainer = ({
 
   let moleculeComponent = null;
   switch (moleculeToDisplay) {
-    case WATER_MOLECULE_ID:
+    case WATER_ID:
       moleculeComponent = (
         <CanvasWater
           moleculeCenter={{ x, y }}
@@ -62,7 +60,7 @@ const CanvasMoleculeContainer = ({
         />
       );
       break;
-    case CARBON_DIOXIDE_MOLECULE_ID:
+    case CARBON_DIOXIDE_ID:
       moleculeComponent = (
         <CanvasCarbonDioxide
           moleculeCenter={{ x, y }}
@@ -71,7 +69,7 @@ const CanvasMoleculeContainer = ({
         />
       );
       break;
-    case OZONE_MOLECULE_ID:
+    case OZONE_ID:
       moleculeComponent = (
         <CanvasOzone
           moleculeCenter={{ x, y }}
@@ -80,7 +78,7 @@ const CanvasMoleculeContainer = ({
         />
       );
       break;
-    case NITROUS_OXIDE_MOLECULE_ID:
+    case NITROUS_OXIDE_ID:
       moleculeComponent = (
         <CanvasNitrousOxide
           moleculeCenter={{ x, y }}
@@ -89,7 +87,7 @@ const CanvasMoleculeContainer = ({
         />
       );
       break;
-    case METHANE_MOLECULE_ID:
+    case METHANE_ID:
       moleculeComponent = (
         <CanvasMethane
           moleculeCenter={{ x, y }}
@@ -98,13 +96,13 @@ const CanvasMoleculeContainer = ({
         />
       );
       break;
-    case DINITROGEN_MOLECULE_ID:
+    case DINITROGEN_ID:
       moleculeComponent = <CanvasDinitrogen moleculeCenter={{ x, y }} />;
       break;
-    case DIOXYGEN_MOLECULE_ID:
+    case DIOXYGEN_ID:
       moleculeComponent = <CanvasDioxygen moleculeCenter={{ x, y }} />;
       break;
-    case ARGON_MOLECULE_ID:
+    case ARGON_ID:
       moleculeComponent = <CanvasArgonMolecule moleculeCenter={{ x, y }} />;
       break;
     default:

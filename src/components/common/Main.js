@@ -13,7 +13,7 @@ import {
   DEFAULT_HEADER_VISIBLE,
   DRAWER_WIDTH,
   MAXIMUM_Z_INDEX,
-} from '../../config/constants';
+} from '../../constants/constants';
 
 const styles = (theme) => ({
   root: {
