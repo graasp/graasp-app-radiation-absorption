@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/graasp/graasp-app-radiation-absorption/compare/v0.3.0...v0.4.0) (2024-03-19)
+
+
+### Features
+
+* add touch events on canvas elements ([5c9f46f](https://github.com/graasp/graasp-app-radiation-absorption/commit/5c9f46f0cc7ad2f2100510c0f54a515d063d797d))
+* make canvas responsive ([147af84](https://github.com/graasp/graasp-app-radiation-absorption/commit/147af84c7a5a9f90483f86e3319ec179d4ef70b4)), closes [#85](https://github.com/graasp/graasp-app-radiation-absorption/issues/85)
+
 ## [0.3.0](https://github.com/graasp/graasp-app-radiation-absorption/compare/v0.2.0...v0.3.0) (2023-09-17)
 
 
