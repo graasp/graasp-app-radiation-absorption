@@ -1,27 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SideMenuAtom from './SideMenuAtom';
-import { NITROGEN } from '../../../../../config/constants';
+import { NITROGEN } from '../../../../../constants/canvas-molecules/common';
 
-const SideMenuNitrogen = ({ customPositioningStyles, charge }) => {
+const SideMenuNitrogen = ({ customStyles, charge }) => {
   return (
     <SideMenuAtom
-      atomColor={NITROGEN.atomColor}
-      atomSize={NITROGEN.size}
-      chargeSymbolColor={NITROGEN.chargeSymbolColor}
-      customPositioningStyles={customPositioningStyles}
+      color={NITROGEN.color}
+      size={NITROGEN.size}
+      chargeColor={NITROGEN.chargeColor}
+      customStyles={customStyles}
       charge={charge}
     />
   );
 };
 
 SideMenuNitrogen.propTypes = {
-  customPositioningStyles: PropTypes.shape(),
+  customStyles: PropTypes.shape(),
   charge: PropTypes.string,
 };
 
 SideMenuNitrogen.defaultProps = {
-  customPositioningStyles: {},
+  customStyles: {},
   charge: '',
 };
 

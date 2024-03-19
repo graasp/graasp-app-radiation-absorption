@@ -1,27 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SideMenuAtom from './SideMenuAtom';
-import { CARBON } from '../../../../../config/constants';
+import { CARBON } from '../../../../../constants/canvas-molecules/common';
 
-const SideMenuCarbon = ({ customPositioningStyles, charge }) => {
+const SideMenuCarbon = ({ customStyles, charge }) => {
   return (
     <SideMenuAtom
-      atomColor={CARBON.atomColor}
-      atomSize={CARBON.size}
-      chargeSymbolColor={CARBON.chargeSymbolColor}
-      customPositioningStyles={customPositioningStyles}
+      color={CARBON.color}
+      size={CARBON.size}
+      chargeColor={CARBON.chargeColor}
+      customStyles={customStyles}
       charge={charge}
     />
   );
 };
 
 SideMenuCarbon.propTypes = {
-  customPositioningStyles: PropTypes.shape(),
+  customStyles: PropTypes.shape(),
   charge: PropTypes.string,
 };
 
 SideMenuCarbon.defaultProps = {
-  customPositioningStyles: {},
+  customStyles: {},
   charge: '',
 };
 

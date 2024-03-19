@@ -2,7 +2,7 @@ import {
   INFRARED_RADIATION_PERIOD,
   Y_INCREMENT_PER_POINT,
   Y_SHIFT_PER_INTERVAL,
-} from '../config/constants';
+} from '../constants/constants';
 
 // remember, points on a Konva line are an array of the form [x_0, y_0, x_1, y_1, ..., x_n, y_n]
 // each pair in that array represents an offset from the origin of the line

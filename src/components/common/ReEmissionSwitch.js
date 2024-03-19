@@ -10,11 +10,8 @@ import {
   setBeginReEmissionIntervalCount,
   toggleShowReEmission,
 } from '../../actions';
-import {
-  GREENHOUSE_GASES,
-  INTERVALS_TO_COMPLETE_INFRARED_RADIATION_PERIOD,
-  SPECTRUMS,
-} from '../../config/constants';
+import { INTERVALS_TO_COMPLETE_INFRARED_RADIATION_PERIOD } from '../../constants/constants';
+import { GREENHOUSE_GASES, SPECTRUMS } from '../../constants/strings';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {

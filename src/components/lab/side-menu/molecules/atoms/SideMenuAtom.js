@@ -5,11 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   SIDE_MENU_ATOM_DIMENSIONS,
   SIDE_MENU_NEGATIVE_CHARGE_SYMBOL,
-  POSITIVE_CHARGE,
   SIDE_MENU_POSITIVE_CHARGE_SYMBOL,
   SIDE_MENU_SMALL_ATOM_CHARGE_FONT_SIZE,
   SIDE_MENU_STANDARD_CHARGE_FONT_SIZE,
-} from '../../../../../config/constants';
+} from '../../../../../constants/constants';
+import { POSITIVE } from '../../../../../constants/strings';
 
 const useStyles = makeStyles(() => ({
   atom: {
@@ -20,25 +20,19 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const SideMenuAtom = ({
-  atomColor,
-  atomSize,
-  customPositioningStyles,
-  charge,
-  chargeSymbolColor,
-}) => {
+const SideMenuAtom = ({ color, size, customStyles, charge, chargeColor }) => {
   const classes = useStyles();
-  const showAtomsCharges = useSelector(({ lab }) => lab.showAtomsCharges);
+  const { showCharges } = useSelector(({ lab }) => lab);
 
-  const atomWidthAndHeight = SIDE_MENU_ATOM_DIMENSIONS[atomSize];
+  const atomWidthAndHeight = SIDE_MENU_ATOM_DIMENSIONS[size];
 
   // constants for displaying and styling charge text (a + or -)
   const chargeSymbol =
-    charge === POSITIVE_CHARGE
+    charge === POSITIVE
       ? SIDE_MENU_POSITIVE_CHARGE_SYMBOL
       : SIDE_MENU_NEGATIVE_CHARGE_SYMBOL;
   const chargeFontSize =
-    atomSize === 'small'
+    size === 'small'
       ? SIDE_MENU_SMALL_ATOM_CHARGE_FONT_SIZE
       : SIDE_MENU_STANDARD_CHARGE_FONT_SIZE;
 
@@ -46,14 +40,14 @@ const SideMenuAtom = ({
     <div
       className={classes.atom}
       style={{
-        backgroundColor: atomColor,
+        backgroundColor: color,
         width: atomWidthAndHeight,
         height: atomWidthAndHeight,
-        ...customPositioningStyles,
+        ...customStyles,
       }}
     >
-      {showAtomsCharges && charge && (
-        <div style={{ fontSize: chargeFontSize, color: chargeSymbolColor }}>
+      {showCharges && charge && (
+        <div style={{ fontSize: chargeFontSize, color: chargeColor }}>
           {chargeSymbol}
         </div>
       )}
@@ -62,15 +56,15 @@ const SideMenuAtom = ({
 };
 
 SideMenuAtom.propTypes = {
-  atomColor: PropTypes.string.isRequired,
-  atomSize: PropTypes.string.isRequired,
-  chargeSymbolColor: PropTypes.string.isRequired,
-  customPositioningStyles: PropTypes.shape(),
+  color: PropTypes.string.isRequired,
+  size: PropTypes.string.isRequired,
+  chargeColor: PropTypes.string.isRequired,
+  customStyles: PropTypes.shape(),
   charge: PropTypes.string,
 };
 
 SideMenuAtom.defaultProps = {
-  customPositioningStyles: {},
+  customStyles: {},
   charge: '',
 };
 

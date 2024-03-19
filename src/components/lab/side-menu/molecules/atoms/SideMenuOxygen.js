@@ -1,27 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SideMenuAtom from './SideMenuAtom';
-import { OXYGEN } from '../../../../../config/constants';
+import { OXYGEN } from '../../../../../constants/canvas-molecules/common';
 
-const SideMenuOxygen = ({ customPositioningStyles, charge }) => {
+const SideMenuOxygen = ({ customStyles, charge }) => {
   return (
     <SideMenuAtom
-      atomColor={OXYGEN.atomColor}
-      atomSize={OXYGEN.size}
-      chargeSymbolColor={OXYGEN.chargeSymbolColor}
-      customPositioningStyles={customPositioningStyles}
+      color={OXYGEN.color}
+      size={OXYGEN.size}
+      chargeColor={OXYGEN.chargeColor}
+      customStyles={customStyles}
       charge={charge}
     />
   );
 };
 
 SideMenuOxygen.propTypes = {
-  customPositioningStyles: PropTypes.shape(),
+  customStyles: PropTypes.shape(),
   charge: PropTypes.string,
 };
 
 SideMenuOxygen.defaultProps = {
-  customPositioningStyles: {},
+  customStyles: {},
   charge: '',
 };
 

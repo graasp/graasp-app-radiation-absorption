@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CanvasAtom from './CanvasAtom';
-import { HYDROGEN } from '../../../../../config/constants';
+import { HYDROGEN } from '../../../../../constants/canvas-molecules/common';
 
-const CanvasHydrogen = ({ coordinates, charge, atomColor }) => {
+const CanvasHydrogen = ({ coordinates, charge, color }) => {
   const { x, y } = coordinates;
   return (
     <CanvasAtom
-      atomColor={atomColor}
-      atomSize={HYDROGEN.size}
-      chargeSymbolColor={HYDROGEN.chargeSymbolColor}
+      color={color}
+      size={HYDROGEN.size}
+      chargeColor={HYDROGEN.chargeColor}
       x={x}
       y={y}
       charge={charge}
@@ -23,7 +23,7 @@ CanvasHydrogen.propTypes = {
     y: PropTypes.number,
   }).isRequired,
   charge: PropTypes.string,
-  atomColor: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 CanvasHydrogen.defaultProps = {

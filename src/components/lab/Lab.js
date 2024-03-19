@@ -13,13 +13,13 @@ import {
 import {
   BACKGROUND_COLOR,
   CANVAS_NUMBER_OF_MOLECULES,
-  CANVAS_MOLECULE_AREA_DEFAULT_RADIUS,
-  SPECTRUMS,
+  MOLECULE_AREA_DEFAULT_RADIUS,
   Y_SHIFT_PER_INTERVAL,
   INFRARED_RADIATION_CURVE_PERIOD,
-} from '../../config/constants';
+} from '../../constants/constants';
 import RadiationLines from './RadiationLines';
 import ElectricFieldVectorGroups from './ElectricFieldVectorGroups';
+import { SPECTRUMS } from '../../constants/strings';
 
 const styles = () => ({
   container: {
@@ -44,7 +44,7 @@ class Lab extends Component {
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,
     }).isRequired,
-    selectedMoleculeInSideMenu: PropTypes.string,
+    selectedMolecule: PropTypes.string,
     moleculesOnCanvas: PropTypes.arrayOf(
       PropTypes.shape({
         molecule: PropTypes.string.isRequired,
@@ -60,7 +60,7 @@ class Lab extends Component {
   };
 
   static defaultProps = {
-    selectedMoleculeInSideMenu: null,
+    selectedMolecule: null,
   };
 
   componentDidMount() {
@@ -142,7 +142,7 @@ class Lab extends Component {
     const {
       classes,
       stageDimensions,
-      selectedMoleculeInSideMenu,
+      selectedMolecule,
       moleculesOnCanvas,
       spectrum,
       showElectricFieldVectors,
@@ -151,7 +151,7 @@ class Lab extends Component {
     const moleculeContainerCenterPoints = this.determineMoleculeContainersCenterPoints(
       stageDimensions.width,
       CANVAS_NUMBER_OF_MOLECULES,
-      CANVAS_MOLECULE_AREA_DEFAULT_RADIUS,
+      MOLECULE_AREA_DEFAULT_RADIUS * stageDimensions.height,
     );
 
     return (
@@ -193,7 +193,7 @@ class Lab extends Component {
                         moleculeCenterYFromBottomOfCanvas
                       }
                       key={centerPoint}
-                      isActive={selectedMoleculeInSideMenu !== ''}
+                      isActive={selectedMolecule !== ''}
                       containerIndex={index}
                       moleculeToDisplay={moleculesOnCanvas[index].molecule}
                       moleculeAreaStatus={
@@ -213,7 +213,7 @@ class Lab extends Component {
 
 const mapStateToProps = ({ layout, lab }) => ({
   stageDimensions: layout.lab.stageDimensions,
-  selectedMoleculeInSideMenu: lab.selectedMoleculeInSideMenu,
+  selectedMolecule: lab.selectedMolecule,
   moleculesOnCanvas: lab.moleculesOnCanvas,
   spectrum: lab.spectrum,
   showElectricFieldVectors: lab.showElectricFieldVectors,

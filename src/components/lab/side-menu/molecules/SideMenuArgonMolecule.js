@@ -1,11 +1,11 @@
 import React from 'react';
 import SideMenuMoleculeContainer from './SideMenuMoleculeContainer';
 import SideMenuArgon from './atoms/SideMenuArgon';
-import { ARGON_MOLECULE_ID } from '../../../../config/constants';
+import { ARGON_ID } from '../../../../constants/strings';
 
 const SideMenuArgonMolecule = () => {
   return (
-    <SideMenuMoleculeContainer moleculeId={ARGON_MOLECULE_ID}>
+    <SideMenuMoleculeContainer moleculeId={ARGON_ID}>
       <SideMenuArgon />
     </SideMenuMoleculeContainer>
   );

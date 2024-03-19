@@ -8,11 +8,11 @@ import { green } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import {
   setIsPaused,
-  setMoleculeAreaStatus,
-  selectMoleculeInSideMenu,
-  toggleHighlightAllSideMenuMolecules,
+  setMoleculeArea,
+  selectMolecule,
+  toggleHighlightAll,
 } from '../../../actions';
-import { CANVAS_MOLECULE_AREA_STATE } from '../../../config/constants';
+import { MOLECULE_AREA_STATE } from '../../../constants/constants';
 
 const useStyles = makeStyles(() => ({
   playButton: { color: green[800] },
@@ -23,26 +23,17 @@ const PlayButton = ({ className, canvasIncomplete }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { moleculesOnCanvas, isPaused } = useSelector(({ lab }) => lab);
+  const { AWAITING_DELETE, FULL } = MOLECULE_AREA_STATE;
 
   const onClickPlay = () => {
-    // if some molecule has an active deletion area, clear that area
-    // this happens when: (1) animation is playing, (2) user clicks on a molecule (activating it for deletion), (3) user clicks back on play button
-    moleculesOnCanvas.forEach((molecule, index) => {
-      if (
-        molecule.moleculeAreaStatus ===
-        CANVAS_MOLECULE_AREA_STATE.AWAITING_DELETE
-      ) {
-        dispatch(
-          setMoleculeAreaStatus({
-            areaIndex: index,
-            newStatus: CANVAS_MOLECULE_AREA_STATE.FULL,
-          }),
-        );
+    moleculesOnCanvas.forEach(({ moleculeAreaStatus }, index) => {
+      if (moleculeAreaStatus === AWAITING_DELETE) {
+        dispatch(setMoleculeArea({ index, status: FULL }));
       }
     });
     dispatch(setIsPaused(false));
-    dispatch(selectMoleculeInSideMenu(null));
-    dispatch(toggleHighlightAllSideMenuMolecules(false));
+    dispatch(selectMolecule(null));
+    dispatch(toggleHighlightAll(false));
   };
 
   return (

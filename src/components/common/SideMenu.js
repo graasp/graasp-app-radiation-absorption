@@ -6,9 +6,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Divider, makeStyles } from '@material-ui/core';
 import {
   toggleShowElectricFieldVectors,
-  toggleShowAtomsCharges,
+  toggleShowCharges,
 } from '../../actions';
-import { DRAWER_WIDTH, SPECTRUMS } from '../../config/constants';
+import { DRAWER_WIDTH } from '../../constants/constants';
 import GreenhouseGases from '../lab/GreenhouseGases';
 import NonGreenhouseGases from '../lab/NonGreenhouseGases';
 import SpectrumToggle from './SpectrumToggle';
@@ -21,6 +21,7 @@ import {
   TOGGLED_ELECTRIC_FIELD_VECTORS_OFF,
   TOGGLED_ELECTRIC_FIELD_VECTORS_ON,
 } from '../../config/verbs';
+import { SPECTRUMS } from '../../constants/strings';
 
 const useStyles = makeStyles((theme) => ({
   drawerPaper: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 const SideMenu = () => {
   const { t } = useTranslation();
   const { showSideMenu } = useSelector(({ layout }) => layout);
-  const { showElectricFieldVectors, showAtomsCharges, spectrum } = useSelector(
+  const { showElectricFieldVectors, showCharges, spectrum } = useSelector(
     ({ lab }) => lab,
   );
   const classes = useStyles();
@@ -77,8 +78,8 @@ const SideMenu = () => {
           />
           <CustomSwitch
             switchLabel={t('Sign of charges')}
-            switchStatus={showAtomsCharges}
-            switchAction={toggleShowAtomsCharges}
+            switchStatus={showCharges}
+            switchAction={toggleShowCharges}
             disabled={false}
             toggleOffAction={TOGGLED_CHARGE_SIGNS_OFF}
             toggleOnAction={TOGGLED_CHARGE_SIGNS_ON}

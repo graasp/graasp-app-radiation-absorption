@@ -7,17 +7,14 @@ import {
   RE_EMISSION_LINE_DASH,
   RE_EMISSION_LINE_STROKE_COLOR,
   RE_EMISSION_LINE_STROKE_WIDTH,
-} from '../../config/constants';
+} from '../../constants/constants';
 import generateSineCurve from '../../utils/generateSineCurve';
 
 const ReEmittedLines = ({ x, y }) => {
-  const intervalCount = useSelector(({ lab }) => lab.intervalCount);
-  const { height: stageHeight } = useSelector(
-    ({ layout }) => layout.lab.stageDimensions,
+  const { intervalCount, beginReEmissionIntervalCount } = useSelector(
+    ({ lab }) => lab,
   );
-  const beginReEmissionIntervalCount = useSelector(
-    ({ lab }) => lab.beginReEmissionIntervalCount,
-  );
+  const { height } = useSelector(({ layout }) => layout.lab.stageDimensions);
 
   return (
     <Group>
@@ -28,9 +25,9 @@ const ReEmittedLines = ({ x, y }) => {
         strokeWidth={RE_EMISSION_LINE_STROKE_WIDTH}
         points={generateSineCurve(
           intervalCount - beginReEmissionIntervalCount,
-          stageHeight,
+          height,
           y,
-          RE_EMISSION_LINE_CURVE_AMPLITUDE,
+          RE_EMISSION_LINE_CURVE_AMPLITUDE * height,
         )}
         dash={RE_EMISSION_LINE_DASH}
       />
@@ -42,8 +39,8 @@ const ReEmittedLines = ({ x, y }) => {
         points={generateSineCurve(
           intervalCount - beginReEmissionIntervalCount,
           y,
-          stageHeight,
-          RE_EMISSION_LINE_CURVE_AMPLITUDE,
+          height,
+          RE_EMISSION_LINE_CURVE_AMPLITUDE * height,
         )}
         dash={RE_EMISSION_LINE_DASH}
       />

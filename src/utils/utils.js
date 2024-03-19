@@ -2,6 +2,7 @@
 export const determineCoordinates = (
   moleculeCenter,
   atom,
+  canvasHeight,
   animationOscillating = false,
   oscillationFactor = 0,
 ) => {
@@ -17,16 +18,16 @@ export const determineCoordinates = (
     oscillates: yOscillates,
     amplitude: yAmplitude,
   } = atomYPoint;
-  const atomInitialX = moleculeCenterX + xOffset;
-  const atomInitialY = moleculeCenterY + yOffset;
+  const atomInitialX = moleculeCenterX + xOffset * canvasHeight;
+  const atomInitialY = moleculeCenterY + yOffset * canvasHeight;
   return {
     x:
       xOscillates && animationOscillating
-        ? atomInitialX + oscillationFactor * xAmplitude
+        ? atomInitialX + oscillationFactor * xAmplitude * canvasHeight
         : atomInitialX,
     y:
       yOscillates && animationOscillating
-        ? atomInitialY + oscillationFactor * yAmplitude
+        ? atomInitialY + oscillationFactor * yAmplitude * canvasHeight
         : atomInitialY,
   };
 };

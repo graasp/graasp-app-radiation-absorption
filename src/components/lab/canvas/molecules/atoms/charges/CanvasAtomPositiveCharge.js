@@ -1,42 +1,36 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Group, Line } from 'react-konva';
 import {
   CANVAS_ATOM_CHARGE_LENGTH,
   CANVAS_ATOM_CHARGE_STROKE_WIDTH,
-} from '../../../../../../config/constants';
+} from '../../../../../../constants/constants';
 
 const CanvasAtomPositiveCharge = ({ x, y, color }) => {
-  // note: a '+' sign is 4 lines going up, right, down, and left from the center point of the +
-  // using konva lines (versus a konva text node) results in accurate centering
+  const { height } = useSelector(({ layout }) => layout.lab.stageDimensions);
+  const chargeLength = CANVAS_ATOM_CHARGE_LENGTH * height;
+
   return (
-    <Group>
+    <Group x={x} y={y}>
       <Line
-        x={x}
-        y={y}
         stroke={color}
-        points={[0, 0, CANVAS_ATOM_CHARGE_LENGTH, 0]}
+        points={[0, 0, chargeLength, 0]}
         strokeWidth={CANVAS_ATOM_CHARGE_STROKE_WIDTH}
       />
       <Line
-        x={x}
-        y={y}
         stroke={color}
-        points={[0, 0, 0, CANVAS_ATOM_CHARGE_LENGTH]}
+        points={[0, 0, 0, chargeLength]}
         strokeWidth={CANVAS_ATOM_CHARGE_STROKE_WIDTH}
       />
       <Line
-        x={x}
-        y={y}
         stroke={color}
-        points={[0, 0, -CANVAS_ATOM_CHARGE_LENGTH, 0]}
+        points={[0, 0, -chargeLength, 0]}
         strokeWidth={CANVAS_ATOM_CHARGE_STROKE_WIDTH}
       />
       <Line
-        x={x}
-        y={y}
         stroke={color}
-        points={[0, 0, 0, -CANVAS_ATOM_CHARGE_LENGTH]}
+        points={[0, 0, 0, -chargeLength]}
         strokeWidth={CANVAS_ATOM_CHARGE_STROKE_WIDTH}
       />
     </Group>

@@ -1,26 +1,25 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Group } from 'react-konva';
 import CanvasNitrogen from './atoms/CanvasNitrogen';
 import CanvasBondContainer from './CanvasBondContainer';
-import { CANVAS_DINITROGEN } from '../../../../config/constants';
 import { determineCoordinates } from '../../../../utils/utils';
+import { CANVAS_DINITROGEN } from '../../../../constants/canvas-molecules';
 
-const CanvasDinitrogen = ({ moleculeCenter }) => {
+const CanvasDinitrogen = ({ moleculeCenter: center }) => {
+  const { height } = useSelector(({ layout }) => layout.lab.stageDimensions);
   const { TOP_NITROGEN, BOTTOM_NITROGEN } = CANVAS_DINITROGEN;
-  const topNitrogen = determineCoordinates(moleculeCenter, TOP_NITROGEN);
-  const bottomNitrogen = determineCoordinates(moleculeCenter, BOTTOM_NITROGEN);
+  const topNitrogen = determineCoordinates(center, TOP_NITROGEN, height);
+  const bottomNitrogen = determineCoordinates(center, BOTTOM_NITROGEN, height);
 
   return (
     <Group>
-      {/* molecule bonds */}
-      {/* note that these CanvasBondContainer components need to be at the top here so that they fall behind atoms on the canvas */}
       <CanvasBondContainer
         from={topNitrogen}
         to={bottomNitrogen}
         numberOfBonds={3}
       />
-      {/* molecule atoms */}
       <CanvasNitrogen coordinates={topNitrogen} />
       <CanvasNitrogen coordinates={bottomNitrogen} />
     </Group>

@@ -1,26 +1,25 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Group } from 'react-konva';
 import CanvasOxygen from './atoms/CanvasOxygen';
 import CanvasBondContainer from './CanvasBondContainer';
-import { CANVAS_DIOXYGEN } from '../../../../config/constants';
 import { determineCoordinates } from '../../../../utils/utils';
+import { CANVAS_DIOXYGEN } from '../../../../constants/canvas-molecules';
 
-const CanvasDioxygen = ({ moleculeCenter }) => {
+const CanvasDioxygen = ({ moleculeCenter: center }) => {
+  const { height } = useSelector(({ layout }) => layout.lab.stageDimensions);
   const { TOP_OXYGEN, BOTTOM_OXYGEN } = CANVAS_DIOXYGEN;
-  const topOxygen = determineCoordinates(moleculeCenter, TOP_OXYGEN);
-  const bottomOxygen = determineCoordinates(moleculeCenter, BOTTOM_OXYGEN);
+  const topOxygen = determineCoordinates(center, TOP_OXYGEN, height);
+  const bottomOxygen = determineCoordinates(center, BOTTOM_OXYGEN, height);
 
   return (
     <Group>
-      {/* molecule bonds */}
-      {/* note that these CanvasBondContainer components need to be at the top here so that they fall behind atoms on the canvas */}
       <CanvasBondContainer
         from={topOxygen}
         to={bottomOxygen}
         numberOfBonds={2}
       />
-      {/* molecule atoms */}
       <CanvasOxygen coordinates={topOxygen} />
       <CanvasOxygen coordinates={bottomOxygen} />
     </Group>

@@ -1,45 +1,20 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Group, Line } from 'react-konva';
-import {
-  ACTIVE_MOLECULE_AREA_PLUS_LENGTH,
-  ACTIVE_MOLECULE_AREA_PLUS_STROKE,
-  ACTIVE_MOLECULE_AREA_PLUS_STROKE_WIDTH,
-} from '../../../config/constants';
+import { Group } from 'react-konva';
+import { ACTIVE_MOLECULE_AREA_PLUS_LENGTH } from '../../../constants/constants';
+import PlusSignLine from './common/PlusSignLine';
 
 const ActiveMoleculeAreaPlus = ({ x, y }) => {
-  // note: a '+' sign is 4 lines going up, right, down, and left from the center point of the +
-  // using konva lines (versus a konva text node) results in accurate centering
+  const { height } = useSelector(({ layout }) => layout.lab.stageDimensions);
+  const plusLength = ACTIVE_MOLECULE_AREA_PLUS_LENGTH * height;
+
   return (
-    <Group>
-      <Line
-        x={x}
-        y={y}
-        stroke={ACTIVE_MOLECULE_AREA_PLUS_STROKE}
-        points={[0, 0, ACTIVE_MOLECULE_AREA_PLUS_LENGTH, 0]}
-        strokeWidth={ACTIVE_MOLECULE_AREA_PLUS_STROKE_WIDTH}
-      />
-      <Line
-        x={x}
-        y={y}
-        stroke={ACTIVE_MOLECULE_AREA_PLUS_STROKE}
-        points={[0, 0, -ACTIVE_MOLECULE_AREA_PLUS_LENGTH, 0]}
-        strokeWidth={ACTIVE_MOLECULE_AREA_PLUS_STROKE_WIDTH}
-      />
-      <Line
-        x={x}
-        y={y}
-        stroke={ACTIVE_MOLECULE_AREA_PLUS_STROKE}
-        points={[0, 0, 0, ACTIVE_MOLECULE_AREA_PLUS_LENGTH]}
-        strokeWidth={ACTIVE_MOLECULE_AREA_PLUS_STROKE_WIDTH}
-      />
-      <Line
-        x={x}
-        y={y}
-        stroke={ACTIVE_MOLECULE_AREA_PLUS_STROKE}
-        points={[0, 0, 0, -ACTIVE_MOLECULE_AREA_PLUS_LENGTH]}
-        strokeWidth={ACTIVE_MOLECULE_AREA_PLUS_STROKE_WIDTH}
-      />
+    <Group x={x} y={y}>
+      <PlusSignLine points={[0, 0, plusLength, 0]} />
+      <PlusSignLine points={[0, 0, -plusLength, 0]} />
+      <PlusSignLine points={[0, 0, 0, plusLength]} />
+      <PlusSignLine points={[0, 0, 0, -plusLength]} />
     </Group>
   );
 };

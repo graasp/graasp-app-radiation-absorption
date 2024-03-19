@@ -2,50 +2,39 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Group, Circle } from 'react-konva';
-import {
-  CANVAS_ATOM_DIMENSIONS,
-  POSITIVE_CHARGE,
-  NEGATIVE_CHARGE,
-} from '../../../../../config/constants';
+import { POSITIVE, NEGATIVE } from '../../../../../constants/strings';
 import CanvasAtomNegativeCharge from './charges/CanvasAtomNegativeCharge';
 import CanvasAtomPositiveCharge from './charges/CanvasAtomPositiveCharge';
+import { CANVAS_ATOM_DIMENSIONS } from '../../../../../constants/canvas-molecules/common';
 
-const CanvasAtom = ({
-  atomColor,
-  atomSize,
-  x,
-  y,
-  charge,
-  chargeSymbolColor,
-}) => {
-  const showAtomsCharges = useSelector(({ lab }) => lab.showAtomsCharges);
+const CanvasAtom = ({ color, size, x, y, charge, chargeColor }) => {
+  const { showCharges } = useSelector(({ lab }) => lab);
+  const { height } = useSelector(({ layout }) => layout.lab.stageDimensions);
+  const atomRadius = CANVAS_ATOM_DIMENSIONS[size] * height;
 
-  const atomRadius = CANVAS_ATOM_DIMENSIONS[atomSize];
-
-  // used in return statement below; default is null (no charge displayed)
   let chargeToDisplay = null;
-  if (charge === POSITIVE_CHARGE) {
+  if (charge === POSITIVE) {
     chargeToDisplay = (
-      <CanvasAtomPositiveCharge x={x} y={y} color={chargeSymbolColor} />
+      <CanvasAtomPositiveCharge x={x} y={y} color={chargeColor} />
     );
-  } else if (charge === NEGATIVE_CHARGE) {
+  } else if (charge === NEGATIVE) {
     chargeToDisplay = (
-      <CanvasAtomNegativeCharge x={x} y={y} color={chargeSymbolColor} />
+      <CanvasAtomNegativeCharge x={x} y={y} color={chargeColor} />
     );
   }
 
   return (
     <Group>
-      <Circle radius={atomRadius} fill={atomColor} x={x} y={y} />
-      {showAtomsCharges && chargeToDisplay}
+      <Circle radius={atomRadius} fill={color} x={x} y={y} />
+      {showCharges && chargeToDisplay}
     </Group>
   );
 };
 
 CanvasAtom.propTypes = {
-  atomColor: PropTypes.string.isRequired,
-  atomSize: PropTypes.string.isRequired,
-  chargeSymbolColor: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  size: PropTypes.string.isRequired,
+  chargeColor: PropTypes.string.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   charge: PropTypes.string,

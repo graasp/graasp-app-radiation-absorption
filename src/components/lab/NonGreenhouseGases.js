@@ -6,21 +6,14 @@ import SideMenuArgonMolecule from './side-menu/molecules/SideMenuArgonMolecule';
 import SideMenuDinitrogen from './side-menu/molecules/SideMenuDinitrogen';
 import SideMenuDioxygen from './side-menu/molecules/SideMenuDioxygen';
 import SideMenuMoleculeAndLabelContainer from './side-menu/molecules/SideMenuMoleculeAndLabelContainer';
-import {
-  DINITROGEN_MOLECULE_ID,
-  DIOXYGEN_MOLECULE_ID,
-  ARGON_MOLECULE_ID,
-} from '../../config/constants';
+import { DINITROGEN_ID, DIOXYGEN_ID, ARGON_ID } from '../../constants/strings';
 import DinitrogenFormula from './canvas/formulas/DinitrogenFormula';
 import DioxygenFormula from './canvas/formulas/DioxygenFormula';
 
 const NonGreenhouseGases = () => {
   const { t } = useTranslation();
-  const selectedMoleculeInSideMenu = useSelector(
-    ({ lab }) => lab.selectedMoleculeInSideMenu,
-  );
-  const highlightAllSideMenuMolecules = useSelector(
-    ({ lab }) => lab.highlightAllSideMenuMolecules,
+  const { selectedMolecule, highlightAllMolecules } = useSelector(
+    ({ lab }) => lab,
   );
 
   return (
@@ -29,27 +22,18 @@ const NonGreenhouseGases = () => {
         molecule={<SideMenuDinitrogen />}
         moleculeLabel={t('Dinitrogen')}
         moleculeFormula={<DinitrogenFormula />}
-        isSelected={
-          selectedMoleculeInSideMenu === DINITROGEN_MOLECULE_ID ||
-          highlightAllSideMenuMolecules
-        }
+        isSelected={selectedMolecule === DINITROGEN_ID || highlightAllMolecules}
       />
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuDioxygen />}
         moleculeLabel={t('Dioxygen')}
         moleculeFormula={<DioxygenFormula />}
-        isSelected={
-          selectedMoleculeInSideMenu === DIOXYGEN_MOLECULE_ID ||
-          highlightAllSideMenuMolecules
-        }
+        isSelected={selectedMolecule === DIOXYGEN_ID || highlightAllMolecules}
       />
       <SideMenuMoleculeAndLabelContainer
         molecule={<SideMenuArgonMolecule />}
         moleculeLabel={t('Argon')}
-        isSelected={
-          selectedMoleculeInSideMenu === ARGON_MOLECULE_ID ||
-          highlightAllSideMenuMolecules
-        }
+        isSelected={selectedMolecule === ARGON_ID || highlightAllMolecules}
       />
     </GasesContainer>
   );

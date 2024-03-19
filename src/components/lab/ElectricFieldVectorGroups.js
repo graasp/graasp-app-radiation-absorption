@@ -4,16 +4,14 @@ import { Group } from 'react-konva';
 import PropTypes from 'prop-types';
 import ElectricFieldVectorGroup from './ElectricFieldVectorGroup';
 import {
-  GREENHOUSE_GASES,
   INFRARED_RADIATION_CURVE_INTERVAL,
   Y_SHIFT_PER_INTERVAL,
-} from '../../config/constants';
+} from '../../constants/constants';
 import generateElectricFieldVectorGroupYPoints from '../../utils/generateElectricFieldVectorGroupYPoints';
+import { GREENHOUSE_GASES } from '../../constants/strings';
 
 const ElectricFieldVectorGroups = ({ x, groupIndex }) => {
-  const { height: stageHeight } = useSelector(
-    ({ layout }) => layout.lab.stageDimensions,
-  );
+  const { height } = useSelector(({ layout }) => layout.lab.stageDimensions);
   const moleculeCenterYFromBottomOfCanvas = useSelector(
     ({ layout }) => layout.moleculeCenterYFromBottomOfCanvas,
   );
@@ -23,17 +21,18 @@ const ElectricFieldVectorGroups = ({ x, groupIndex }) => {
 
   let absorptionPoint = 0;
   if (GREENHOUSE_GASES.includes(currentLineMolecule)) {
-    absorptionPoint = stageHeight - moleculeCenterYFromBottomOfCanvas;
+    absorptionPoint = height - moleculeCenterYFromBottomOfCanvas;
   }
 
   return (
     <Group>
       {generateElectricFieldVectorGroupYPoints(
         intervalCount,
-        stageHeight,
+        height,
         absorptionPoint,
         INFRARED_RADIATION_CURVE_INTERVAL,
         Y_SHIFT_PER_INTERVAL,
+        height,
       ).map(({ y, direction }, index) => (
         <ElectricFieldVectorGroup
           x={x}

@@ -2,11 +2,11 @@ import React from 'react';
 import SideMenuMoleculeContainer from './SideMenuMoleculeContainer';
 import SideMenuNitrogen from './atoms/SideMenuNitrogen';
 import SideMenuBondContainer from '../SideMenuBondContainer';
-import { DINITROGEN_MOLECULE_ID } from '../../../../config/constants';
+import { DINITROGEN_ID } from '../../../../constants/strings';
 
 const SideMenuDinitrogen = () => {
   return (
-    <SideMenuMoleculeContainer moleculeId={DINITROGEN_MOLECULE_ID}>
+    <SideMenuMoleculeContainer moleculeId={DINITROGEN_ID}>
       <SideMenuNitrogen />
       <SideMenuBondContainer numberOfBonds={3} />
       <SideMenuNitrogen />

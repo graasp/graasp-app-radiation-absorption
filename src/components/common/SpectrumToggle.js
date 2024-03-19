@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
-import { SPECTRUMS } from '../../config/constants';
+import { SPECTRUMS } from '../../constants/strings';
 import {
   resetIntervalCount,
   toggleShowElectricFieldVectors,
