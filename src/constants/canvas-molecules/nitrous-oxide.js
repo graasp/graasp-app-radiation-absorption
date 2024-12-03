@@ -11,7 +11,6 @@ const TOP_BOTTOM_AMPLITUDE = -REFERENCE_POINT * (2 / 3);
 const AMPLITUDE_FACTOR = -2;
 const MIDDLE_ATOM_AMPLITUDE = TOP_BOTTOM_AMPLITUDE * AMPLITUDE_FACTOR;
 
-// eslint-disable-next-line import/prefer-default-export
 export const CANVAS_NITROUS_OXIDE = {
   TOP_NITROGEN: {
     x: { offset: 0, oscillates: true, amplitude: TOP_BOTTOM_AMPLITUDE },

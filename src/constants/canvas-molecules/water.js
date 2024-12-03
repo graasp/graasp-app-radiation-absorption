@@ -12,7 +12,6 @@ const HYDROGEN_AMPLITUDE = REFERENCE_POINT * (4 / 5);
 const AMPLITUDE_FACTOR = -(1 / 8);
 const OXYGEN_AMPLITUDE = HYDROGEN_AMPLITUDE * AMPLITUDE_FACTOR;
 
-// eslint-disable-next-line import/prefer-default-export
 export const CANVAS_WATER = {
   TOP_HYDROGEN: {
     x: { offset: X_OFFSET, oscillates: true, amplitude: HYDROGEN_AMPLITUDE },

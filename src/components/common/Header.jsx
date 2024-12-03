@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import { withTranslation } from 'react-i18next';
-import { ReactComponent as Logo } from '../../resources/logo.svg';
+import { GraaspLogo } from './GraaspLogo';
 import { toggleSideMenu } from '../../actions';
 import { DRAWER_WIDTH, LOGO_SIZE } from '../../constants/constants';
 
@@ -78,7 +78,7 @@ class Header extends Component {
         })}
       >
         <Toolbar>
-          <Logo className={classes.logo} />
+          <GraaspLogo className={classes.logo} />
           <Typography variant="h6" color="inherit" className={classes.grow}>
             {t('Radiation Absorption')}
           </Typography>

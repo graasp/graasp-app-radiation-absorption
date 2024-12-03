@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { ReactComponent as GraaspLogo } from '../../resources/logo.svg';
+import { GraaspLogo } from './GraaspLogo';
 import { toggleLoadingScreen } from '../../actions';
 
 const styles = (theme) => ({
@@ -35,7 +35,7 @@ const styles = (theme) => ({
   },
 });
 
-class ProgressScreen extends Component {
+class LoadingScreen extends Component {
   static propTypes = {
     dispatchToggleLoader: PropTypes.func.isRequired,
     classes: PropTypes.shape({
@@ -65,13 +65,13 @@ class ProgressScreen extends Component {
     // show loading screen
     setTimeout(() => {
       dispatchToggleLoader(false);
-    }, ProgressScreen.loadingTime);
+    }, LoadingScreen.loadingTime);
 
     this.loading = setInterval(() => {
       this.setState((state) => ({
-        progress: state.progress + ProgressScreen.progressStepSize,
+        progress: state.progress + LoadingScreen.progressStepSize,
       }));
-    }, ProgressScreen.loadingInterval);
+    }, LoadingScreen.loadingInterval);
   }
 
   componentDidUpdate() {
@@ -102,7 +102,7 @@ const mapDispatchToProps = {
   dispatchToggleLoader: toggleLoadingScreen,
 };
 
-const ConnectedApp = connect(null, mapDispatchToProps)(ProgressScreen);
+const ConnectedApp = connect(null, mapDispatchToProps)(LoadingScreen);
 
 const StyledComponent = withStyles(styles, { withTheme: true })(ConnectedApp);
 
