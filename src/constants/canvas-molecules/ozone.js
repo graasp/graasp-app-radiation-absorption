@@ -11,7 +11,6 @@ const TOP_BOTTOM_AMPLITUDE = -REFERENCE_POINT * (2 / 5);
 const AMPLITUDE_FACTOR = -2;
 const MIDDLE_ATOM_AMPLITUDE = TOP_BOTTOM_AMPLITUDE * AMPLITUDE_FACTOR;
 
-// eslint-disable-next-line import/prefer-default-export
 export const CANVAS_OZONE = {
   TOP_OXYGEN: {
     x: { offset: -X_OFFSET, oscillates: true, amplitude: TOP_BOTTOM_AMPLITUDE },

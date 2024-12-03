@@ -9,7 +9,6 @@ import {
   MOLECULE_AREA_STATE,
 } from '../constants/constants';
 
-// eslint-disable-next-line import/prefer-default-export
 export const styleMoleculeArea = (moleculeStatus) => {
   const { ACTIVE, EMPTY, AWAITING_DELETE, FULL } = MOLECULE_AREA_STATE;
 

@@ -2,7 +2,6 @@ import { ATOMS_VERTICAL_DISTANCE, NITROGEN_SIZE } from './common';
 
 const Y_OFFSET = NITROGEN_SIZE + ATOMS_VERTICAL_DISTANCE;
 
-// eslint-disable-next-line import/prefer-default-export
 export const CANVAS_DINITROGEN = {
   TOP_NITROGEN: {
     x: { offset: 0, oscillates: false, amplitude: 0 },

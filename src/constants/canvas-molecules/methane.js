@@ -10,7 +10,6 @@ const CARBON_AMPLITUDE = -REFERENCE_POINT / 5;
 const H_AMPLITUDE_1 = REFERENCE_POINT / 3;
 const H_AMPLITUDE_2 = REFERENCE_POINT / 3;
 
-// eslint-disable-next-line import/prefer-default-export
 export const CANVAS_METHANE = {
   CARBON: {
     x: { offset: 0, oscillates: true, amplitude: CARBON_AMPLITUDE },
